@@ -1,0 +1,16 @@
+|HEAD|||0||14-07-2020|16:06:52|A0A8BED3-3D6F-4AD8-907A-84D52EE1543B|0x00010001|PlatformSpecificElements|UEFI Compliant Test|GenericTest\EFICompliantTest|No device path
+F61F0F0A-64FE-40A6-9D7C-0746A230245F:PASS|UEFI Compliant - DEVICE_PATH protocol must exist:/home/edhcha01/v2.4_Plus/arm-enterprise-acs/luv/build/tmp/work/aarch64-oe-linux/sbbr/v1.1+gitAUTOINC+b558bad254-r0/edk2/SctPkg/TestCase/UEFI/EFI/Generic/EfiCompliant/BlackBoxTest/EfiCompliantBBTestRequired_uefi.c:795:Status - Success, Expected - Success
+
+02C017D7-1557-47D9-BCE9-87182D07910C:PASS|UEFI Compliant - DECOMPRESS protocol must exist:/home/edhcha01/v2.4_Plus/arm-enterprise-acs/luv/build/tmp/work/aarch64-oe-linux/sbbr/v1.1+gitAUTOINC+b558bad254-r0/edk2/SctPkg/TestCase/UEFI/EFI/Generic/EfiCompliant/BlackBoxTest/EfiCompliantBBTestRequired_uefi.c:839:Status - Success, Expected - Success
+
+3A07DC1B-53D1-4FAC-88AF-C72579EB07F2:PASS|UEFI Compliant - DevicePathUtility:/home/edhcha01/v2.4_Plus/arm-enterprise-acs/luv/build/tmp/work/aarch64-oe-linux/sbbr/v1.1+gitAUTOINC+b558bad254-r0/edk2/SctPkg/TestCase/UEFI/EFI/Generic/EfiCompliant/BlackBoxTest/EfiCompliantBBTestRequired_uefi.c:904:Status - Success, Expected - Success
+
+F6334F9B-B930-4ADB-A53B-76FA7B4C2762:PASS|UEFI Compliant - Globally Defined Variables:/home/edhcha01/v2.4_Plus/arm-enterprise-acs/luv/build/tmp/work/aarch64-oe-linux/sbbr/v1.1+gitAUTOINC+b558bad254-r0/edk2/SctPkg/TestCase/UEFI/EFI/Generic/EfiCompliant/BlackBoxTest/EfiCompliantBBTestRequired_uefi.c:1507
+
+|TERM|0000|14-07-2020|16:13229757697097735:27866469370953730|13792480017252352 12948063677054976:30399641082134528:27303274604396547
+|HEAD|||0||14-07-2020|16:07:04|24D52C4C-AFEB-49EA-A777-8FE19F322066|0x00010000|MediaIoProtocols|RequiredUefiProtocols Tests|GenericTest\SbbrRequiredUefiProtocols|No device path
+6092F275-19CA-413A-ACC8-60D6E0CA7054:PASS|MediaIoProtocols:/home/edhcha01/v2.4_Plus/arm-enterprise-acs/luv/build/tmp/work/aarch64-oe-linux/sbbr/v1.1+gitAUTOINC+b558bad254-r0/edk2/SctPkg/TestCase/UEFI/EFI/Generic/SbbrRequiredUefiProtocols/BlackBoxTest/RequiredUefiProtocolsBBTestFunction.c:139:EFI_LOAD_FILE_PROTOCOL Found
+
+|TERM|0000|14-07-2020|16:32088628381351943:12666807743676429|13229817826639872 13229830711541760:30399748456316928:30681270677667841
+|HEAD|||0||14-07-2020|16:07:15|78F530DD-FE16-4DAF-A201-BCB9371503A2|0x00010000|OsDiskFormat|SBBR UEFI System Environment and Configuration Tests|GenericTest\SbbrSysEnvConfig|No device path
+91D5B963-1DA8-4C1D-913E-D34BB3A73A1C:FAILURE|TestOsDiskFormat:/home/edhcha01/v2.4_Plus/arm-enterprise-acs/luv/build/tmp/work/aarch64-oe-linux/sbbr/v1.1+gitAUTOINC+b558bad254-r0/edk2/SctPkg/TestCase/UEFI/EFI/Generic/SbbrSysEnvConfig/BlackBoxTest/SysEnvConfigBBTestFunction.c:368:No Valid Boot Disk Found
