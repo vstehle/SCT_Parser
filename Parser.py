@@ -16,6 +16,8 @@
 #   "log": "full log output"
 #}
 
+import sys
+
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filterd dict of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
@@ -76,7 +78,9 @@ def ekl_parser (file):
 
 
 def main():
-    with open("sample.ekl","r",encoding="utf-16") as f:
+
+    file = sys.argv[2] if len(sys.argv) >= 2 else "sample.ekl"
+    with open(file,"r",encoding="utf-16") as f:
         db = ekl_parser(f.readlines())
         #print the final dict,
         print(db)
@@ -84,7 +88,9 @@ def main():
         print(len(db))
         
         #find all passing tests,
-        passes = find(db,"result","PASS")
+        find_key = sys.argv[3] if len(sys.argv) >= 4 else "result"
+        find_value = sys.argv[4] if len(sys.argv) >= 4 else "WARNING"
+        passes = find(db,find_key,find_value)
         #print the dict
         print(passes)
        # print number of passing
