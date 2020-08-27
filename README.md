@@ -6,11 +6,12 @@ It's designed to read a `.ekl` result log named `sample.ekl` and a generated `.s
 It will proceed to list the names of each test that has failed or had a warning, then filter that list based one the tests that were supposed to run according to the `.seq` file, including mentioning tests that would not run.
 
 
-##Command line arguments (WIP)
-###Diffrent File:
+## Command line arguments (WIP)
+
+### Diffrent File:
 if you choose to, you can pass command like arguments like so `python3 Parser.py <file.ekl>`. this will provide a different `.ekl` log to search (such as `summary.ekl`), but run the same find failure/warnings, and cross check with a seq file. 
 
-###Custom search
+### Custom search
 The next two arguments MUST be included together and will only search and display files that met that constraint, no cross check. `python3 Parser.py <file.ekl> <search key> <search value>`
 
 
@@ -21,14 +22,14 @@ The next two arguments MUST be included together and will only search and displa
 
 
 
-##Notes
-###Known Issues:
+## Notes
+### Known Issues:
 Currently If a test with the same guid is re-run, it will squash any previous test. I.E. TPL -4/6/8...
 
-###Need to test
+### Need to test
 would a concatenation of all `.ekl` logs work?
 
-###Dict structure:
+### Dict structure:
 ```
 tests = {
     <guid> : test_dict 
