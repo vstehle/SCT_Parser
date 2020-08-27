@@ -1,24 +1,5 @@
 #SCT log parser
 
-
-###Dict structure:
-#tests = {
-#    <guid> : test_dict 
-#    <guid2> : test_dict2...
-#}
-#test_dict = {
-#   "name": "some test",
-#   "result": "pass/fail",
-#   "group": "some group",
-#   "test set": "some set",  
-#   "sub set": "some subset",
-#   "set guid": "XXXXXX",
-#   "guid": "XXXXXX",
-#   "comment": "some comment"
-#   "log": "full log output"
-#}
-
-
 import sys
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -119,15 +100,15 @@ def seq_parser(file):
 
 def main():
     #Command line argument 1, file to open, else open sample
-    file = sys.argv[2] if len(sys.argv) >= 2 else "sample.ekl"
+    file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
     db = {}
     #files are encoded in utf-16
     with open(file,"r",encoding="utf-16") as f:
         db = ekl_parser(f.readlines())
     
     #command line argument 2&3, key and value to find.
-    find_key = sys.argv[3]  if len(sys.argv) >= 4 else "result"
-    find_value = sys.argv[4] if len(sys.argv) >= 4 else "WARNING"    
+    find_key = sys.argv[2]  if len(sys.argv) >= 4 else "result"
+    find_value = sys.argv[3] if len(sys.argv) >= 4 else "WARNING"    
     
     #if default search for Warnings
     found = key_value_find(db,find_key,find_value)
@@ -166,6 +147,13 @@ def main():
         temp_dict = key_value_find(db, "set guid", x)
         if not (temp_dict):
             print("test set",db2[x]["name"],"was not found, possible silent drop")
-        
     
+    #TODO: add structure to generate CSV summary
+    #including 
+    # pass/fail
+    # failed test sets
+    # dropped tests sets
+    # failed tests info
+    # all tests
+
 main()

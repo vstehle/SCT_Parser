@@ -1,0 +1,30 @@
+###Dict structure:
+tests = {
+    <guid> : test_dict 
+    <guid2> : test_dict2...
+}
+test_dict = {
+   "name": "some test",
+   "result": "pass/fail",
+   "group": "some group",
+   "test set": "some set",  
+   "sub set": "some subset",
+   "set guid": "XXXXXX",
+   "guid": "XXXXXX",
+   "comment": "some comment"
+   "log": "full log output"
+}
+
+
+seqs = {
+    <guid> : seq_dict
+    <guid2> : seq_dict2...
+}
+
+seq_dict = {
+                "name": "set name",
+                "guid": "set guid",
+                "Iteration": "some hex/num of how many times to run",
+                "rev": "some hex/numb",
+                "Order": "some hex/num"
+}
