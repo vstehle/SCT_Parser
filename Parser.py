@@ -1,9 +1,10 @@
 #SCT log parser
 
 import sys
+import csv
 
 #based loosley on https://stackoverflow.com/a/4391978
-# returns a filterd dict of dicts that meet some Key-value pair.
+# returns a filtered dict of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
 def key_value_find(dict1, key, value):
     found = {}
@@ -23,11 +24,10 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       "test set": current_test_set,  
       "sub set": current_sub_set,
       "set guid": current_set_guid,
-      "guid": string[0],
-      #"comment": string[-1], #need to hash this out, sometime there is no comments
+      "guid": string[0], #FIXME:ACS GUID's overlap... need fix... 
+      #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
       "log": string
     }
-    #FIXME:GUID's overlap... need fix, bad... 
     return test_dict["guid"], test_dict
     
 #Parse the ekl file, and create a map of the tests
@@ -56,7 +56,7 @@ def ekl_parser (file):
             current_set_guid = split_line[4]
             current_sub_set = split_line[6]
 
-        #FIXME: EKL file has a (in my opinion) bad line structure,
+        #FIXME:? EKL file has an inconsistent line structure,
         # sometime we see a line that consits ' dump of GOP->I\n'
         #easiest way to skip is check for blank space in the first char
         elif split_line[0][0] != " ":
@@ -71,8 +71,7 @@ def ekl_parser (file):
 def seq_parser(file):
     db_dict = dict()
     lines=file.readlines()
-    #a test in a seq file is 7 lines, if not mod7, something wrong..
-    magic=7
+    magic=7 #a test in a seq file is 7 lines, if not mod7, something wrong..
     if len(lines)%magic != 0:
         sys.exit("seqfile cut short, should be mod7")
     #the utf-16 char makes this looping a bit harder, so we use x+(i) where i is next 0-6th
@@ -85,6 +84,7 @@ def seq_parser(file):
         #(x+5)Iterations=0xFFFFFFFF
         #(x+6)(utf-16 char) 
         #currently only add tests that are supposed to run, should add all?
+        #0xFFFFFFFF in "Iterations" means the test is NOT supposed to run
         if not "0xFFFFFFFF" in lines[x+5]:
             seq_dict = {
                 "name": lines[x+3][5:-1],#from after "Name=" to end (5char long)
@@ -98,62 +98,75 @@ def seq_parser(file):
     return db_dict
 
 
-def main():
-    #Command line argument 1, file to open, else open sample
-    file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
-    db = {}
-    #files are encoded in utf-16
-    with open(file,"r",encoding="utf-16") as f:
-        db = ekl_parser(f.readlines())
-    
-    #command line argument 2&3, key and value to find.
-    find_key = sys.argv[2]  if len(sys.argv) >= 4 else "result"
-    find_value = sys.argv[3] if len(sys.argv) >= 4 else "WARNING"    
-    
-    #if default search for Warnings
-    found = key_value_find(db,find_key,find_value)
-    
-    #if default, also search for failures
-    if len(sys.argv) < 4:
-        found = {**found, **key_value_find(db,"result","FAILURE")}
-    
-    #print the dict
-    print("found:",len(found),"items with search constraints")
-    for x in found:
-        print(found[x]["result"],":",found[x]["name"])
 
-    #FIXME: needs to add support for custom seq name.
-    if len(sys.argv) >= 4:
-        return
-    #seq file
-    file2 = "sample.seq"
-    db2 = {}
-    #files are encoded in utf-16
-    with open(file2,"r",encoding="utf-16") as f:
+def main():
+    #Command line argument 1, ekl file to open, else open sample
+    log_file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
+    db1 = {} #"database 1" all tests.
+    with open(log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
+        db1 = ekl_parser(f.readlines())
+
+    #Command line argument 2, seq file to open, else open sample
+    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "sample.seq"
+    db2 = {} #"database 2" all test sets that should run
+    with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
     
+    #cross check is filled only with tests labled as "run" int the seq file
     cross_check_dict = dict()
-    for x in db2:
-        temp_dict = key_value_find(found,"set guid",x)
-        if bool(temp_dict):
+    #combine a list of test sets that did not run for whatever reason.
+    would_not_run = []
+    for x in db2: #for each "set guid" in db2
+        temp_dict = key_value_find(db1,"set guid",x)#find tests in db1 with given set guid
+        if bool(temp_dict): #if its not empty, apprend it to our dict
             cross_check_dict = {**cross_check_dict, **temp_dict}
+        else: #if it is empty, this test set was not run.
+            would_not_run.append(db2[x]) 
 
-    print()
-    print("previous list filtered")
-    for x in cross_check_dict:
-        print(cross_check_dict[x]["result"],":",cross_check_dict[x]["name"])
-
-    for x in db2:
-        temp_dict = key_value_find(db, "set guid", x)
-        if not (temp_dict):
-            print("test set",db2[x]["name"],"was not found, possible silent drop")
     
-    #TODO: add structure to generate CSV summary
-    #including 
-    # pass/fail
-    # failed test sets
-    # dropped tests sets
-    # failed tests info
-    # all tests
+    #search for failures and warnings & passes,
+    failures = key_value_find(cross_check_dict,"result","FAILURE")
+    warnings = key_value_find(cross_check_dict,"result","WARNING")
+    passes = key_value_find(cross_check_dict,"result","PASS")
+    fail_and_warn = {**failures, **warnings}#dict of failures and warnings
+
+
+    # generate CSV summary
+    with open('result.csv', 'w') as csvfile:
+        result_writer = csv.writer(csvfile, delimiter=',')
+        result_writer.writerow(['']*9) 
+        result_writer.writerow(["Failures:",len(failures)])
+        result_writer.writerow(["Warnings:",len(warnings)])
+        result_writer.writerow(["Pass:",len(passes)])
+        result_writer.writerow(['']*9) 
+
+        #If there were any silently dropped, lets print them
+        if len(would_not_run) > 0:
+            result_writer.writerow(["Silently Dropped:"]) 
+            not_run_writer = csv.DictWriter(csvfile, would_not_run[0])
+            not_run_writer.writeheader()
+            for x in would_not_run:
+                not_run_writer.writerow(x)
+            result_writer.writerow(['']*9)
+        
+        #lets print every test that failed or had a wanring. if any did!
+        result_writer.writerow(["Fail & Warn tests:"]) 
+        first_guid = (list(fail_and_warn.keys())[0])
+        test_writer = csv.DictWriter(csvfile, fail_and_warn[first_guid])
+        test_writer.writeheader()
+        for x in fail_and_warn:
+            test_writer.writerow(fail_and_warn[x])
+
+
+    #command line argument 3&4, key are to support a key & value search.
+    #these will be displayed in CLI
+    if len(sys.argv) >= 5:
+        find_key = sys.argv[3]
+        find_value = sys.argv[4]
+        found = key_value_find(db1,find_key,find_value)
+        #print the dict
+        print("found:",len(found),"items with search constraints")
+        for x in found:
+            print(found[x]["guid"],":",found[x]["name"],"with",found[x][find_key],":",found[x][find_value])
 
 main()
