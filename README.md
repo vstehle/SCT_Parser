@@ -30,18 +30,22 @@ you can use the `test_dict` below to see available keys.
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.
-* Currently ACS tests have shared GUIDs
-* ACS follows different naming convention
+* some SCT tests have shared GUIDs, Currently using lists to keep tests from squashing each other. 
+* some lines in ekl file follow Different naming Conventions 
 
-### Need to test
-would a concatenation of all `.ekl` logs work?
 
-### Dict structure:
+### TODO:
+* double check concatenation of all `.ekl` logs, preliminary tests show small Divergence between them and `summary.ekl` found in `Overall` folder. Cat.sh will generate this file.
+* look into repated GUIDs & non test nots within `.ekl` file
+* build functions to help better render markdown. 
+
+
+### db structure:
 ```
-tests = {
-    <guid> : test_dict 
-    <guid2> : test_dict2...
-}
+tests = [
+    test_dict,
+    est_dict2...
+]
 
 test_dict = {
    "name": "some test",
