@@ -1,31 +1,20 @@
 #SCT log parser
 
-#BIGFIXME: need to Decide on Definite Structure, and do a deeper dive into how logs are represented.gi
+#BIGFIXME: do a deeper dive into how logs are represented.
 
 import sys
 import json
-#import csv
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
-#if tests ar in lists.
 def key_value_find(dict1, key, value):
-    #print(key)
     found = list()
     for test in dict1:
         if test[key] == value:
             found.append(test)
     return found
-    
-#if tests are in dicts.
-#def key_value_find(dict1, key, value):
-#    found = {}
-#    for key2 in dict1:
-#        test = dict1[key2]
-#        if test[key] == value:
-#            found[key2]=test
-#    return found
+
 
 #Were we intrept test logs into test dicts
 def test_parser(string,current_group,current_test_set,current_set_guid,current_sub_set):
@@ -38,15 +27,14 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       "set guid": current_set_guid,
       "guid": string[0], #FIXME:GUID's overlap... need fix... 
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
-      "log":
+      "log": string
     }
     return (test_dict["guid"]+test_dict["set guid"]), test_dict
     
 #Parse the ekl file, and create a map of the tests
 def ekl_parser (file):
     #create our "database" dict
-    #db_dict = dict()
-    db_dict = list()
+    temp_list = list()
     #All tests are grouped by the "HEAD" line the procedes them.
     current_group = "N/A"
     current_set = "N/A"
@@ -64,7 +52,10 @@ def ekl_parser (file):
         #The "HEAD" tag is the only indcation we are on a new test set
         if split_line[0]=="HEAD":
             #split the header into test group and test set.
-            current_group, current_set = split_line[8].split('\\')
+            try:
+                current_group, current_set = split_line[8].split('\\')
+            except:
+                current_group, current_set =split_line[8],split_line
             current_set_guid = split_line[4]
             current_sub_set = split_line[6]
 
@@ -72,17 +63,20 @@ def ekl_parser (file):
         # sometime we see a line that consits ' dump of GOP->I\n'
         #easiest way to skip is check for blank space in the first char
         elif split_line[0][0] != " ":
-            #deliminiate on ':' for tests
-            split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
-            #put the test into a dict, and then place that dict in another dict with GUID as key
-            guid,tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
-            #print(guid)
-            db_dict.append(tmp_dict)
-
-    return db_dict
+            try:
+                #deliminiate on ':' for tests
+                split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
+                #put the test into a dict, and then place that dict in another dict with GUID as key
+                guid,tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
+                #print(guid)
+                temp_list.append(tmp_dict)
+            except:
+                print("Line:",split_line)
+                sys.exit("your log may be corrupted")
+    return temp_list
 
 def seq_parser(file):
-    db_dict = dict()
+    temp_dict = dict()
     lines=file.readlines()
     magic=7 #a test in a seq file is 7 lines, if not mod7, something wrong..
     if len(lines)%magic != 0:
@@ -106,16 +100,16 @@ def seq_parser(file):
                 "rev": lines[x+1][9:-1],#from after "Revision=" (9char long)
                 "Order": lines[x+4][6:-1]#from after "Order=" (6char long)
             }
-            db_dict[seq_dict["guid"]]=seq_dict #put in a dict based on guid
+            temp_dict[seq_dict["guid"]]=seq_dict #put in a dict based on guid
 
-    return db_dict
+    return temp_dict
 
 
 
 def main():
     #Command line argument 1, ekl file to open, else open sample
     log_file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
-    db1 = {} #"database 1" all tests.
+    db1 = list() #"database 1" all tests.
     with open(log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db1 = ekl_parser(f.readlines())
 
@@ -126,59 +120,23 @@ def main():
         db2 = seq_parser(f)
     
     #cross check is filled only with tests labled as "run" int the seq file
-    cross_check_dict = list()
-    #cross_check_dict = list()
+    cross_check = list()
     #combine a list of test sets that did not run for whatever reason.
     would_not_run = list()
-    #would_not_run = dict()
     for x in db2: #for each "set guid" in db2
         temp_dict = key_value_find(db1,"set guid",x)#find tests in db1 with given set guid
         if bool(temp_dict): #if its not empty, apprend it to our dict
-            #list
-            cross_check_dict = (cross_check_dict +temp_dict)
-            #dict
-            #cross_check_dict = {**cross_check_dict, **temp_dict}
+            cross_check = (cross_check +temp_dict)
         else: #if it is empty, this test set was not run.
             would_not_run.append(db2[x]) 
 
     
     #search for failures and warnings & passes,
     
-    failures = key_value_find(cross_check_dict,"result","FAILURE")
-    warnings = key_value_find(cross_check_dict,"result","WARNING")
-    passes = key_value_find(cross_check_dict,"result","PASS")
-    #list
+    failures = key_value_find(cross_check,"result","FAILURE")
+    warnings = key_value_find(cross_check,"result","WARNING")
+    passes = key_value_find(cross_check,"result","PASS")
     fail_and_warn = (failures + warnings)#dict of failures and warnings
-    #dict
-    #fail_and_warn = {**failures, **warnings}#dict of failures and warnings
-
-
-    #FIXME:? Do we want CSV and MD. 
-    # generate CSV summary
-#    with open('result.csv', 'w') as csvfile:
-#        result_writer = csv.writer(csvfile, delimiter=',')
-#        result_writer.writerow(['']*9) 
-#        result_writer.writerow(["Failures:",len(failures)])
-#        result_writer.writerow(["Warnings:",len(warnings)])
-#        result_writer.writerow(["Pass:",len(passes)])
-#        result_writer.writerow(['']*9) 
-#
-#        #If there were any silently dropped, lets print them
-#        if len(would_not_run) > 0:
-#            result_writer.writerow(["Silently Dropped:"]) 
-#            not_run_writer = csv.DictWriter(csvfile, would_not_run[0])
-#            not_run_writer.writeheader()
-#            for x in would_not_run:
-#                not_run_writer.writerow(x)
-#            result_writer.writerow(['']*9)
-#        
-#        #lets print every test that failed or had a wanring. if any did!
-#        result_writer.writerow(["Fail & Warn tests:"]) 
-#        first_guid = fail_and_warn[0]["guid"]
-#        test_writer = csv.DictWriter(csvfile, fail_and_warn[first_guid])
-#        test_writer.writeheader()
-#        for x in fail_and_warn:
-#            test_writer.writerow(fail_and_warn[x])
 
 
     # generate MD summary
