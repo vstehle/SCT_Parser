@@ -1,6 +1,6 @@
 #SCT log parser
 
-#BIGFIXME: do a deeper dive into how logs are represented.
+#BIG FIXME: do a deeper dive into how logs are represented.
 
 import sys
 import json
@@ -67,7 +67,7 @@ def ekl_parser (file):
                 #deliminiate on ':' for tests
                 split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
                 #put the test into a dict, and then place that dict in another dict with GUID as key
-                guid,tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
+                tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
                 #print(guid)
                 temp_list.append(tmp_dict)
             except:
@@ -75,6 +75,7 @@ def ekl_parser (file):
                 sys.exit("your log may be corrupted")
     return temp_list
 
+#Parse Seq file, used to tell which tests should run.
 def seq_parser(file):
     temp_dict = list()
     lines=file.readlines()
@@ -107,13 +108,13 @@ def seq_parser(file):
 #generic writer, takes a list of dicts and turns the dicts into an MD table.
 def dict_2_md(input_list,file):
     if len(input_list) > 0:
-        file.write("\n")
+        file.write("\n\n")
 
         #create header for MD table using dict keys
         temp_string1, temp_string2 = "|", "|"
         for x in (input_list[0].keys()):
             temp_string1 += (x + "|")
-            temp_string2 += ("--|")
+            temp_string2 += ("---|")
         file.write(temp_string1+"\n"+temp_string2+"\n")
         #print each item from the dict into the table
         for x in input_list:
@@ -155,7 +156,6 @@ def main():
     failures = key_value_find(cross_check,"result","FAILURE")
     warnings = key_value_find(cross_check,"result","WARNING")
     passes = key_value_find(cross_check,"result","PASS")
-    fail_and_warn = (failures + warnings)#dict of failures and warnings
 
 
     # generate MD summary
@@ -168,13 +168,13 @@ def main():
         resultfile.write("### 4. Passes: "+str(len(passes))+"\n")
         resultfile.write("\n\n")
 
-        resultfile.write(" ## 1. Silently dropped or missing")
+        resultfile.write("## 1. Silently dropped or missing")
         dict_2_md(would_not_run,resultfile)
 
-        resultfile.write(" ## 2. Failures")
+        resultfile.write("## 2. Failures")
         dict_2_md(failures,resultfile)
 
-        resultfile.write(" ## 3. Warnings")
+        resultfile.write("## 3. Warnings")
         dict_2_md(warnings,resultfile)
 
     
