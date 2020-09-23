@@ -8,9 +8,9 @@ import json
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
-def key_value_find(dict1, key, value):
+def key_value_find(list_1, key, value):
     found = list()
-    for test in dict1:
+    for test in list_1:
         if test[key] == value:
             found.append(test)
     return found
@@ -18,7 +18,7 @@ def key_value_find(dict1, key, value):
 
 #Were we intrept test logs into test dicts
 def test_parser(string,current_group,current_test_set,current_set_guid,current_sub_set):
-    test_dict = {
+    test_list = {
       "name": string[2], #FIXME:Sometimes, SCT has name and Description, 
       "result": string[1],
       "group": current_group,
@@ -27,9 +27,9 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       "set guid": current_set_guid,
       "guid": string[0], #FIXME:GUID's overlap... need fix... 
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
-      "log": string
+      "log": ' '.join(string)
     }
-    return (test_dict["guid"]+test_dict["set guid"]), test_dict
+    return (test_list["guid"]+test_list["set guid"]), test_list
     
 #Parse the ekl file, and create a map of the tests
 def ekl_parser (file):
@@ -76,7 +76,7 @@ def ekl_parser (file):
     return temp_list
 
 def seq_parser(file):
-    temp_dict = dict()
+    temp_dict = list()
     lines=file.readlines()
     magic=7 #a test in a seq file is 7 lines, if not mod7, something wrong..
     if len(lines)%magic != 0:
@@ -100,21 +100,40 @@ def seq_parser(file):
                 "rev": lines[x+1][9:-1],#from after "Revision=" (9char long)
                 "Order": lines[x+4][6:-1]#from after "Order=" (6char long)
             }
-            temp_dict[seq_dict["guid"]]=seq_dict #put in a dict based on guid
+            temp_dict.append(seq_dict) #put in a dict based on guid
 
     return temp_dict
 
+#generic writer, takes a list of dicts and turns the dicts into an MD table.
+def dict_2_md(input_list,file):
+    if len(input_list) > 0:
+        file.write("\n")
+
+        #create header for MD table using dict keys
+        temp_string1, temp_string2 = "|", "|"
+        for x in (input_list[0].keys()):
+            temp_string1 += (x + "|")
+            temp_string2 += ("--|")
+        file.write(temp_string1+"\n"+temp_string2+"\n")
+        #print each item from the dict into the table
+        for x in input_list:
+            test_string = "|"
+            for y in x.keys():
+                test_string += (x[y] + "|")
+            file.write(test_string+'\n')
+    #seprate table from other items in MD        
+    file.write("\n\n")
 
 
 def main():
     #Command line argument 1, ekl file to open, else open sample
-    log_file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
+    log_file = sys.argv[1] if len(sys.argv) >= 2 else "Sample.ekl"
     db1 = list() #"database 1" all tests.
     with open(log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db1 = ekl_parser(f.readlines())
 
     #Command line argument 2, seq file to open, else open sample
-    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "sample.seq"
+    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "Sample.seq"
     db2 = {} #"database 2" all test sets that should run
     with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
@@ -124,11 +143,11 @@ def main():
     #combine a list of test sets that did not run for whatever reason.
     would_not_run = list()
     for x in db2: #for each "set guid" in db2
-        temp_dict = key_value_find(db1,"set guid",x)#find tests in db1 with given set guid
+        temp_dict = key_value_find(db1,"set guid",x["guid"])#find tests in db1 with given set guid
         if bool(temp_dict): #if its not empty, apprend it to our dict
             cross_check = (cross_check +temp_dict)
         else: #if it is empty, this test set was not run.
-            would_not_run.append(db2[x]) 
+            would_not_run.append(x)
 
     
     #search for failures and warnings & passes,
@@ -143,25 +162,21 @@ def main():
     #TODO: this should be split out into functions, and also "Beautified"
     with open('result.md', 'w') as resultfile:
         resultfile.write("# SCT Summary \n")
-        resultfile.write("### Failures:"+str(len(failures))+"\n")
-        resultfile.write("### Warnings:"+str(len(warnings))+"\n")
-        resultfile.write("### Passes:"+str(len(passes))+"\n")
-        resultfile.write("### Dropped:"+str(len(would_not_run))+"\n")
-        if len(would_not_run) > 0:
-            resultfile.write("\n\n# Silently dropped or missing \n")
-            resultfile.write("|dict| \n")
-            resultfile.write("|---| \n")
-            for x in would_not_run:
-                resultfile.write("| ")
-                json.dump(x,resultfile)
-                resultfile.write(" |\n")
-        if len(fail_and_warn) > 0:
-            resultfile.write("\n# Failures & warnings\n")
-            resultfile.write("|dict| \n")
-            resultfile.write("|---| \n")
-            for x in fail_and_warn:
-                json.dump(x,resultfile)
-                resultfile.write(" |\n")
+        resultfile.write("### 1. Dropped: "+str(len(would_not_run))+"\n")
+        resultfile.write("### 2. Failures: "+str(len(failures))+"\n")
+        resultfile.write("### 3. Warnings: "+str(len(warnings))+"\n")
+        resultfile.write("### 4. Passes: "+str(len(passes))+"\n")
+        resultfile.write("\n\n")
+
+        resultfile.write(" ## 1. Silently dropped or missing")
+        dict_2_md(would_not_run,resultfile)
+
+        resultfile.write(" ## 2. Failures")
+        dict_2_md(failures,resultfile)
+
+        resultfile.write(" ## 3. Warnings")
+        dict_2_md(warnings,resultfile)
+
     
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
