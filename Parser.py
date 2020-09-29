@@ -1,6 +1,5 @@
 #SCT log parser
 
-#BIG FIXME: do a deeper dive into how logs are represented.
 
 import sys
 import json
@@ -25,7 +24,7 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       "test set": current_test_set,  
       "sub set": current_sub_set,
       "set guid": current_set_guid,
-      "guid": string[0], #FIXME:GUID's overlap... need fix... 
+      "guid": string[0], #FIXME:GUID's overlap
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
       "log": ' '.join(string)
     }
@@ -68,7 +67,6 @@ def ekl_parser (file):
                 split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
                 #put the test into a dict, and then place that dict in another dict with GUID as key
                 tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
-                #print(guid)
                 temp_list.append(tmp_dict)
             except:
                 print("Line:",split_line)
@@ -105,22 +103,25 @@ def seq_parser(file):
 
     return temp_dict
 
-def tree_list(input_list,file):
-    temp_list= input_list
-    while ( len(temp_list) > 0):
-        temp_dict = (temp_list.pop())
-        found = list()
-        pop_list = list()
-        for idx, test in enumerate(temp_list):
-            if test["group"] == temp_dict["group"]:
-               found.append(test)
-               pop_list.append(idx)
-        pop_list.sort(reverse=True)
-        for i in pop_list:
-            temp_list.pop(i)
-        file.write("### " + temp_dict["group"])
-        found.append(temp_dict)
+#group items by key, and print by key
+#we slowly iterate through the list, group and print groups
+def key_tree_2_md(input_list,file,key):
+    #make a copy so we don't destroy the first list.
+    temp_list = input_list.copy()    
+    while temp_list:
+        test_dict = temp_list.pop()
+        found, not_found = [test_dict],[]
+        #go through whole list looking for key match
+        while temp_list:
+            next_dict = temp_list.pop()
+            if next_dict[key] == test_dict[key]: #if match add to found
+                found.append(next_dict)
+            else: #else not found
+                not_found.append(next_dict)
+        temp_list = not_found #start over with found items removed
+        file.write("### " + test_dict[key])
         dict_2_md(found,file)
+    
 
 
 #generic writer, takes a list of dicts and turns the dicts into an MD table.
@@ -189,11 +190,12 @@ def main():
 
         resultfile.write("## 4. Failure by group")
         resultfile.write("\n\n") 
-        tree_list(failures,resultfile)
+        key_tree_2_md(failures,resultfile,"group")
+        print(len(failures))
 
         resultfile.write("## 3. Warnings by group")
         resultfile.write("\n\n")
-        tree_list(warnings,resultfile)
+        key_tree_2_md(warnings,resultfile,"group")
 
     
     #command line argument 3&4, key are to support a key & value search.
