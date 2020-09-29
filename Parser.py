@@ -29,7 +29,7 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
       "log": ' '.join(string)
     }
-    return (test_list["guid"]+test_list["set guid"]), test_list
+    return test_list
     
 #Parse the ekl file, and create a map of the tests
 def ekl_parser (file):
@@ -105,11 +105,28 @@ def seq_parser(file):
 
     return temp_dict
 
+def tree_list(input_list,file):
+    temp_list= input_list
+    while ( len(temp_list) > 0):
+        temp_dict = (temp_list.pop())
+        found = list()
+        pop_list = list()
+        for idx, test in enumerate(temp_list):
+            if test["group"] == temp_dict["group"]:
+               found.append(test)
+               pop_list.append(idx)
+        pop_list.sort(reverse=True)
+        for i in pop_list:
+            temp_list.pop(i)
+        file.write("### " + temp_dict["group"])
+        found.append(temp_dict)
+        dict_2_md(found,file)
+
+
 #generic writer, takes a list of dicts and turns the dicts into an MD table.
 def dict_2_md(input_list,file):
     if len(input_list) > 0:
         file.write("\n\n")
-
         #create header for MD table using dict keys
         temp_string1, temp_string2 = "|", "|"
         for x in (input_list[0].keys()):
@@ -159,7 +176,6 @@ def main():
 
 
     # generate MD summary
-    #TODO: this should be split out into functions, and also "Beautified"
     with open('result.md', 'w') as resultfile:
         resultfile.write("# SCT Summary \n")
         resultfile.write("### 1. Dropped: "+str(len(would_not_run))+"\n")
@@ -171,11 +187,13 @@ def main():
         resultfile.write("## 1. Silently dropped or missing")
         dict_2_md(would_not_run,resultfile)
 
-        resultfile.write("## 2. Failures")
-        dict_2_md(failures,resultfile)
+        resultfile.write("## 4. Failure by group")
+        resultfile.write("\n\n") 
+        tree_list(failures,resultfile)
 
-        resultfile.write("## 3. Warnings")
-        dict_2_md(warnings,resultfile)
+        resultfile.write("## 3. Warnings by group")
+        resultfile.write("\n\n")
+        tree_list(warnings,resultfile)
 
     
     #command line argument 3&4, key are to support a key & value search.
