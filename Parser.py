@@ -153,7 +153,7 @@ def main():
 
     #Command line argument 2, seq file to open, else open sample
     seq_file = sys.argv[2] if len(sys.argv) >= 3 else "Sample.seq"
-    db2 = {} #"database 2" all test sets that should run
+    db2 = dict() #"database 2" all test sets that should run
     with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
     
@@ -191,7 +191,7 @@ def main():
         resultfile.write("## 4. Failure by group")
         resultfile.write("\n\n") 
         key_tree_2_md(failures,resultfile,"group")
-        print(len(failures))
+       
 
         resultfile.write("## 3. Warnings by group")
         resultfile.write("\n\n")
