@@ -18,10 +18,10 @@ def key_value_find(list_1, key, value):
 #Were we intrept test logs into test dicts
 def test_parser(string,current_group,current_test_set,current_set_guid,current_sub_set):
     test_list = {
-      "name": string[2], #FIXME:Sometimes, SCT has name and Description, 
+      "name": string[2], #FIXME:Sometimes, SCT has name and Description,
       "result": string[1],
       "group": current_group,
-      "test set": current_test_set,  
+      "test set": current_test_set,
       "sub set": current_sub_set,
       "set guid": current_set_guid,
       "guid": string[0], #FIXME:GUID's overlap
@@ -29,7 +29,7 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       "log": ' '.join(string)
     }
     return test_list
-    
+
 #Parse the ekl file, and create a map of the tests
 def ekl_parser (file):
     #create our "database" dict
@@ -44,7 +44,7 @@ def ekl_parser (file):
         #strip the line of | & || used for sepration
         split_line = [string for string in line.split('|') if string != ""]
 
-        #TODO:I can skip TERM, but I feel like "\n" should be able to be handled in the above list comprehension 
+        #TODO:I can skip TERM, but I feel like "\n" should be able to be handled in the above list comprehension
         if split_line[0]=="TERM" or split_line[0]=="\n":
             continue
 
@@ -88,7 +88,7 @@ def seq_parser(file):
         #(x+3)Name=InstallAcpiTableFunction
         #(x+4)Order=0xFFFFFFFF
         #(x+5)Iterations=0xFFFFFFFF
-        #(x+6)(utf-16 char) 
+        #(x+6)(utf-16 char)
         #currently only add tests that are supposed to run, should add all?
         #0xFFFFFFFF in "Iterations" means the test is NOT supposed to run
         if not "0xFFFFFFFF" in lines[x+5]:
@@ -107,7 +107,7 @@ def seq_parser(file):
 #we slowly iterate through the list, group and print groups
 def key_tree_2_md(input_list,file,key):
     #make a copy so we don't destroy the first list.
-    temp_list = input_list.copy()    
+    temp_list = input_list.copy()
     while temp_list:
         test_dict = temp_list.pop()
         found, not_found = [test_dict],[]
@@ -121,7 +121,7 @@ def key_tree_2_md(input_list,file,key):
         temp_list = not_found #start over with found items removed
         file.write("### " + test_dict[key])
         dict_2_md(found,file)
-    
+
 
 
 #generic writer, takes a list of dicts and turns the dicts into an MD table.
@@ -140,7 +140,7 @@ def dict_2_md(input_list,file):
             for y in x.keys():
                 test_string += (x[y] + "|")
             file.write(test_string+'\n')
-    #seprate table from other items in MD        
+    #seprate table from other items in MD
     file.write("\n\n")
 
 
@@ -156,7 +156,7 @@ def main():
     db2 = dict() #"database 2" all test sets that should run
     with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
-    
+
     #cross check is filled only with tests labled as "run" int the seq file
     cross_check = list()
     #combine a list of test sets that did not run for whatever reason.
@@ -168,9 +168,9 @@ def main():
         else: #if it is empty, this test set was not run.
             would_not_run.append(x)
 
-    
+
     #search for failures and warnings & passes,
-    
+
     failures = key_value_find(cross_check,"result","FAILURE")
     warnings = key_value_find(cross_check,"result","WARNING")
     passes = key_value_find(cross_check,"result","PASS")
@@ -189,15 +189,15 @@ def main():
         dict_2_md(would_not_run,resultfile)
 
         resultfile.write("## 4. Failure by group")
-        resultfile.write("\n\n") 
+        resultfile.write("\n\n")
         key_tree_2_md(failures,resultfile,"group")
-       
+
 
         resultfile.write("## 3. Warnings by group")
         resultfile.write("\n\n")
         key_tree_2_md(warnings,resultfile,"group")
 
-    
+
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
     if len(sys.argv) >= 5:
