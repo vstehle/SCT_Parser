@@ -12,7 +12,7 @@ Usage to generate a "result md" is such. `python3 parser.py <log_file.ekl> <seq_
 If you do no provided any command line arguments it will use `sample.ekl` and `sample.seq`.
 
 
-### Custom search (WIP)
+### Custom search
 For a custom Key:value search, the next two arguments *MUST be included together.* The program will search and display files that met that constraint, without the crosscheck, and display the names, guid, and key:value to the command line. `python3 Parser.py <file.ekl> <file.seq> <search key> <search value>`
 
 you can use the `test_dict` below to see available keys. 

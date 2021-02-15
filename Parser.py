@@ -207,6 +207,6 @@ def main():
         #print the dict
         print("found:",len(found),"items with search constraints")
         for x in found:
-            print(found[x]["guid"],":",found[x]["name"],"with",found[x][find_key],":",found[x][find_value])
+            print(x["guid"],":",x["name"],"with",find_key,":",x[find_key])
 
 main()
