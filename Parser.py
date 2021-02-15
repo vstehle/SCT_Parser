@@ -4,6 +4,7 @@
 
 import sys
 import argparse
+import csv
 
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -162,12 +163,29 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Generate csv
+def gen_csv(cross_check, filename):
+    # Find keys
+    keys = set()
+
+    for x in cross_check:
+        keys = keys.union(x.keys())
+
+    # Write csv
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(
+            csvfile, fieldnames=sorted(keys), delimiter=';')
+        writer.writeheader()
+        writer.writerows(cross_check)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
                     ' and generates a nice report in mardown format.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--csv', help='Output .csv filename')
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
@@ -231,6 +249,9 @@ def main():
         resultfile.write("\n\n")
         key_tree_2_md(warnings,resultfile,"group")
 
+    # Generate csv if requested
+    if args.csv is not None:
+        gen_csv(cross_check, args.csv)
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
