@@ -41,11 +41,18 @@ def ekl_parser (file):
     current_sub_set = "N/A"
 
     for line in file:
+        # Strip the line from trailing whitespaces
+        line = line.rstrip()
+
+        # Skip empty line
+        if line == '':
+            continue
+
         #strip the line of | & || used for sepration
         split_line = [string for string in line.split('|') if string != ""]
 
-        #TODO:I can skip TERM, but I feel like "\n" should be able to be handled in the above list comprehension
-        if split_line[0]=="TERM" or split_line[0]=="\n":
+        # Skip TERM
+        if split_line[0] == "TERM":
             continue
 
         #The "HEAD" tag is the only indcation we are on a new test set
