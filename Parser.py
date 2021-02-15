@@ -61,7 +61,7 @@ def ekl_parser (file):
             try:
                 current_group, current_set = split_line[8].split('\\')
             except:
-                current_group, current_set =split_line[8],split_line
+                current_group, current_set = '', split_line[8]
             current_set_guid = split_line[4]
             current_sub_set = split_line[6]
 
