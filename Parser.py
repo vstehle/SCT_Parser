@@ -2,7 +2,6 @@
 
 
 import sys
-import json
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
