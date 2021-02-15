@@ -3,6 +3,8 @@
 
 
 import sys
+import argparse
+
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
@@ -161,16 +163,31 @@ def dict_2_md(input_list,file):
 
 
 def main():
-    #Command line argument 1, ekl file to open, else open sample
-    log_file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
+    parser = argparse.ArgumentParser(
+        description='Process SCT results.'
+                    ' This program takes the SCT summary and sequence files,'
+                    ' and generates a nice report in mardown format.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        '--md', help='Output .md filename', default='result.md')
+    parser.add_argument(
+        'log_file', nargs='?', default='sample.ekl',
+        help='Input .ekl filename')
+    parser.add_argument(
+        'seq_file', nargs='?', default='sample.seq',
+        help='Input .seq filename')
+    parser.add_argument('find_key', nargs='?', help='Search key')
+    parser.add_argument('find_value', nargs='?', help='Search value')
+    args = parser.parse_args()
+
+    #Command line argument 1, ekl file to open
     db1 = list() #"database 1" all tests.
-    with open(log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
+    with open(args.log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db1 = ekl_parser(f.readlines())
 
-    #Command line argument 2, seq file to open, else open sample
-    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "sample.seq"
+    #Command line argument 2, seq file to open
     db2 = dict() #"database 2" all test sets that should run
-    with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
+    with open(args.seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
 
     #cross check is filled only with tests labled as "run" int the seq file
@@ -191,9 +208,8 @@ def main():
     warnings = key_value_find(cross_check,"result","WARNING")
     passes = key_value_find(cross_check,"result","PASS")
 
-
     # generate MD summary
-    with open('result.md', 'w') as resultfile:
+    with open(args.md, 'w') as resultfile:
         resultfile.write("# SCT Summary \n\n")
         resultfile.write("|  |  |\n")
         resultfile.write("|--|--|\n")
@@ -218,13 +234,14 @@ def main():
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
-    if len(sys.argv) >= 5:
-        find_key = sys.argv[3]
-        find_value = sys.argv[4]
-        found = key_value_find(db1,find_key,find_value)
+    if args.find_key is not None and args.find_value is not None:
+        found = key_value_find(db1, args.find_key, args.find_value)
         #print the dict
         print("found:",len(found),"items with search constraints")
         for x in found:
-            print(x["guid"],":",x["name"],"with",find_key,":",x[find_key])
+            print(
+                x["guid"], ":", x["name"], "with", args.find_key, ":",
+                x[args.find_key])
+
 
 main()
