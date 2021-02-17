@@ -5,6 +5,7 @@
 import sys
 import argparse
 import csv
+import logging
 
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -172,6 +173,8 @@ def gen_csv(cross_check, filename):
         keys = keys.union(x.keys())
 
     # Write csv
+    logging.debug(f'Generate {filename}')
+
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.DictWriter(
             csvfile, fieldnames=sorted(keys), delimiter=';')
@@ -189,6 +192,8 @@ def main():
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
+        '--debug', action='store_true', help='Turn on debug messages')
+    parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
     parser.add_argument(
@@ -198,15 +203,27 @@ def main():
     parser.add_argument('find_value', nargs='?', help='Search value')
     args = parser.parse_args()
 
+    logging.basicConfig(
+        format='%(levelname)s %(funcName)s: %(message)s',
+        level=logging.DEBUG if args.debug else logging.INFO)
+
     #Command line argument 1, ekl file to open
     db1 = list() #"database 1" all tests.
+    logging.debug(f'Read {args.log_file}')
+
     with open(args.log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db1 = ekl_parser(f.readlines())
 
+    logging.debug('{} test(s)'.format(len(db1)))
+
     #Command line argument 2, seq file to open
     db2 = dict() #"database 2" all test sets that should run
+    logging.debug(f'Read {args.seq_file}')
+
     with open(args.seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
+
+    logging.debug('{} test set(s)'.format(len(db2)))
 
     #cross check is filled only with tests labled as "run" int the seq file
     cross_check = list()
@@ -227,6 +244,8 @@ def main():
     passes = key_value_find(cross_check,"result","PASS")
 
     # generate MD summary
+    logging.debug(f'Generate {args.md}')
+
     with open(args.md, 'w') as resultfile:
         resultfile.write("# SCT Summary \n\n")
         resultfile.write("|  |  |\n")
