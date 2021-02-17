@@ -337,6 +337,15 @@ def gen_json(cross_check, filename):
         json.dump(cross_check, jsonfile, sort_keys=True, indent=2)
 
 
+# Generate yaml
+def gen_yaml(cross_check, filename):
+    assert('yaml' in sys.modules)
+    logging.debug(f'Generate {filename}')
+
+    with open(filename, 'w') as yamlfile:
+        yaml.dump(cross_check, yamlfile)
+
+
 # Combine or two databases db1 and db2 coming from ekl and seq files
 # respectively into a single cross_check database
 # Tests in db1, which were not meant to be run according to db2 have their
@@ -439,6 +448,7 @@ def main():
     if 'yaml' in sys.modules:
         parser.add_argument(
             '--config', help='Input .yaml configuration filename')
+        parser.add_argument('--yaml', help='Output .yaml filename')
 
     args = parser.parse_args()
 
@@ -530,6 +540,10 @@ def main():
     # Generate json if requested
     if args.json is not None:
         gen_json(cross_check, args.json)
+
+    # Generate yaml if requested
+    if 'yaml' in args and args.yaml is not None:
+        gen_yaml(cross_check, args.yaml)
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
