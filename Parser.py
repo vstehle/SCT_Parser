@@ -164,6 +164,111 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Sanitize our YAML configuration
+# We modify conf in-place
+# TODO: use a proper validator instead
+def sanitize_yaml(conf):
+    rules = set()
+
+    for i in range(len(conf)):
+        r = conf[i]
+
+        # Generate a rule name if needed
+        if 'rule' not in r:
+            r['rule'] = f'r{i}'
+            logging.debug(f"Auto-naming rule {i} `{r['rule']}'")
+            conf[i] = r
+
+        if r['rule'] in rules:
+            logging.warning(f"Duplicate rule {i} `{r['rule']}'")
+
+        rules.add(r['rule'])
+
+        if 'criteria' not in r or not type(r['criteria']) is dict or \
+           'update' not in r or not type(r['update']) is dict:
+            logging.error(f"Bad rule {i} `{r}'")
+            raise Exception()
+
+
+# Evaluate if a test dict matches a criteria
+# The criteria is a dict of Key-value pairs.
+# I.E. crit = {"result": "FAILURE", "xxx": "yyy", ...}
+# All key-value pairs must be present and match for a test dict to match.
+# A test value and a criteria value match if the criteria value string is
+# present anywhere in the test value string.
+# For example, the test value "abcde" matches the criteria value "cd".
+# This allows for more "relaxed" criteria than strict comparison.
+def matches_crit(test, crit):
+    for key, value in crit.items():
+        if key not in test or test[key].find(value) < 0:
+            return False
+
+    return True
+
+
+# Apply all configuration rules to the tests
+# We modify cross_check in-place
+def apply_rules(cross_check, conf):
+    # Prepare statistics counters
+    stats = {}
+
+    for r in conf:
+        stats[r['rule']] = 0
+
+    # Apply rules on each test data
+    s = len(cross_check)
+
+    for i in range(s):
+        test = cross_check[i]
+
+        for r in conf:
+            if not matches_crit(test, r['criteria']):
+                continue
+
+            rule = r['rule']
+
+            logging.debug(
+                f"Applying rule `{rule}'"
+                f" to test {i} `{test['name']}'")
+
+            test.update({
+                **r['update'],
+                'Updated by': rule,
+            })
+
+            stats[rule] += 1
+            break
+
+    # Statistics
+    n = 0
+
+    for rule, cnt in stats.items():
+        logging.debug(f"{cnt} matche(s) for rule `{rule}'")
+        n += cnt
+
+    if n:
+        r = len(conf)
+        logging.info(
+            f'Updated {n} test(s) out of {s} after applying {r} rule(s)')
+
+
+# Use YAML configuration file and perform all the transformations described in
+# there.
+# See the README.md for details on the file format.
+# We modify cross_check in-place
+def use_config(cross_check, filename):
+    # Load configuration file
+    import yaml
+    logging.debug(f'Read {filename}')
+
+    with open(filename, 'r') as yamlfile:
+        conf = yaml.load(yamlfile, Loader=yaml.FullLoader)
+
+    logging.debug('{} rule(s)'.format(len(conf)))
+    sanitize_yaml(conf)
+    apply_rules(cross_check, conf)
+
+
 # Generate csv
 def gen_csv(cross_check, filename):
     # Find keys
@@ -189,6 +294,7 @@ def main():
                     ' and generates a nice report in mardown format.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
+    parser.add_argument('--config', help='Input .yaml configuration filename')
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
@@ -236,6 +342,10 @@ def main():
         else: #if it is empty, this test set was not run.
             would_not_run.append(x)
 
+    # Take configuration file into account. This can perform transformations on
+    # the tests results.
+    if args.config is not None:
+        use_config(cross_check, args.config)
 
     #search for failures and warnings & passes,
 
