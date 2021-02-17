@@ -16,14 +16,11 @@ def key_value_find(list_1, key, value):
 
 
 #Were we intrept test logs into test dicts
-def test_parser(string,current_group,current_test_set,current_set_guid,current_sub_set):
+def test_parser(string, current):
     test_list = {
       "name": string[2], #FIXME:Sometimes, SCT has name and Description,
       "result": string[1],
-      "group": current_group,
-      "test set": current_test_set,
-      "sub set": current_sub_set,
-      "set guid": current_set_guid,
+      **current,
       "guid": string[0], #FIXME:GUID's overlap
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
       "log": ' '.join(string[3:])
@@ -35,10 +32,12 @@ def ekl_parser (file):
     #create our "database" dict
     temp_list = list()
     #All tests are grouped by the "HEAD" line the procedes them.
-    current_group = "N/A"
-    current_set = "N/A"
-    current_set_guid = "N/A"
-    current_sub_set = "N/A"
+    current = {
+        'group': "N/A",
+        'test set': "N/A",
+        'sub set': "N/A",
+        'set guid': "N/A",
+    }
 
     for line in file:
         # Strip the line from trailing whitespaces
@@ -59,11 +58,15 @@ def ekl_parser (file):
         if split_line[0]=="HEAD":
             #split the header into test group and test set.
             try:
-                current_group, current_set = split_line[8].split('\\')
+                group, Set = split_line[8].split('\\')
             except:
-                current_group, current_set = '', split_line[8]
-            current_set_guid = split_line[4]
-            current_sub_set = split_line[6]
+                group, Set = '', split_line[8]
+            current = {
+                'group': group,
+                'test set': Set,
+                'sub set': split_line[6],
+                'set guid': split_line[4],
+            }
 
         #FIXME:? EKL file has an inconsistent line structure,
         # sometime we see a line that consits ' dump of GOP->I\n'
@@ -73,7 +76,7 @@ def ekl_parser (file):
                 #deliminiate on ':' for tests
                 split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
                 #put the test into a dict, and then place that dict in another dict with GUID as key
-                tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
+                tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
             except:
                 print("Line:",split_line)
