@@ -66,6 +66,12 @@ def ekl_parser (file):
                 'test set': Set,
                 'sub set': split_line[6],
                 'set guid': split_line[4],
+                'iteration': split_line[1],
+                'start date': split_line[2],
+                'start time': split_line[3],
+                'revision': split_line[5],
+                'descr': split_line[7],
+                'device path': split_line[9],
             }
 
         #FIXME:? EKL file has an inconsistent line structure,
