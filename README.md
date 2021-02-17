@@ -1,5 +1,5 @@
 # SCT_Parser
----
+
 This is an external Parser script for UEFI SCT. (WIP)
 
 It's designed to read a `.ekl` results log from an UEFI SCT run, and a generated `.seq` from UEFI SCT configurator.
