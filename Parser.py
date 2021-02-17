@@ -26,7 +26,7 @@ def test_parser(string,current_group,current_test_set,current_set_guid,current_s
       "set guid": current_set_guid,
       "guid": string[0], #FIXME:GUID's overlap
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
-      "log": ' '.join(string)
+      "log": ' '.join(string[3:])
     }
     return test_list
 
