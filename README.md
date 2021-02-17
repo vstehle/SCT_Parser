@@ -32,6 +32,71 @@ $ ./parser.py --sort \
       'group,descr,set guid,test set,sub set,guid,name,log' ...
 ```
 
+## Configuration file
+
+It is possible to use a configuration file with command line option `--config
+<filename>`.
+This configuration file describes operations to perform on the tests results,
+such as marking tests as false positives or waiving failures.
+
+Example command for EBBR:
+
+``` {.sh}
+$ ./parser.py --config EBBR.yaml /path/to/Summary.ekl EBBR.seq ...
+```
+
+You need to install the PyYAML module for this to work (see
+<https://github.com/yaml/pyyaml>).
+
+### Configuration file format
+
+The configuration file is in YAML format (see <https://yaml.org>).
+It contains a list of rules:
+
+``` {.yaml}
+- rule: name/description (optional)
+  criteria:
+    key1: value1
+    key2: value2
+    ...
+  update:
+    key3: value3
+    key4: value4
+    ...
+- rule...
+```
+
+### Rule processing
+
+The rules will be applied to each test one by one in the following manner:
+
+* An attempt is made at matching all the keys/values of the rule's 'criteria'
+  dict to the keys/values of the test dict. Matching test and criteria is done
+  with a "relaxed" comparison (more below).
+  - If there is no match, processing moves on to the next rule.
+  - If there is a match:
+    1. The test dict is updated with the 'update' dict of the rule.
+    2. An 'Updated by' key is set in the test dict to the rule name.
+    3. Finally, no more rule is applied to that test.
+
+A test value and a criteria value match if the criteria value string is present
+anywhere in the test value string.
+For example, the test value "abcde" matches the criteria value "cd".
+
+You can use `--debug` to see more details about which rules are applied to the
+tests.
+
+### Sample
+
+A `sample.yaml` configuration file is provided as example, to use with the
+`sample.ekl` and `sample.seq` files.
+
+Try it with:
+
+``` {.sh}
+$ ./parser.py --config sample.yaml ...
+```
+
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.

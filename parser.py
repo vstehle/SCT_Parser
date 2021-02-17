@@ -8,6 +8,11 @@ import csv
 import logging
 import json
 
+try:
+    import yaml
+except ImportError:
+    print('No yaml...')
+
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
@@ -191,6 +196,111 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Sanitize our YAML configuration
+# We modify conf in-place
+# TODO: use a proper validator instead
+def sanitize_yaml(conf):
+    rules = set()
+
+    for i in range(len(conf)):
+        r = conf[i]
+
+        # Generate a rule name if needed
+        if 'rule' not in r:
+            r['rule'] = f'r{i}'
+            logging.debug(f"Auto-naming rule {i} `{r['rule']}'")
+            conf[i] = r
+
+        if r['rule'] in rules:
+            logging.warning(f"Duplicate rule {i} `{r['rule']}'")
+
+        rules.add(r['rule'])
+
+        if 'criteria' not in r or not type(r['criteria']) is dict or \
+           'update' not in r or not type(r['update']) is dict:
+            logging.error(f"Bad rule {i} `{r}'")
+            raise Exception()
+
+
+# Evaluate if a test dict matches a criteria
+# The criteria is a dict of Key-value pairs.
+# I.E. crit = {"result": "FAILURE", "xxx": "yyy", ...}
+# All key-value pairs must be present and match for a test dict to match.
+# A test value and a criteria value match if the criteria value string is
+# present anywhere in the test value string.
+# For example, the test value "abcde" matches the criteria value "cd".
+# This allows for more "relaxed" criteria than strict comparison.
+def matches_crit(test, crit):
+    for key, value in crit.items():
+        if key not in test or test[key].find(value) < 0:
+            return False
+
+    return True
+
+
+# Apply all configuration rules to the tests
+# We modify cross_check in-place
+def apply_rules(cross_check, conf):
+    # Prepare statistics counters
+    stats = {}
+
+    for r in conf:
+        stats[r['rule']] = 0
+
+    # Apply rules on each test data
+    s = len(cross_check)
+
+    for i in range(s):
+        test = cross_check[i]
+
+        for r in conf:
+            if not matches_crit(test, r['criteria']):
+                continue
+
+            rule = r['rule']
+
+            logging.debug(
+                f"Applying rule `{rule}'"
+                f" to test {i} `{test['name']}'")
+
+            test.update({
+                **r['update'],
+                'Updated by': rule,
+            })
+
+            stats[rule] += 1
+            break
+
+    # Statistics
+    n = 0
+
+    for rule, cnt in stats.items():
+        logging.debug(f"{cnt} matche(s) for rule `{rule}'")
+        n += cnt
+
+    if n:
+        r = len(conf)
+        logging.info(
+            f'Updated {n} test(s) out of {s} after applying {r} rule(s)')
+
+
+# Use YAML configuration file and perform all the transformations described in
+# there.
+# See the README.md for details on the file format.
+# We modify cross_check in-place
+def use_config(cross_check, filename):
+    assert('yaml' in sys.modules)
+
+    # Load configuration file
+    logging.debug(f'Read {filename}')
+
+    with open(filename, 'r') as yamlfile:
+        conf = yaml.load(yamlfile, Loader=yaml.FullLoader)
+
+    logging.debug('{} rule(s)'.format(len(conf)))
+    sanitize_yaml(conf)
+    apply_rules(cross_check, conf)
+
 # Sort tests data in-place
 # sort_keys is a comma-separated list
 # The first key has precedence, then the second, etc.
@@ -323,6 +433,13 @@ def main():
         help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
     parser.add_argument('find_value', nargs='?', help='Search value')
+
+    # A few command line switches depend on yaml. We enable those only if we
+    # could actually import yaml.
+    if 'yaml' in sys.modules:
+        parser.add_argument(
+            '--config', help='Input .yaml configuration filename')
+
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -350,6 +467,10 @@ def main():
     # Produce a single cross_check database from our two db1 and db2 databases.
     cross_check = combine_dbs(db1, db2)
 
+    # Take configuration file into account. This can perform transformations on
+    # the tests results.
+    if 'config' in args and args.config is not None:
+        use_config(cross_check, args.config)
 
     # Sort tests data in-place, if requested
     if args.sort is not None:

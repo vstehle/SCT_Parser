@@ -1,0 +1,26 @@
+###############################################################################
+#                        sample configuration file                            #
+###############################################################################
+
+# Rules defined in this configuration are applied in order to the tests.
+# Only the first matching rule does actually update the test.
+# Criteria fields are matched in a "relaxed" manner (substrings can match).
+# See README.md for details.
+
+- rule: A sample rule to force the result as `SAMPLE' and create a `System' key
+    with value `Ready'.
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 72BA0E86-58E5-48DD-8529-88C68383118D
+    log: GOP - Yes, EDID Discovered - No, EDID Active - No
+    name: UEFI Compliant - Graphic Console Device
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: SAMPLE
+    System: Ready
