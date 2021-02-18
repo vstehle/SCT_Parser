@@ -19,6 +19,19 @@ For a custom Key:value search, the next two arguments *MUST be included together
 
 you can use the `test_dict` below to see available keys.
 
+### Sorting data
+
+It is possible to sort the tests data before output using
+the `--sort <key1,key2,...>` option.
+Sorting the test data helps when comparing results with diff.
+
+Example command:
+
+``` {.sh}
+$ ./Parser.py --sort \
+      'group,descr,set guid,test set,sub set,guid,name,log' ...
+```
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config
