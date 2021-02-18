@@ -165,6 +165,16 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Sort tests data in-place
+# sort_keys is a comma-separated list
+# The first key has precedence, then the second, etc.
+# To use python list in-place sorting, we use the keys in reverse order.
+def sort_data(cross_check, sort_keys):
+    logging.debug(f"Sorting on `{sort_keys}'")
+    for k in reversed(sort_keys.split(',')):
+        cross_check.sort(key=lambda x: x[k])
+
+
 # Generate csv
 def gen_csv(cross_check, filename):
     # Find keys
@@ -196,6 +206,11 @@ def main():
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
                     ' and generates a nice report in mardown format.',
+        epilog='When sorting is requested, tests data are sorted'
+               ' according to the first sort key, then the second, etc.'
+               ' Sorting happens after update by the configuration rules.'
+               ' Useful example: --sort'
+               ' "group,descr,set guid,test set,sub set,guid,name,log"',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
     parser.add_argument('--json', help='Output .json filename')
@@ -203,6 +218,8 @@ def main():
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
         '--debug', action='store_true', help='Turn on debug messages')
+    parser.add_argument(
+        '--sort', help='Comma-separated list of keys to sort output on')
     parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
@@ -247,7 +264,11 @@ def main():
             would_not_run.append(x)
 
 
-    #search for failures and warnings & passes,
+    # Sort tests data in-place, if requested
+    if args.sort is not None:
+        sort_data(cross_check, args.sort)
+
+    # search for failures and warnings & passes,
 
     failures = key_value_find(cross_check,"result","FAILURE")
     warnings = key_value_find(cross_check,"result","WARNING")
