@@ -268,11 +268,28 @@ def main():
     if args.sort is not None:
         sort_data(cross_check, args.sort)
 
-    # search for failures and warnings & passes,
+    # search for failures, warnings, passes & others
+    # We detect all present keys in additions to the expected ones. This is
+    # handy with config rules overriding the result field with arbitrary values.
+    res_keys = set(['FAILURE', 'WARNING', 'PASS'])
 
-    failures = key_value_find(cross_check,"result","FAILURE")
-    warnings = key_value_find(cross_check,"result","WARNING")
-    passes = key_value_find(cross_check,"result","PASS")
+    for x in cross_check:
+        res_keys.add(x['result'])
+
+    # Now we fill some bins with tests according to their result
+    bins = {}
+
+    for k in res_keys:
+        bins[k] = key_value_find(cross_check, "result", k)
+
+    # Print a one-line summary
+    s = ['{} dropped'.format(len(would_not_run))]
+
+    s += map(
+        lambda k: '{} {}(s)'.format(len(bins[k]), k.lower()),
+        sorted(res_keys))
+
+    logging.info(', '.join(s))
 
     # generate MD summary
     logging.debug(f'Generate {args.md}')
@@ -282,22 +299,27 @@ def main():
         resultfile.write("|  |  |\n")
         resultfile.write("|--|--|\n")
         resultfile.write("|Dropped:|" + str(len(would_not_run)) + "|\n")
-        resultfile.write("|Failures:|" + str(len(failures)) + "|\n")
-        resultfile.write("|Warnings:|" + str(len(warnings)) + "|\n")
-        resultfile.write("|Passes:|" + str(len(passes)) + "|\n")
+
+        # Loop on all the result values we found for the summary
+        for k in sorted(res_keys):
+            resultfile.write(
+                "|{}:|{}|\n".format(k.title(), len(bins[k])))
+
         resultfile.write("\n\n")
 
         resultfile.write("## 1. Silently dropped or missing")
         dict_2_md(would_not_run,resultfile)
 
-        resultfile.write("## 4. Failure by group")
-        resultfile.write("\n\n")
-        key_tree_2_md(failures,resultfile,"group")
+        # Loop on all the result values we found (except PASS) for the sections
+        # listing the tests by group
+        n = 2
+        res_keys_np = set(res_keys)
+        res_keys_np.remove('PASS')
 
-
-        resultfile.write("## 3. Warnings by group")
-        resultfile.write("\n\n")
-        key_tree_2_md(warnings,resultfile,"group")
+        for k in sorted(res_keys_np):
+            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
+            key_tree_2_md(bins[k], resultfile, "group")
+            n += 1
 
     # Generate csv if requested
     if args.csv is not None:
