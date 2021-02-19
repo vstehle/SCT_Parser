@@ -30,6 +30,10 @@ you can use the `test_dict` below to see available keys.
 * some lines in ekl file follow Different naming Conventions
 * some tests in the sequence file are not strongly Associated with the test spec. 
 
+### Documentation
+
+It is possible to convert this `README.md` into `README.pdf` with pandoc using
+`make doc`. See `make help`.
 
 ### TODO:
 * double check concatenation of all `.ekl` logs, preliminary tests show small Divergence between them and `summary.ekl` found in `Overall` folder. Cat.sh will generate this file.
