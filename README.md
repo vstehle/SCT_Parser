@@ -41,7 +41,7 @@ It is possible to convert this `README.md` into `README.pdf` with pandoc using
 
 
 ### db structure:
-```
+``` {.python}
 tests = [
     test_dict,
     est_dict2...
