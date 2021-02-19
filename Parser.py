@@ -185,11 +185,13 @@ def main():
 
     # generate MD summary
     with open('result.md', 'w') as resultfile:
-        resultfile.write("# SCT Summary \n")
-        resultfile.write("### 1. Dropped: "+str(len(would_not_run))+"\n")
-        resultfile.write("### 2. Failures: "+str(len(failures))+"\n")
-        resultfile.write("### 3. Warnings: "+str(len(warnings))+"\n")
-        resultfile.write("### 4. Passes: "+str(len(passes))+"\n")
+        resultfile.write("# SCT Summary \n\n")
+        resultfile.write("|  |  |\n")
+        resultfile.write("|--|--|\n")
+        resultfile.write("|Dropped:|" + str(len(would_not_run)) + "|\n")
+        resultfile.write("|Failures:|" + str(len(failures)) + "|\n")
+        resultfile.write("|Warnings:|" + str(len(warnings)) + "|\n")
+        resultfile.write("|Passes:|" + str(len(passes)) + "|\n")
         resultfile.write("\n\n")
 
         resultfile.write("## 1. Silently dropped or missing")
