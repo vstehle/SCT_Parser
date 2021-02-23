@@ -146,13 +146,13 @@ def dict_2_md(input_list,file):
 
 def main():
     #Command line argument 1, ekl file to open, else open sample
-    log_file = sys.argv[1] if len(sys.argv) >= 2 else "Sample.ekl"
+    log_file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
     db1 = list() #"database 1" all tests.
     with open(log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db1 = ekl_parser(f.readlines())
 
     #Command line argument 2, seq file to open, else open sample
-    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "Sample.seq"
+    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "sample.seq"
     db2 = dict() #"database 2" all test sets that should run
     with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
@@ -207,6 +207,6 @@ def main():
         #print the dict
         print("found:",len(found),"items with search constraints")
         for x in found:
-            print(found[x]["guid"],":",found[x]["name"],"with",found[x][find_key],":",found[x][find_value])
+            print(x["guid"],":",x["name"],"with",find_key,":",x[find_key])
 
 main()
