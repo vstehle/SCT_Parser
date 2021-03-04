@@ -86,6 +86,17 @@ For example, the test value "abcde" matches the criteria value "cd".
 You can use `--debug` to see more details about which rules are applied to the
 tests.
 
+### Sample
+
+A `sample.yaml` configuration file is provided as example, to use with the
+`sample.ekl` and `sample.seq` files.
+
+Try it with:
+
+``` {.sh}
+$ ./Parser.py --config sample.yaml ...
+```
+
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.
