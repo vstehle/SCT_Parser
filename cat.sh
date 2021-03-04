@@ -1,3 +1,7 @@
 #!/bin/bash
+set -eu
 
-find log/ -name '*.ekl' -exec cat {} \; > cat_summary.ekl
+d="${1:-log/}"
+
+find "$d" -name '*.ekl' -exec iconv -f UTF-16 -t UTF-8 {} \; |\
+	iconv -f UTF-8 -t UTF-16 > cat_summary.ekl
