@@ -35,13 +35,14 @@ def test_parser(string, current):
 def ekl_parser (file):
     #create our "database" dict
     temp_list = list()
-    #All tests are grouped by the "HEAD" line the procedes them.
-    current = {
-        'group': "N/A",
-        'test set': "N/A",
-        'sub set': "N/A",
-        'set guid': "N/A",
-    }
+    # All tests are grouped by the "HEAD" line, which precedes them.
+    current = {}
+
+    # Count number of tests since beginning of the set
+    n = 0
+
+    # Number of skipped tests sets
+    s = 0
 
     for line in file:
         # Strip the line from trailing whitespaces
@@ -54,8 +55,26 @@ def ekl_parser (file):
         #strip the line of | & || used for sepration
         split_line = [string for string in line.split('|') if string != ""]
 
-        # Skip TERM
+        # TERM marks the end of a test set
+        # In case of empty test set we generate an artificial skipped test
+        # entry. Then reset current as a precaution, as well as our test
+        # counter.
         if split_line[0] == "TERM":
+            if not n:
+                logging.debug(f"Skipped test set `{current['sub set']}'")
+
+                temp_list.append({
+                    **current,
+                    'name': '',
+                    'guid': '',
+                    'log': '',
+                    'result': 'SKIPPED',
+                })
+
+                s += 1
+
+            current = {}
+            n = 0
             continue
 
         #The "HEAD" tag is the only indcation we are on a new test set
@@ -88,9 +107,14 @@ def ekl_parser (file):
                 #put the test into a dict, and then place that dict in another dict with GUID as key
                 tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
+                n += 1
             except:
                 print("Line:",split_line)
                 sys.exit("your log may be corrupted")
+
+    if s:
+        logging.debug(f'{s} skipped test set(s)')
+
     return temp_list
 
 #Parse Seq file, used to tell which tests should run.
