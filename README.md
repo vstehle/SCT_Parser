@@ -113,3 +113,11 @@ dropped_test_dict = {
    "log": ""
 }
 ```
+
+#### Skipped tests sets
+
+Skipped tests sets are the tests sets, which were considered but had zero of
+their test run according to the log file.
+
+We create artificial tests entries for those dropped tests sets, with the
+"result" fields set to "SKIPPED".
