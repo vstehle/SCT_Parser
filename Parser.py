@@ -306,6 +306,75 @@ def gen_yaml(cross_check, filename):
         yaml.dump(cross_check, yamlfile)
 
 
+# Combine or two databases db1 and db2 coming from ekl and seq files
+# respectively into a single cross_check database
+# Tests in db1, which were not meant to be run according to db2 have their
+# results forced to SPURIOUS.
+# Tests sets in db2, which were not run according to db1 have an artificial
+# test entry created with result DROPPED.
+def combine_dbs(db1, db2):
+    cross_check = db1
+
+    # Do a pass to verify that all tests in db1 were meant to be run.
+    # Otherwise, force the result to SPURIOUS.
+    s = set()
+
+    for x in db2:
+        s.add(x['guid'])
+
+    n = 0
+
+    for i in range(len(cross_check)):
+        if cross_check[i]['set guid'] not in s:
+            logging.debug(f"Spurious test {i} `{cross_check[i]['name']}'")
+            cross_check[i]['result'] = 'SPURIOUS'
+            n += 1
+
+    if n:
+        logging.debug(f'{n} spurious test(s)')
+
+    # Do a pass to autodetect all tests fields in case we need to merge dropped
+    # tests sets entries
+    f = {}
+
+    for x in cross_check:
+        for k in x.keys():
+            f[k] = ''
+
+    logging.debug(f'Test fields: {f.keys()}')
+
+    # Do a pass to find the test sets that did not run for whatever reason.
+    s = set()
+
+    for x in cross_check:
+        s.add(x['set guid'])
+
+    n = 0
+
+    for i in range(len(db2)):
+        x = db2[i]
+
+        if not x['guid'] in s:
+            logging.debug(f"Dropped test set {i} `{x['name']}'")
+
+            # Create an artificial test entry to reflect the dropped test set
+            cross_check.append({
+                **f,
+                'sub set': x['name'],
+                'set guid': x['guid'],
+                'revision': x['rev'],
+                'group': 'Unknown',
+                'result': 'DROPPED',
+            })
+
+            n += 1
+
+    if n:
+        logging.debug(f'{n} dropped test set(s)')
+
+    return cross_check
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
@@ -358,16 +427,8 @@ def main():
 
     logging.debug('{} test set(s)'.format(len(db2)))
 
-    #cross check is filled only with tests labled as "run" int the seq file
-    cross_check = list()
-    #combine a list of test sets that did not run for whatever reason.
-    would_not_run = list()
-    for x in db2: #for each "set guid" in db2
-        temp_dict = key_value_find(db1,"set guid",x["guid"])#find tests in db1 with given set guid
-        if bool(temp_dict): #if its not empty, apprend it to our dict
-            cross_check = (cross_check +temp_dict)
-        else: #if it is empty, this test set was not run.
-            would_not_run.append(x)
+    # Produce a single cross_check database from our two db1 and db2 databases.
+    cross_check = combine_dbs(db1, db2)
 
     # Take configuration file into account. This can perform transformations on
     # the tests results.
@@ -381,7 +442,7 @@ def main():
     # search for failures, warnings, passes & others
     # We detect all present keys in additions to the expected ones. This is
     # handy with config rules overriding the result field with arbitrary values.
-    res_keys = set(['FAILURE', 'WARNING', 'PASS'])
+    res_keys = set(['DROPPED', 'FAILURE', 'WARNING', 'PASS'])
 
     for x in cross_check:
         res_keys.add(x['result'])
@@ -393,9 +454,7 @@ def main():
         bins[k] = key_value_find(cross_check, "result", k)
 
     # Print a one-line summary
-    s = ['{} dropped'.format(len(would_not_run))]
-
-    s += map(
+    s = map(
         lambda k: '{} {}(s)'.format(len(bins[k]), k.lower()),
         sorted(res_keys))
 
@@ -408,7 +467,6 @@ def main():
         resultfile.write("# SCT Summary \n\n")
         resultfile.write("|  |  |\n")
         resultfile.write("|--|--|\n")
-        resultfile.write("|Dropped:|" + str(len(would_not_run)) + "|\n")
 
         # Loop on all the result values we found for the summary
         for k in sorted(res_keys):
@@ -417,12 +475,9 @@ def main():
 
         resultfile.write("\n\n")
 
-        resultfile.write("## 1. Silently dropped or missing")
-        dict_2_md(would_not_run,resultfile)
-
         # Loop on all the result values we found (except PASS) for the sections
         # listing the tests by group
-        n = 2
+        n = 1
         res_keys_np = set(res_keys)
         res_keys_np.remove('PASS')
 

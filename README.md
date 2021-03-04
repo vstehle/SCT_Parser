@@ -147,3 +147,34 @@ seq_dict = {
                 "Order": "some hex/num"
 }
 ```
+
+#### Spurious tests
+
+Spurious tests are tests, which were run according to the log file but were not
+meant to be run according to the sequence file.
+
+We force the "result" fields of those tests to "SPURIOUS".
+
+#### Dropped tests sets
+
+Dropped tests sets are the tests sets, which were were meant to be run according
+to the sequence file but for which no test have been run according to the log
+file.
+
+We create artificial tests entries for those dropped tests sets, with the
+"result" fields set to "DROPPED". We convert some fields coming from the
+sequence file, and auto-generate others:
+
+``` {.python}
+dropped_test_dict = {
+   "name": "",
+   "result": "DROPPED",
+   "group": "Unknown",
+   "test set": "",
+   "sub set": <name from sequence file>,
+   "set guid": <guid from sequence file>,
+   "revision": <rev from sequence file>,
+   "guid": "",
+   "log": ""
+}
+```
