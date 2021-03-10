@@ -6,6 +6,7 @@ import sys
 import argparse
 import csv
 import logging
+import json
 
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -182,6 +183,14 @@ def gen_csv(cross_check, filename):
         writer.writerows(cross_check)
 
 
+# Generate json
+def gen_json(cross_check, filename):
+    logging.debug(f'Generate {filename}')
+
+    with open(filename, 'w') as jsonfile:
+        json.dump(cross_check, jsonfile, sort_keys=True, indent=2)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
@@ -189,6 +198,7 @@ def main():
                     ' and generates a nice report in mardown format.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
+    parser.add_argument('--json', help='Output .json filename')
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
@@ -271,6 +281,10 @@ def main():
     # Generate csv if requested
     if args.csv is not None:
         gen_csv(cross_check, args.csv)
+
+    # Generate json if requested
+    if args.json is not None:
+        gen_json(cross_check, args.json)
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
