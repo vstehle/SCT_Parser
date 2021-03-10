@@ -6,6 +6,7 @@ import sys
 import argparse
 import csv
 import logging
+import json
 
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -321,6 +322,14 @@ def gen_csv(cross_check, filename):
         writer.writerows(cross_check)
 
 
+# Generate json
+def gen_json(cross_check, filename):
+    logging.debug(f'Generate {filename}')
+
+    with open(filename, 'w') as jsonfile:
+        json.dump(cross_check, jsonfile, sort_keys=True, indent=2)
+
+
 # Generate yaml
 def gen_yaml(cross_check, filename):
     import yaml
@@ -413,6 +422,7 @@ def main():
     parser.add_argument('--csv', help='Output .csv filename')
     parser.add_argument('--config', help='Input .yaml configuration filename')
     parser.add_argument('--yaml', help='Output .yaml filename')
+    parser.add_argument('--json', help='Output .json filename')
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
@@ -513,6 +523,10 @@ def main():
     # Generate csv if requested
     if args.csv is not None:
         gen_csv(cross_check, args.csv)
+
+    # Generate json if requested
+    if args.json is not None:
+        gen_json(cross_check, args.json)
 
     # Generate yaml if requested
     if args.yaml is not None:
