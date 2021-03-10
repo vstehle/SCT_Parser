@@ -3,6 +3,10 @@
 
 
 import sys
+import argparse
+import csv
+import logging
+
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
@@ -16,14 +20,11 @@ def key_value_find(list_1, key, value):
 
 
 #Were we intrept test logs into test dicts
-def test_parser(string,current_group,current_test_set,current_set_guid,current_sub_set):
+def test_parser(string, current):
     test_list = {
       "name": string[2], #FIXME:Sometimes, SCT has name and Description,
       "result": string[1],
-      "group": current_group,
-      "test set": current_test_set,
-      "sub set": current_sub_set,
-      "set guid": current_set_guid,
+      **current,
       "guid": string[0], #FIXME:GUID's overlap
       #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
       "log": ' '.join(string[3:])
@@ -35,10 +36,12 @@ def ekl_parser (file):
     #create our "database" dict
     temp_list = list()
     #All tests are grouped by the "HEAD" line the procedes them.
-    current_group = "N/A"
-    current_set = "N/A"
-    current_set_guid = "N/A"
-    current_sub_set = "N/A"
+    current = {
+        'group': "N/A",
+        'test set': "N/A",
+        'sub set': "N/A",
+        'set guid': "N/A",
+    }
 
     for line in file:
         # Strip the line from trailing whitespaces
@@ -59,11 +62,21 @@ def ekl_parser (file):
         if split_line[0]=="HEAD":
             #split the header into test group and test set.
             try:
-                current_group, current_set = split_line[8].split('\\')
+                group, Set = split_line[8].split('\\')
             except:
-                current_group, current_set = '', split_line[8]
-            current_set_guid = split_line[4]
-            current_sub_set = split_line[6]
+                group, Set = '', split_line[8]
+            current = {
+                'group': group,
+                'test set': Set,
+                'sub set': split_line[6],
+                'set guid': split_line[4],
+                'iteration': split_line[1],
+                'start date': split_line[2],
+                'start time': split_line[3],
+                'revision': split_line[5],
+                'descr': split_line[7],
+                'device path': split_line[9],
+            }
 
         #FIXME:? EKL file has an inconsistent line structure,
         # sometime we see a line that consits ' dump of GOP->I\n'
@@ -73,7 +86,7 @@ def ekl_parser (file):
                 #deliminiate on ':' for tests
                 split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
                 #put the test into a dict, and then place that dict in another dict with GUID as key
-                tmp_dict = test_parser(split_test,current_group,current_set,current_set_guid,current_sub_set)
+                tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
             except:
                 print("Line:",split_line)
@@ -151,18 +164,66 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Generate csv
+def gen_csv(cross_check, filename):
+    # Find keys
+    keys = set()
+
+    for x in cross_check:
+        keys = keys.union(x.keys())
+
+    # Write csv
+    logging.debug(f'Generate {filename}')
+
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(
+            csvfile, fieldnames=sorted(keys), delimiter=';')
+        writer.writeheader()
+        writer.writerows(cross_check)
+
+
 def main():
-    #Command line argument 1, ekl file to open, else open sample
-    log_file = sys.argv[1] if len(sys.argv) >= 2 else "sample.ekl"
+    parser = argparse.ArgumentParser(
+        description='Process SCT results.'
+                    ' This program takes the SCT summary and sequence files,'
+                    ' and generates a nice report in mardown format.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--csv', help='Output .csv filename')
+    parser.add_argument(
+        '--md', help='Output .md filename', default='result.md')
+    parser.add_argument(
+        '--debug', action='store_true', help='Turn on debug messages')
+    parser.add_argument(
+        'log_file', nargs='?', default='sample.ekl',
+        help='Input .ekl filename')
+    parser.add_argument(
+        'seq_file', nargs='?', default='sample.seq',
+        help='Input .seq filename')
+    parser.add_argument('find_key', nargs='?', help='Search key')
+    parser.add_argument('find_value', nargs='?', help='Search value')
+    args = parser.parse_args()
+
+    logging.basicConfig(
+        format='%(levelname)s %(funcName)s: %(message)s',
+        level=logging.DEBUG if args.debug else logging.INFO)
+
+    #Command line argument 1, ekl file to open
     db1 = list() #"database 1" all tests.
-    with open(log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
+    logging.debug(f'Read {args.log_file}')
+
+    with open(args.log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db1 = ekl_parser(f.readlines())
 
-    #Command line argument 2, seq file to open, else open sample
-    seq_file = sys.argv[2] if len(sys.argv) >= 3 else "sample.seq"
+    logging.debug('{} test(s)'.format(len(db1)))
+
+    #Command line argument 2, seq file to open
     db2 = dict() #"database 2" all test sets that should run
-    with open(seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
+    logging.debug(f'Read {args.seq_file}')
+
+    with open(args.seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
         db2 = seq_parser(f)
+
+    logging.debug('{} test set(s)'.format(len(db2)))
 
     #cross check is filled only with tests labled as "run" int the seq file
     cross_check = list()
@@ -182,9 +243,10 @@ def main():
     warnings = key_value_find(cross_check,"result","WARNING")
     passes = key_value_find(cross_check,"result","PASS")
 
-
     # generate MD summary
-    with open('result.md', 'w') as resultfile:
+    logging.debug(f'Generate {args.md}')
+
+    with open(args.md, 'w') as resultfile:
         resultfile.write("# SCT Summary \n\n")
         resultfile.write("|  |  |\n")
         resultfile.write("|--|--|\n")
@@ -206,16 +268,20 @@ def main():
         resultfile.write("\n\n")
         key_tree_2_md(warnings,resultfile,"group")
 
+    # Generate csv if requested
+    if args.csv is not None:
+        gen_csv(cross_check, args.csv)
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
-    if len(sys.argv) >= 5:
-        find_key = sys.argv[3]
-        find_value = sys.argv[4]
-        found = key_value_find(db1,find_key,find_value)
+    if args.find_key is not None and args.find_value is not None:
+        found = key_value_find(db1, args.find_key, args.find_value)
         #print the dict
         print("found:",len(found),"items with search constraints")
         for x in found:
-            print(x["guid"],":",x["name"],"with",find_key,":",x[find_key])
+            print(
+                x["guid"], ":", x["name"], "with", args.find_key, ":",
+                x[args.find_key])
+
 
 main()
