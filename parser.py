@@ -13,6 +13,12 @@ try:
 except ImportError:
     print('No yaml...')
 
+if 'yaml' in sys.modules:
+    try:
+        from yaml import CDumper as Dumper
+    except ImportError:
+        from yaml import Dumper
+
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
@@ -343,7 +349,7 @@ def gen_yaml(cross_check, filename):
     logging.debug(f'Generate {filename}')
 
     with open(filename, 'w') as yamlfile:
-        yaml.dump(cross_check, yamlfile)
+        yaml.dump(cross_check, yamlfile, Dumper=Dumper)
 
 
 # Combine or two databases db1 and db2 coming from ekl and seq files
