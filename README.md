@@ -1,6 +1,6 @@
 # SCT_Parser
 
-This is an external Parser script for UEFI SCT. (WIP)
+This is an external parser script for UEFI SCT. (WIP)
 
 It's designed to read a `.ekl` results log from an UEFI SCT run, and a generated `.seq` from UEFI SCT configurator.
 
@@ -15,15 +15,22 @@ The output filename can be specified with `--md <filename>`.
 An online help is available with the `-h` option.
 
 ### Custom search
-For a custom Key:value search, the next two arguments *MUST be included together.* The program will search and display files that met that constraint, without the crosscheck, and display the names, guid, and key:value to the command line. `python3 Parser.py <file.ekl> <file.seq> <search key> <search value>`
+For a custom Key:value search, the next two arguments *MUST be included together.* The program will search and display files that met that constraint, without the crosscheck, and display the names, guid, and key:value to the command line. `python3 parser.py <file.ekl> <file.seq> <search key> <search value>`
 
 you can use the `test_dict` below to see available keys.
 
+### Sorting data
 
+It is possible to sort the tests data before output using
+the `--sort <key1,key2,...>` option.
+Sorting the test data helps when comparing results with diff.
 
+Example command:
 
-
-
+``` {.sh}
+$ ./parser.py --sort \
+      'group,descr,set guid,test set,sub set,guid,name,log' ...
+```
 
 ## Notes
 ### Known Issues:
@@ -73,5 +80,36 @@ seq_dict = {
                 "Iteration": "some hex/num of how many times to run",
                 "rev": "some hex/numb",
                 "Order": "some hex/num"
+}
+```
+
+#### Spurious tests
+
+Spurious tests are tests, which were run according to the log file but were not
+meant to be run according to the sequence file.
+
+We force the "result" fields of those tests to "SPURIOUS".
+
+#### Dropped tests sets
+
+Dropped tests sets are the tests sets, which were were meant to be run according
+to the sequence file but for which no test have been run according to the log
+file.
+
+We create artificial tests entries for those dropped tests sets, with the
+"result" fields set to "DROPPED". We convert some fields coming from the
+sequence file, and auto-generate others:
+
+``` {.python}
+dropped_test_dict = {
+   "name": "",
+   "result": "DROPPED",
+   "group": "Unknown",
+   "test set": "",
+   "sub set": <name from sequence file>,
+   "set guid": <guid from sequence file>,
+   "revision": <rev from sequence file>,
+   "guid": "",
+   "log": ""
 }
 ```

@@ -6,6 +6,7 @@ import sys
 import argparse
 import csv
 import logging
+import json
 
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -164,6 +165,16 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Sort tests data in-place
+# sort_keys is a comma-separated list
+# The first key has precedence, then the second, etc.
+# To use python list in-place sorting, we use the keys in reverse order.
+def sort_data(cross_check, sort_keys):
+    logging.debug(f"Sorting on `{sort_keys}'")
+    for k in reversed(sort_keys.split(',')):
+        cross_check.sort(key=lambda x: x[k])
+
+
 # Generate csv
 def gen_csv(cross_check, filename):
     # Find keys
@@ -182,17 +193,102 @@ def gen_csv(cross_check, filename):
         writer.writerows(cross_check)
 
 
+# Generate json
+def gen_json(cross_check, filename):
+    logging.debug(f'Generate {filename}')
+
+    with open(filename, 'w') as jsonfile:
+        json.dump(cross_check, jsonfile, sort_keys=True, indent=2)
+
+
+# Combine or two databases db1 and db2 coming from ekl and seq files
+# respectively into a single cross_check database
+# Tests in db1, which were not meant to be run according to db2 have their
+# results forced to SPURIOUS.
+# Tests sets in db2, which were not run according to db1 have an artificial
+# test entry created with result DROPPED.
+def combine_dbs(db1, db2):
+    cross_check = db1
+
+    # Do a pass to verify that all tests in db1 were meant to be run.
+    # Otherwise, force the result to SPURIOUS.
+    s = set()
+
+    for x in db2:
+        s.add(x['guid'])
+
+    n = 0
+
+    for i in range(len(cross_check)):
+        if cross_check[i]['set guid'] not in s:
+            logging.debug(f"Spurious test {i} `{cross_check[i]['name']}'")
+            cross_check[i]['result'] = 'SPURIOUS'
+            n += 1
+
+    if n:
+        logging.debug(f'{n} spurious test(s)')
+
+    # Do a pass to autodetect all tests fields in case we need to merge dropped
+    # tests sets entries
+    f = {}
+
+    for x in cross_check:
+        for k in x.keys():
+            f[k] = ''
+
+    logging.debug(f'Test fields: {f.keys()}')
+
+    # Do a pass to find the test sets that did not run for whatever reason.
+    s = set()
+
+    for x in cross_check:
+        s.add(x['set guid'])
+
+    n = 0
+
+    for i in range(len(db2)):
+        x = db2[i]
+
+        if not x['guid'] in s:
+            logging.debug(f"Dropped test set {i} `{x['name']}'")
+
+            # Create an artificial test entry to reflect the dropped test set
+            cross_check.append({
+                **f,
+                'sub set': x['name'],
+                'set guid': x['guid'],
+                'revision': x['rev'],
+                'group': 'Unknown',
+                'result': 'DROPPED',
+            })
+
+            n += 1
+
+    if n:
+        logging.debug(f'{n} dropped test set(s)')
+
+    return cross_check
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
                     ' and generates a nice report in mardown format.',
+        epilog='When sorting is requested, tests data are sorted'
+               ' according to the first sort key, then the second, etc.'
+               ' Sorting happens after update by the configuration rules.'
+               ' Useful example: --sort'
+               ' "group,descr,set guid,test set,sub set,guid,name,log"',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
+    parser.add_argument('--json', help='Output .json filename')
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
         '--debug', action='store_true', help='Turn on debug messages')
+    parser.add_argument(
+        '--sort', help='Comma-separated list of keys to sort output on')
     parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
@@ -225,23 +321,34 @@ def main():
 
     logging.debug('{} test set(s)'.format(len(db2)))
 
-    #cross check is filled only with tests labled as "run" int the seq file
-    cross_check = list()
-    #combine a list of test sets that did not run for whatever reason.
-    would_not_run = list()
-    for x in db2: #for each "set guid" in db2
-        temp_dict = key_value_find(db1,"set guid",x["guid"])#find tests in db1 with given set guid
-        if bool(temp_dict): #if its not empty, apprend it to our dict
-            cross_check = (cross_check +temp_dict)
-        else: #if it is empty, this test set was not run.
-            would_not_run.append(x)
+    # Produce a single cross_check database from our two db1 and db2 databases.
+    cross_check = combine_dbs(db1, db2)
 
 
-    #search for failures and warnings & passes,
+    # Sort tests data in-place, if requested
+    if args.sort is not None:
+        sort_data(cross_check, args.sort)
 
-    failures = key_value_find(cross_check,"result","FAILURE")
-    warnings = key_value_find(cross_check,"result","WARNING")
-    passes = key_value_find(cross_check,"result","PASS")
+    # search for failures, warnings, passes & others
+    # We detect all present keys in additions to the expected ones. This is
+    # handy with config rules overriding the result field with arbitrary values.
+    res_keys = set(['DROPPED', 'FAILURE', 'WARNING', 'PASS'])
+
+    for x in cross_check:
+        res_keys.add(x['result'])
+
+    # Now we fill some bins with tests according to their result
+    bins = {}
+
+    for k in res_keys:
+        bins[k] = key_value_find(cross_check, "result", k)
+
+    # Print a one-line summary
+    s = map(
+        lambda k: '{} {}(s)'.format(len(bins[k]), k.lower()),
+        sorted(res_keys))
+
+    logging.info(', '.join(s))
 
     # generate MD summary
     logging.debug(f'Generate {args.md}')
@@ -250,27 +357,32 @@ def main():
         resultfile.write("# SCT Summary \n\n")
         resultfile.write("|  |  |\n")
         resultfile.write("|--|--|\n")
-        resultfile.write("|Dropped:|" + str(len(would_not_run)) + "|\n")
-        resultfile.write("|Failures:|" + str(len(failures)) + "|\n")
-        resultfile.write("|Warnings:|" + str(len(warnings)) + "|\n")
-        resultfile.write("|Passes:|" + str(len(passes)) + "|\n")
+
+        # Loop on all the result values we found for the summary
+        for k in sorted(res_keys):
+            resultfile.write(
+                "|{}:|{}|\n".format(k.title(), len(bins[k])))
+
         resultfile.write("\n\n")
 
-        resultfile.write("## 1. Silently dropped or missing")
-        dict_2_md(would_not_run,resultfile)
+        # Loop on all the result values we found (except PASS) for the sections
+        # listing the tests by group
+        n = 1
+        res_keys_np = set(res_keys)
+        res_keys_np.remove('PASS')
 
-        resultfile.write("## 4. Failure by group")
-        resultfile.write("\n\n")
-        key_tree_2_md(failures,resultfile,"group")
-
-
-        resultfile.write("## 3. Warnings by group")
-        resultfile.write("\n\n")
-        key_tree_2_md(warnings,resultfile,"group")
+        for k in sorted(res_keys_np):
+            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
+            key_tree_2_md(bins[k], resultfile, "group")
+            n += 1
 
     # Generate csv if requested
     if args.csv is not None:
         gen_csv(cross_check, args.csv)
+
+    # Generate json if requested
+    if args.json is not None:
+        gen_json(cross_check, args.json)
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
