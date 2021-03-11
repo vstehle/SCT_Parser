@@ -44,7 +44,7 @@ def ekl_parser (file):
         'set guid': "N/A",
     }
 
-    for line in file:
+    for i, line in enumerate(file):
         # Strip the line from trailing whitespaces
         line = line.rstrip()
 
@@ -52,37 +52,37 @@ def ekl_parser (file):
         if line == '':
             continue
 
-        #strip the line of | & || used for sepration
-        split_line = [string for string in line.split('|') if string != ""]
+        # strip the line of | & || used for sepration
+        split_line = line.split('|')
 
         # Skip TERM
-        if split_line[0] == "TERM":
+        if split_line[0] == '' and split_line[1] == "TERM":
             continue
 
-        #The "HEAD" tag is the only indcation we are on a new test set
-        if split_line[0]=="HEAD":
-            #split the header into test group and test set.
+        # The "HEAD" tag is the only indcation we are on a new test set
+        if split_line[0] == '' and split_line[1] == "HEAD":
+            # split the header into test group and test set.
             try:
-                group, Set = split_line[8].split('\\')
-            except:
-                group, Set = '', split_line[8]
+                group, Set = split_line[12].split('\\')
+            except Exception:
+                group, Set = '', split_line[12]
             current = {
                 'group': group,
                 'test set': Set,
-                'sub set': split_line[6],
-                'set guid': split_line[4],
-                'iteration': split_line[1],
-                'start date': split_line[2],
-                'start time': split_line[3],
-                'revision': split_line[5],
-                'descr': split_line[7],
-                'device path': split_line[9],
+                'sub set': split_line[10],
+                'set guid': split_line[8],
+                'iteration': split_line[4],
+                'start date': split_line[6],
+                'start time': split_line[7],
+                'revision': split_line[9],
+                'descr': split_line[11],
+                'device path': '|'.join(split_line[13:]),
             }
 
         #FIXME:? EKL file has an inconsistent line structure,
         # sometime we see a line that consits ' dump of GOP->I\n'
         #easiest way to skip is check for blank space in the first char
-        elif split_line[0][0] != " ":
+        elif split_line[0] != '' and split_line[0][0] != " ":
             try:
                 #deliminiate on ':' for tests
                 split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
@@ -92,6 +92,9 @@ def ekl_parser (file):
             except:
                 print("Line:",split_line)
                 sys.exit("your log may be corrupted")
+        else:
+            logging.error(f"Unparsed line {i} `{line}'")
+
     return temp_list
 
 #Parse Seq file, used to tell which tests should run.
