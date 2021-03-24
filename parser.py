@@ -8,6 +8,17 @@ import csv
 import logging
 import json
 
+try:
+    import yaml
+except ImportError:
+    print('No yaml...')
+
+if 'yaml' in sys.modules:
+    try:
+        from yaml import CDumper as Dumper
+    except ImportError:
+        from yaml import Dumper
+
 
 #based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
@@ -36,15 +47,16 @@ def test_parser(string, current):
 def ekl_parser (file):
     #create our "database" dict
     temp_list = list()
-    #All tests are grouped by the "HEAD" line the procedes them.
-    current = {
-        'group': "N/A",
-        'test set': "N/A",
-        'sub set': "N/A",
-        'set guid': "N/A",
-    }
+    # All tests are grouped by the "HEAD" line, which precedes them.
+    current = {}
 
-    for line in file:
+    # Count number of tests since beginning of the set
+    n = 0
+
+    # Number of skipped tests sets
+    s = 0
+
+    for i, line in enumerate(file):
         # Strip the line from trailing whitespaces
         line = line.rstrip()
 
@@ -52,46 +64,71 @@ def ekl_parser (file):
         if line == '':
             continue
 
-        #strip the line of | & || used for sepration
-        split_line = [string for string in line.split('|') if string != ""]
+        # strip the line of | & || used for sepration
+        split_line = line.split('|')
 
-        # Skip TERM
-        if split_line[0] == "TERM":
+        # TERM marks the end of a test set
+        # In case of empty test set we generate an artificial skipped test
+        # entry. Then reset current as a precaution, as well as our test
+        # counter.
+        if split_line[0] == '' and split_line[1] == "TERM":
+            if not n:
+                logging.debug(f"Skipped test set `{current['sub set']}'")
+
+                temp_list.append({
+                    **current,
+                    'name': '',
+                    'guid': '',
+                    'log': '',
+                    'result': 'SKIPPED',
+                })
+
+                s += 1
+
+            current = {}
+            n = 0
             continue
 
-        #The "HEAD" tag is the only indcation we are on a new test set
-        if split_line[0]=="HEAD":
-            #split the header into test group and test set.
+        # The "HEAD" tag is the only indcation we are on a new test set
+        if split_line[0] == '' and split_line[1] == "HEAD":
+            # split the header into test group and test set.
             try:
-                group, Set = split_line[8].split('\\')
-            except:
-                group, Set = '', split_line[8]
+                group, Set = split_line[12].split('\\')
+            except Exception:
+                group, Set = '', split_line[12]
             current = {
                 'group': group,
                 'test set': Set,
-                'sub set': split_line[6],
-                'set guid': split_line[4],
-                'iteration': split_line[1],
-                'start date': split_line[2],
-                'start time': split_line[3],
-                'revision': split_line[5],
-                'descr': split_line[7],
-                'device path': split_line[9],
+                'sub set': split_line[10],
+                'set guid': split_line[8],
+                'iteration': split_line[4],
+                'start date': split_line[6],
+                'start time': split_line[7],
+                'revision': split_line[9],
+                'descr': split_line[11],
+                'device path': '|'.join(split_line[13:]),
             }
 
         #FIXME:? EKL file has an inconsistent line structure,
         # sometime we see a line that consits ' dump of GOP->I\n'
         #easiest way to skip is check for blank space in the first char
-        elif split_line[0][0] != " ":
+        elif split_line[0] != '' and split_line[0][0] != " ":
             try:
                 #deliminiate on ':' for tests
                 split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
                 #put the test into a dict, and then place that dict in another dict with GUID as key
                 tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
+                n += 1
             except:
                 print("Line:",split_line)
                 sys.exit("your log may be corrupted")
+        else:
+            logging.error(f"Unparsed line {i} `{line}'")
+
+    if s:
+        logging.debug(f'{s} skipped test set(s)')
+
     return temp_list
 
 #Parse Seq file, used to tell which tests should run.
@@ -165,6 +202,111 @@ def dict_2_md(input_list,file):
     file.write("\n\n")
 
 
+# Sanitize our YAML configuration
+# We modify conf in-place
+# TODO: use a proper validator instead
+def sanitize_yaml(conf):
+    rules = set()
+
+    for i in range(len(conf)):
+        r = conf[i]
+
+        # Generate a rule name if needed
+        if 'rule' not in r:
+            r['rule'] = f'r{i}'
+            logging.debug(f"Auto-naming rule {i} `{r['rule']}'")
+            conf[i] = r
+
+        if r['rule'] in rules:
+            logging.warning(f"Duplicate rule {i} `{r['rule']}'")
+
+        rules.add(r['rule'])
+
+        if 'criteria' not in r or not type(r['criteria']) is dict or \
+           'update' not in r or not type(r['update']) is dict:
+            logging.error(f"Bad rule {i} `{r}'")
+            raise Exception()
+
+
+# Evaluate if a test dict matches a criteria
+# The criteria is a dict of Key-value pairs.
+# I.E. crit = {"result": "FAILURE", "xxx": "yyy", ...}
+# All key-value pairs must be present and match for a test dict to match.
+# A test value and a criteria value match if the criteria value string is
+# present anywhere in the test value string.
+# For example, the test value "abcde" matches the criteria value "cd".
+# This allows for more "relaxed" criteria than strict comparison.
+def matches_crit(test, crit):
+    for key, value in crit.items():
+        if key not in test or test[key].find(value) < 0:
+            return False
+
+    return True
+
+
+# Apply all configuration rules to the tests
+# We modify cross_check in-place
+def apply_rules(cross_check, conf):
+    # Prepare statistics counters
+    stats = {}
+
+    for r in conf:
+        stats[r['rule']] = 0
+
+    # Apply rules on each test data
+    s = len(cross_check)
+
+    for i in range(s):
+        test = cross_check[i]
+
+        for r in conf:
+            if not matches_crit(test, r['criteria']):
+                continue
+
+            rule = r['rule']
+
+            logging.debug(
+                f"Applying rule `{rule}'"
+                f" to test {i} `{test['name']}'")
+
+            test.update({
+                **r['update'],
+                'Updated by': rule,
+            })
+
+            stats[rule] += 1
+            break
+
+    # Statistics
+    n = 0
+
+    for rule, cnt in stats.items():
+        logging.debug(f"{cnt} matche(s) for rule `{rule}'")
+        n += cnt
+
+    if n:
+        r = len(conf)
+        logging.info(
+            f'Updated {n} test(s) out of {s} after applying {r} rule(s)')
+
+
+# Use YAML configuration file and perform all the transformations described in
+# there.
+# See the README.md for details on the file format.
+# We modify cross_check in-place
+def use_config(cross_check, filename):
+    assert('yaml' in sys.modules)
+
+    # Load configuration file
+    logging.debug(f'Read {filename}')
+
+    with open(filename, 'r') as yamlfile:
+        conf = yaml.load(yamlfile, Loader=yaml.FullLoader)
+
+    logging.debug('{} rule(s)'.format(len(conf)))
+    sanitize_yaml(conf)
+    apply_rules(cross_check, conf)
+
 # Sort tests data in-place
 # sort_keys is a comma-separated list
 # The first key has precedence, then the second, etc.
@@ -199,6 +341,15 @@ def gen_json(cross_check, filename):
 
     with open(filename, 'w') as jsonfile:
         json.dump(cross_check, jsonfile, sort_keys=True, indent=2)
+
+
+# Generate yaml
+def gen_yaml(cross_check, filename):
+    assert('yaml' in sys.modules)
+    logging.debug(f'Generate {filename}')
+
+    with open(filename, 'w') as yamlfile:
+        yaml.dump(cross_check, yamlfile, Dumper=Dumper)
 
 
 # Combine or two databases db1 and db2 coming from ekl and seq files
@@ -297,6 +448,14 @@ def main():
         help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
     parser.add_argument('find_value', nargs='?', help='Search value')
+
+    # A few command line switches depend on yaml. We enable those only if we
+    # could actually import yaml.
+    if 'yaml' in sys.modules:
+        parser.add_argument(
+            '--config', help='Input .yaml configuration filename')
+        parser.add_argument('--yaml', help='Output .yaml filename')
+
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -324,6 +483,10 @@ def main():
     # Produce a single cross_check database from our two db1 and db2 databases.
     cross_check = combine_dbs(db1, db2)
 
+    # Take configuration file into account. This can perform transformations on
+    # the tests results.
+    if 'config' in args and args.config is not None:
+        use_config(cross_check, args.config)
 
     # Sort tests data in-place, if requested
     if args.sort is not None:
@@ -383,6 +546,10 @@ def main():
     # Generate json if requested
     if args.json is not None:
         gen_json(cross_check, args.json)
+
+    # Generate yaml if requested
+    if 'yaml' in args and args.yaml is not None:
+        gen_yaml(cross_check, args.yaml)
 
     #command line argument 3&4, key are to support a key & value search.
     #these will be displayed in CLI
