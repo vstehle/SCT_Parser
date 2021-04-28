@@ -536,6 +536,23 @@
   update:
     result: IGNORED
 
+- rule: Force false-positive image services failures as ignored (EBBR Table 2.4
+    Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Image Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 1D8B160C-7601-47C9-8102-68C0F801314B
+    log: ImageBBTestFunction.c
+    name: BS.LoadImage - InterfaceTestCheckpoint8
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 2FF0431A-8E07-4CDB-A298-D004566A74D4
+    sub set: LoadImage_Func
+    test set: ImageServicesTest
+  update:
+    result: IGNORED
+
 # We force the following dropped tests result as `IGNORED' because they are run
 # only when some platform features are present, which are not mandated by EBBR.
 
@@ -1586,23 +1603,6 @@
     set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
     sub set: AuthVar_Func
     test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force image services failures also failing with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Image Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 1D8B160C-7601-47C9-8102-68C0F801314B
-    log: ImageBBTestFunction.c
-    name: BS.LoadImage - InterfaceTestCheckpoint8
-    result: FAILURE
-    revision: '0x00010001'
-    set guid: 2FF0431A-8E07-4CDB-A298-D004566A74D4
-    sub set: LoadImage_Func
-    test set: ImageServicesTest
   update:
     result: WAIVED
 
