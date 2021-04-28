@@ -604,6 +604,104 @@
   update:
     result: IGNORED
 
+- rule: Force skipped simple network protocol test as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 426BE7F5-3F47-4919-9F77-C142BB0C9B27
+    sub set: NVData_Func
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (2) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 534A9E0F-B31B-40C5-AD60-DF02C55361D4
+    sub set: ReceiveFilter_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (3) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: BA628A58-E318-4E4A-BAC2-A7833ADF42D9
+    sub set: Reset_Func
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (4) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 5408EB9D-B40A-47DD-BD04-E9A8B906661F
+    sub set: NVData_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (5) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: EC8714E0-2AB9-46E9-8F35-508334B118A7
+    sub set: StationAddress_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (6) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 762FCCB6-5CDB-4E23-8890-45CD233CD16F
+    sub set: StationAddress_Func
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (7) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 122DD1F0-AF8E-4D3B-884B-14C2FF7AEFA7
+    sub set: Statistics_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
 ###############################################################################
 #                                 Waived                                      #
 ###############################################################################
@@ -1987,97 +2085,6 @@
     set guid: 2C3CA282-5644-41B6-AFC9-4387F25389BD
     sub set: ReadKeyStrokeExFunctionAuto
     test set: SimpleTextInputExProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol skipped also with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 426BE7F5-3F47-4919-9F77-C142BB0C9B27
-    sub set: NVData_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (2) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 534A9E0F-B31B-40C5-AD60-DF02C55361D4
-    sub set: ReceiveFilter_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (3) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: BA628A58-E318-4E4A-BAC2-A7833ADF42D9
-    sub set: Reset_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (4) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 5408EB9D-B40A-47DD-BD04-E9A8B906661F
-    sub set: NVData_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (5) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: EC8714E0-2AB9-46E9-8F35-508334B118A7
-    sub set: StationAddress_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (6) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 762FCCB6-5CDB-4E23-8890-45CD233CD16F
-    sub set: StationAddress_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (7) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 122DD1F0-AF8E-4D3B-884B-14C2FF7AEFA7
-    sub set: Statistics_Conf
-    test set: SimpleNetworkProtocolTest
   update:
     result: WAIVED
 
