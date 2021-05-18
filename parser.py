@@ -7,6 +7,7 @@ import argparse
 import csv
 import logging
 import json
+from packaging import version
 
 try:
     import yaml
@@ -18,6 +19,12 @@ if 'yaml' in sys.modules:
         from yaml import CDumper as Dumper
     except ImportError:
         from yaml import Dumper
+
+# Not all yaml versions have a Loader argument.
+if version.parse(yaml.__version__) >= version.parse('5.1'):
+    yaml_load_args = {'Loader': yaml.FullLoader}
+else:
+    yaml_load_args = {}
 
 
 #based loosley on https://stackoverflow.com/a/4391978
@@ -301,7 +308,7 @@ def use_config(cross_check, filename):
     logging.debug(f'Read {filename}')
 
     with open(filename, 'r') as yamlfile:
-        conf = yaml.load(yamlfile, Loader=yaml.FullLoader)
+        conf = yaml.load(yamlfile, **yaml_load_args)
 
     logging.debug('{} rule(s)'.format(len(conf)))
     sanitize_yaml(conf)
