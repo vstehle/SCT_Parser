@@ -32,6 +32,21 @@ $ ./parser.py --sort \
       'group,descr,set guid,test set,sub set,guid,name,log' ...
 ```
 
+### Filtering data
+
+The `--filter` option allows to specify a python3 expression, which is used as a
+filter. The expression is evaluated for each test; if it evaluates to True the
+test is kept, otherwise it is omitted. The expression has access to the test
+as dict "x".
+
+Example command, which keeps only the failed tests:
+
+``` {.sh}
+$ ./parser.py --filter "x['result'] == 'FAILURE'" ...
+```
+
+Filtering takes place after the configuration rules, which are described below.
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config

@@ -315,6 +315,21 @@ def use_config(cross_check, filename):
     sanitize_yaml(conf)
     apply_rules(cross_check, conf)
 
+
+# Filter tests data
+# Filter is a python expression, which is evaluated for each test
+# When the expression evaluates to True, the test is kept
+# Otherwise it is dropped
+def filter_data(cross_check, Filter):
+    logging.debug(f"Filtering with `{Filter}'")
+
+    # This function "wraps" the filter and is called for each test
+    def function(x):
+        return eval(Filter)
+
+    return list(filter(function, cross_check))
+
+
 # Sort tests data in-place
 # sort_keys is a comma-separated list
 # The first key has precedence, then the second, etc.
@@ -486,6 +501,7 @@ def main():
         '--debug', action='store_true', help='Turn on debug messages')
     parser.add_argument(
         '--sort', help='Comma-separated list of keys to sort output on')
+    parser.add_argument('--filter', help='Python expression to filter results')
     parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
@@ -535,6 +551,10 @@ def main():
     # the tests results.
     if 'config' in args and args.config is not None:
         use_config(cross_check, args.config)
+
+    # Filter tests data, if requested
+    if args.filter is not None:
+        cross_check = filter_data(cross_check, args.filter)
 
     # Sort tests data in-place, if requested
     if args.sort is not None:
