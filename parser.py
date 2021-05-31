@@ -349,20 +349,49 @@ def sort_data(cross_check, sort_keys):
         cross_check.sort(key=lambda x: x[k])
 
 
-# Generate csv
-def gen_csv(cross_check, filename):
-    # Find keys
-    keys = set()
+# Keep only certain fields in data, in-place
+# The fields to write are supplied as a comma-separated list
+def keep_fields(cross_check, fields):
+    logging.debug(f"Keeping fields: `{fields}'")
+    s = set(fields.split(','))
 
     for x in cross_check:
-        keys = keys.union(x.keys())
+        for k in list(x.keys()):
+            if k not in s:
+                del x[k]
 
-    # Write csv
-    logging.debug(f'Generate {filename}')
+
+# Discover fields
+# The fields can be supplied as a comma-separated list
+# Order is preserved
+# Additional fields are auto-discovered and added to the list, sorted
+def discover_fields(cross_check, fields=None):
+    if fields is not None:
+        keys = fields.split(',')
+    else:
+        keys = []
+
+    # Find keys, not already listed
+    s = set()
+
+    for x in cross_check:
+        s = s.union(x.keys())
+
+    s = s.difference(keys)
+    keys += sorted(s)
+
+    logging.debug(f'Fields: {keys}')
+    return keys
+
+
+# Generate csv
+# The fields to write are supplied as a list
+def gen_csv(cross_check, filename, fields):
+    logging.debug(f'Generate {filename} (fields: {fields})')
 
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.DictWriter(
-            csvfile, fieldnames=sorted(keys), delimiter=';')
+            csvfile, fieldnames=fields, delimiter=';')
         writer.writeheader()
         writer.writerows(cross_check)
 
@@ -512,6 +541,8 @@ def main():
         '--sort', help='Comma-separated list of keys to sort output on')
     parser.add_argument('--filter', help='Python expression to filter results')
     parser.add_argument(
+        '--fields', help='Comma-separated list of fields to write')
+    parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
     parser.add_argument(
@@ -616,9 +647,21 @@ def main():
             key_tree_2_md(bins[k], resultfile, "group")
             n += 1
 
+    # Generate yaml config template if requested
+    if 'template' in args and args.template is not None:
+        gen_template(cross_check, args.template)
+
+    # Filter fields before writing any other type of output
+    # Do not rely on specific fields being present after this step
+    if args.fields is not None:
+        keep_fields(cross_check, args.fields)
+
+    # Auto-discover the fields and take the option into account
+    fields = discover_fields(cross_check, args.fields)
+
     # Generate csv if requested
     if args.csv is not None:
-        gen_csv(cross_check, args.csv)
+        gen_csv(cross_check, args.csv, fields)
 
     # Generate json if requested
     if args.json is not None:
@@ -627,10 +670,6 @@ def main():
     # Generate yaml if requested
     if 'yaml' in args and args.yaml is not None:
         gen_yaml(cross_check, args.yaml)
-
-    # Generate yaml config template if requested
-    if 'template' in args and args.template is not None:
-        gen_template(cross_check, args.template)
 
     # command line argument 3&4, key are to support a key & value search.
     # these will be displayed in CLI

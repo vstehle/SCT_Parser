@@ -65,6 +65,19 @@ $ ./parser.py \
                 or True" ...
 ```
 
+### Keeping only certain fields
+
+Except for the markdown and the config template formats, it is possible to
+specify which tests data fields to actually write using the `--fields` option.
+
+Example command, suitable for triaging:
+
+``` {.sh}
+$ ./parser.py --fields 'result,sub set,descr,name,log' ...
+```
+
+The csv format can retain the fields order.
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config
