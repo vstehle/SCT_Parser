@@ -604,6 +604,74 @@
   update:
     result: IGNORED
 
+- rule: Force false-positive time services warnings as ignored (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestConformance.c
+    name: RT.GetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 735BA337-2A44-46A2-AFAB-AFBED7358F08
+    sub set: GetWakeupTime_Conf
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings (2) as ignored (EBBR Table
+    2.6 EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestConformance.c
+    name: RT.SetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 8721B500-F13A-40FA-8217-70ACDDDC67BF
+    sub set: SetWakeupTime_Conf
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings (3) as ignored (EBBR Table
+    2.6 EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestFunction.c
+    name: RT.SetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 8A878BFB-6BE1-4226-8F69-4EBF7A1FF9A5
+    sub set: SetWakeupTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings (4) as ignored (EBBR Table
+    2.6 EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestFunction.c
+    name: RT.GetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: F508572D-74F7-4C6C-9CEF-DBA49C56F7AE
+    sub set: GetWakeupTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
 # We force the following dropped or skipped tests result as `IGNORED' because
 # they are run only when some platform features are present, which are not
 # mandated by EBBR.
@@ -1392,74 +1460,6 @@
     set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
     sub set: SetStateConformance
     test set: SimpleTextInputExProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force time services warnings also appearing with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestConformance.c
-    name: RT.GetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 735BA337-2A44-46A2-AFAB-AFBED7358F08
-    sub set: GetWakeupTime_Conf
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time services warnings (2) also appearing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestConformance.c
-    name: RT.SetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 8721B500-F13A-40FA-8217-70ACDDDC67BF
-    sub set: SetWakeupTime_Conf
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time services warnings (3) also appearing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestFunction.c
-    name: RT.SetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 8A878BFB-6BE1-4226-8F69-4EBF7A1FF9A5
-    sub set: SetWakeupTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time services warnings (4) also appearing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestFunction.c
-    name: RT.GetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: F508572D-74F7-4C6C-9CEF-DBA49C56F7AE
-    sub set: GetWakeupTime_Func
-    test set: TimeServicesTest
   update:
     result: WAIVED
 
