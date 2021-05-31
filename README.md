@@ -97,6 +97,23 @@ Try it with:
 $ ./parser.py --config sample.yaml ...
 ```
 
+### Generating a configuration template
+
+To ease the writing of yaml configurations, there is a `--template` option to
+generate a configuration "template" from the results of a run:
+
+``` {.sh}
+$ ./parser.py --template template.yaml ...
+```
+
+This generated configuration can then be further edited manually.
+
+* Tests with result "PASS" are omitted.
+* The following tests fields are omitted from the generated rule "criteria":
+  "iteration", "start date" and "start time".
+* The generated rule "criteria" "log" field is filtered to remove the leading
+  path before C filename.
+
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.
