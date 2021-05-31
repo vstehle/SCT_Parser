@@ -553,6 +553,57 @@
   update:
     result: IGNORED
 
+- rule: Force false-positive protocol handler boot services failures as ignored
+    (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Protocol Handler Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 25CFFDF5-D252-4515-AF8F-D8DB68F022C3
+    log: ProtocolHandlerBBTestFunction_3.c
+    name: BS.ConnectController - InterfaceTestCheckpoint14
+    result: FAILURE
+    revision: '0x00010002'
+    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
+    sub set: ConnectController_Func
+    test set: ProtocolHandlerServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive protocol handler boot services failures (2) as
+    ignored (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Protocol Handler Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 4643E80E-A6BF-412C-B4FF-9629282BC831
+    log: ProtocolHandlerBBTestFunction_3.c
+    name: BS.ConnectController - InterfaceTestCheckpoint14
+    result: FAILURE
+    revision: '0x00010002'
+    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
+    sub set: ConnectController_Func
+    test set: ProtocolHandlerServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive protocol handler boot services failures (3) as
+    ignored (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Protocol Handler Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 555913E8-BA56-4C68-80B5-A96B8A3AFCB1
+    log: ProtocolHandlerBBTestFunction_3.c
+    name: BS.ConnectController - InterfaceTestCheckpoint14
+    result: FAILURE
+    revision: '0x00010002'
+    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
+    sub set: ConnectController_Func
+    test set: ProtocolHandlerServicesTest
+  update:
+    result: IGNORED
+
 # We force the following dropped tests result as `IGNORED' because they are run
 # only when some platform features are present, which are not mandated by EBBR.
 
@@ -1238,57 +1289,6 @@
     set guid: D35AAEF2-55FB-4377-A07B-29DCA3201F19
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force protocol handler boot services failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Protocol Handler Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 25CFFDF5-D252-4515-AF8F-D8DB68F022C3
-    log: ProtocolHandlerBBTestFunction_3.c
-    name: BS.ConnectController - InterfaceTestCheckpoint14
-    result: FAILURE
-    revision: '0x00010002'
-    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
-    sub set: ConnectController_Func
-    test set: ProtocolHandlerServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force protocol handler boot services failures (2) also failing with
-    U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Protocol Handler Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 4643E80E-A6BF-412C-B4FF-9629282BC831
-    log: ProtocolHandlerBBTestFunction_3.c
-    name: BS.ConnectController - InterfaceTestCheckpoint14
-    result: FAILURE
-    revision: '0x00010002'
-    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
-    sub set: ConnectController_Func
-    test set: ProtocolHandlerServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force protocol handler boot services failures (3) also failing with
-    U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Protocol Handler Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 555913E8-BA56-4C68-80B5-A96B8A3AFCB1
-    log: ProtocolHandlerBBTestFunction_3.c
-    name: BS.ConnectController - InterfaceTestCheckpoint14
-    result: FAILURE
-    revision: '0x00010002'
-    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
-    sub set: ConnectController_Func
-    test set: ProtocolHandlerServicesTest
   update:
     result: WAIVED
 
