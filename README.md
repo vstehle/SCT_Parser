@@ -141,12 +141,8 @@ This generated configuration can then be further edited manually.
 It is possible to convert this `README.md` into `README.pdf` with pandoc using
 `make doc`. See `make help`.
 
-### TODO:
-* double check concatenation of all `.ekl` logs, preliminary tests show small Divergence between them and `summary.ekl` found in `Overall` folder. Cat.sh will generate this file.
-* look into large number of dropped tests.
-
-
 ### db structure:
+
 ``` {.python}
 tests = [
     test_dict,
