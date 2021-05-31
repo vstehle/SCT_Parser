@@ -1504,12 +1504,15 @@
   update:
     result: WAIVED
 
-# We force the following tests result as `WAIVED', as they are known to fail
-# with small terminals.
+###############################################################################
+#                                Comments                                     #
+###############################################################################
 
-- rule: Force simple text output protocol failures with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+# We add comments to the following tests result, as they are known to fail with
+# small terminals.
+
+- rule: Add comments to simple text output protocol failures with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -1523,11 +1526,10 @@
     sub set: ClearScreen_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (2) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (2) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -1541,11 +1543,10 @@
     sub set: EnableCursor_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (3) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (3) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -1559,11 +1560,10 @@
     sub set: Reset_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (4) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (4) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -1577,11 +1577,10 @@
     sub set: SetAttribute_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (5) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (5) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -1595,11 +1594,10 @@
     sub set: SetCursorPosition_Conf
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (6) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (6) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -1613,4 +1611,4 @@
     sub set: SetCursorPosition_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
