@@ -672,6 +672,79 @@
   update:
     result: IGNORED
 
+- rule: Force variable services failures as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 2534ABC0-1F01-48A0-96DE-F8BBA745C364
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.SetVariable - Set Auth Variable with valid cert.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (2) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 55AF8FAD-1B12-45AD-B042-A643962F0470
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.SetVariable - Set Auth Variable with invalid cert.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (3) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: E9893BCB-EF2B-495C-82F0-D0630DA79476
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.SetVariable - Set Invalid Time Base Auth Variable
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (4) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: AA6BF36F-DAE5-43ED-954D-C1C7979D32A0
+    log: AuthVariableServicesBBTestFunction.c
+    name: RT.SetVariable - The 2nd Call SetVariable with the same Data, the
+      return status should be EFI_SECURITY_VIOLATION
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
+    sub set: AuthVar_Func
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
 # We force the following dropped or skipped tests result as `IGNORED' because
 # they are run only when some platform features are present, which are not
 # mandated by EBBR.
@@ -845,57 +918,6 @@
 # This section should become ultimately empty, as more and more tests are fixed
 # with latest U-Boot.
 
-- rule: Force variable services failures also failing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 2534ABC0-1F01-48A0-96DE-F8BBA745C364
-    log: AuthVariableServicesBBTestConformance.c
-    name: RT.SetVariable - Set Auth Variable with valid cert.
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
-    sub set: AuthVar_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 55AF8FAD-1B12-45AD-B042-A643962F0470
-    log: AuthVariableServicesBBTestConformance.c
-    name: RT.SetVariable - Set Auth Variable with invalid cert.
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
-    sub set: AuthVar_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: E9893BCB-EF2B-495C-82F0-D0630DA79476
-    log: AuthVariableServicesBBTestConformance.c
-    name: RT.SetVariable - Set Invalid Time Base Auth Variable
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
-    sub set: AuthVar_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
 - rule: Force variable services failures (4) also failing with U-Boot
     v2021.04-rc2 as waived
   criteria:
@@ -926,24 +948,6 @@
     revision: '0x00010000'
     set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
     sub set: QueryVariableInfo_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (6) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: AA6BF36F-DAE5-43ED-954D-C1C7979D32A0
-    log: AuthVariableServicesBBTestFunction.c
-    name: RT.SetVariable - The 2nd Call SetVariable with the same Data, the
-      return status should be EFI_SECURITY_VIOLATION
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
-    sub set: AuthVar_Func
     test set: VariableServicesTest
   update:
     result: WAIVED
