@@ -604,8 +604,9 @@
   update:
     result: IGNORED
 
-# We force the following dropped tests result as `IGNORED' because they are run
-# only when some platform features are present, which are not mandated by EBBR.
+# We force the following dropped or skipped tests result as `IGNORED' because
+# they are run only when some platform features are present, which are not
+# mandated by EBBR.
 
 - rule: Force dropped RNG as ignored (Table 2.3 UEFI Platform-Specific Required
     Elements)
@@ -750,6 +751,20 @@
     set guid: 122DD1F0-AF8E-4D3B-884B-14C2FF7AEFA7
     sub set: Statistics_Conf
     test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive misc boot services skipped as ignored
+    EBBR does not require watchdog timer
+  criteria:
+    descr: Misc. Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: FF388AE5-4C51-45C6-9D37-6DE04BF9219A
+    sub set: SetWatchdogTimer_Conf
+    test set: MiscBootServicesTest
   update:
     result: IGNORED
 
@@ -1472,19 +1487,6 @@
     set guid: EFABA332-13E8-4730-97CB-48CE9F0826C5
     sub set: HardwareErrorRecord_Func
     test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force misc boot services skipped also with U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Misc. Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: FF388AE5-4C51-45C6-9D37-6DE04BF9219A
-    sub set: SetWatchdogTimer_Conf
-    test set: MiscBootServicesTest
   update:
     result: WAIVED
 
