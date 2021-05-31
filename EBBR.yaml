@@ -845,310 +845,6 @@
 # This section should become ultimately empty, as more and more tests are fixed
 # with latest U-Boot.
 
-- rule: Force simple file protocol failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: set file position fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 11F22AEB-5FA8-412A-A12A-E3D46015368C
-    sub set: Flush_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: set file size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 22372DD8-AA00-4EDA-99E8-6FC14AB1FB3C
-    sub set: Write_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: Set File  Size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 38150EBD-8835-46C5-B085-6A6C626EA972
-    sub set: GetPosition_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (4) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemExBBTestFunction_WriteEx.c
-    name: set file size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44B63E71-6A74-4A23-9C2D-ED333DD5DDE2
-    sub set: WriteEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (5) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 36D0ED31-21F0-48C2-8974-6B6ECA41203C
-    log: SimpleFileSystemBBTestConformance.c
-    name: SetInfo() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (6) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestConformance.c
-    name: InternalSetFileSize fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (7) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: A9DF1E64-E769-4D16-A0D5-B559CE90CF2B
-    log: SimpleFileSystemBBTestConformance.c
-    name: 'InternalGetInfo fail,FileInfo->Attribute should be EFI_FILE_READONLY'
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (8) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: C7BFE9BF-92BF-4301-8217-75662EA52437
-    log: SimpleFileSystemBBTestConformance.c
-    name: SetInfo() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (9) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: Set File  Size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 4867091F-5988-4A0C-9F21-440755479A1B
-    sub set: SetPosition_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (10) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: create file fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
-    sub set: Open_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (11) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: set file info fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
-    sub set: Open_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (12) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemExBBTestFunction_FlushEx.c
-    name: set file position fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
-    sub set: FlushEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (13) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: A056BCFF-DB0B-4733-889A-B1CA52AC58E9
-    log: SimpleFileSystemExBBTestConformance.c
-    name: WriteEx() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: BFFE42D6-CE26-4B63-8609-51E69A1668A1
-    sub set: WriteEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (14) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 12B68173-7C8D-4023-AFCC-F1C6BEB61CEF
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (15) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 19F9C6F4-2B6D-4EB3-80FB-255558F8472F
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (16) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 4BE420A1-D7E7-4327-8E63-5941EF4BFD2A
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (17) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 57880CD6-6EB1-40B5-A3EF-2826949AF89C
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (18) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 5EB09D11-22EE-43F7-A6C1-9592B50470E7
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (19) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6E869806-1BC2-40D5-B302-61F8CE56EBFE
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
 - rule: Force variable services failures also failing with U-Boot v2021.04-rc2
     as waived
   criteria:
@@ -1503,6 +1199,300 @@
     test set: SimpleTextInputExProtocolTest
   update:
     result: WAIVED
+
+###############################################################################
+#                         Known U-Boot limitations                            #
+###############################################################################
+
+# We force the following tests result as `KNOWN U-BOOT LIMITATION'. They are
+# genuine bugs, which much ultimately be fixed. We know about them; they are due
+# to U-Boot FAT filesystem implementation limitations and they do not prevent an
+# OS to boot.
+
+- rule: Force simple file protocol failures as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: set file position fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 11F22AEB-5FA8-412A-A12A-E3D46015368C
+    sub set: Flush_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (2) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: set file size fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 22372DD8-AA00-4EDA-99E8-6FC14AB1FB3C
+    sub set: Write_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (3) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: Set File  Size fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 38150EBD-8835-46C5-B085-6A6C626EA972
+    sub set: GetPosition_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (4) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemExBBTestFunction_WriteEx.c
+    name: set file size fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44B63E71-6A74-4A23-9C2D-ED333DD5DDE2
+    sub set: WriteEx_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (5) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 36D0ED31-21F0-48C2-8974-6B6ECA41203C
+    log: SimpleFileSystemBBTestConformance.c
+    name: SetInfo() Conformance Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (6) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestConformance.c
+    name: InternalSetFileSize fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (7) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: A9DF1E64-E769-4D16-A0D5-B559CE90CF2B
+    log: SimpleFileSystemBBTestConformance.c
+    name: 'InternalGetInfo fail,FileInfo->Attribute should be EFI_FILE_READONLY'
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (8) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: C7BFE9BF-92BF-4301-8217-75662EA52437
+    log: SimpleFileSystemBBTestConformance.c
+    name: SetInfo() Conformance Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (9) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: Set File  Size fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 4867091F-5988-4A0C-9F21-440755479A1B
+    sub set: SetPosition_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (10) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: create file fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
+    sub set: Open_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (11) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: set file info fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
+    sub set: Open_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (12) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemExBBTestFunction_FlushEx.c
+    name: set file position fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
+    sub set: FlushEx_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (13) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: A056BCFF-DB0B-4733-889A-B1CA52AC58E9
+    log: SimpleFileSystemExBBTestConformance.c
+    name: WriteEx() Conformance Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: BFFE42D6-CE26-4B63-8609-51E69A1668A1
+    sub set: WriteEx_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (14) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 12B68173-7C8D-4023-AFCC-F1C6BEB61CEF
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (15) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 19F9C6F4-2B6D-4EB3-80FB-255558F8472F
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint1
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (16) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 4BE420A1-D7E7-4327-8E63-5941EF4BFD2A
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint2
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (17) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 57880CD6-6EB1-40B5-A3EF-2826949AF89C
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint2
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (18) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 5EB09D11-22EE-43F7-A6C1-9592B50470E7
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint1
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (19) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6E869806-1BC2-40D5-B302-61F8CE56EBFE
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
 
 ###############################################################################
 #                                Comments                                     #
