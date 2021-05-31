@@ -763,6 +763,25 @@
   update:
     result: IGNORED
 
+- rule: Force variable services failures (6) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 008E18A5-C345-48AE-9134-61A692E30B87
+    log: AuthVariableServicesBBTestFunction.c
+    name: RT.SetVariable - Create one Time Base Auth Variable, the expect return
+      status should be EFI_SUCCESS
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
+    sub set: AuthVar_Func
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
 # We force the following dropped or skipped tests result as `IGNORED' because
 # they are run only when some platform features are present, which are not
 # mandated by EBBR.
