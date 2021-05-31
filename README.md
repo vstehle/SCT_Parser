@@ -78,6 +78,22 @@ $ ./parser.py --fields 'result,sub set,descr,name,log' ...
 
 The csv format can retain the fields order.
 
+### Collapsing duplicates
+
+It is possible to "collapse" duplicate tests data into a single entry using the
+`--uniq` option, much similar in principle to the UNIX `uniq -c` command.
+
+This step happens after tests and fields filtering, and it adds a "count" field.
+
+Example command, suitable for triaging:
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x.update({'log': re.sub(r'/.*/', '', x['log'])}) \
+                or x['result'] != 'PASS'" \
+      --fields 'count,result,sub set,descr,name,log' --uniq ...
+```
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config

@@ -361,6 +361,35 @@ def keep_fields(cross_check, fields):
                 del x[k]
 
 
+# Do a "uniq" pass on the data
+# All duplicate entries are collapsed into a single one
+# We add a "count" field
+def uniq(cross_check):
+    logging.debug("Collapsing duplicates")
+
+    # First pass to count all occurences
+    h = {}
+
+    for x in cross_check:
+        i = ''
+
+        for k in sorted(x.keys()):
+            i += f"{k}:{x[k]} "
+
+        if i not in h:
+            h[i] = {
+                'count': 0,
+                **x,
+            }
+
+        h[i]['count'] += 1
+
+    # Transform back to list
+    r = list(h.values())
+    logging.info(f"{len(r)} unique entries")
+    return r
+
+
 # Discover fields
 # The fields can be supplied as a comma-separated list
 # Order is preserved
@@ -543,6 +572,8 @@ def main():
     parser.add_argument(
         '--fields', help='Comma-separated list of fields to write')
     parser.add_argument(
+        '--uniq', action='store_true', help='Collapse duplicates')
+    parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
     parser.add_argument(
@@ -655,6 +686,10 @@ def main():
     # Do not rely on specific fields being present after this step
     if args.fields is not None:
         keep_fields(cross_check, args.fields)
+
+    # Do a `uniq` pass if requested
+    if args.uniq:
+        cross_check = uniq(cross_check)
 
     # Auto-discover the fields and take the option into account
     fields = discover_fields(cross_check, args.fields)
