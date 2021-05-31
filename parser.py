@@ -327,12 +327,16 @@ def use_config(cross_check, filename):
 # Otherwise it is dropped
 def filter_data(cross_check, Filter):
     logging.debug(f"Filtering with `{Filter}'")
+    before = len(cross_check)
 
     # This function "wraps" the filter and is called for each test
     def function(x):
         return eval(Filter)
 
-    return list(filter(function, cross_check))
+    r = list(filter(function, cross_check))
+    after = len(r)
+    logging.info(f"Filtered out {before - after} test(s), kept {after}")
+    return r
 
 
 # Sort tests data in-place
