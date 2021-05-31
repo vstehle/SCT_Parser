@@ -8,7 +8,11 @@ import csv
 import logging
 import json
 import re
-from packaging import version
+
+try:
+    from packaging import version
+except ImportError:
+    print('No packaging...')
 
 try:
     import yaml
@@ -22,7 +26,8 @@ if 'yaml' in sys.modules:
         from yaml import Dumper
 
 # Not all yaml versions have a Loader argument.
-if version.parse(yaml.__version__) >= version.parse('5.1'):
+if 'packaging.version' in sys.modules and \
+   version.parse(yaml.__version__) >= version.parse('5.1'):
     yaml_load_args = {'Loader': yaml.FullLoader}
 else:
     yaml_load_args = {}
