@@ -536,6 +536,438 @@
   update:
     result: IGNORED
 
+- rule: Force false-positive uefi compliant warning (30) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 72BA0E86-58E5-48DD-8529-88C68383118D
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Graphic Console Device
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (31) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 18670DB1-89FB-4DE4-B10F-898E047D952A
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Pointer protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (32) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: BF38A3FD-58AC-419A-ABC2-C60BAE9CFE67
+    log: Block IO - Yes, Disk IO - No, Simple FS - Yes, Unicode Collation - Yes
+    name: UEFI Compliant - Boot from disk protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (33) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 98551AE7-5020-4DDD-861A-CFFFB4D60382
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Validating a boot image received through a network
+      device must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (34) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 4C82EB2D-C785-410C-95D1-AE27122144C8
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - UEFI V6 General Network Application required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (35) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 517BCBEB-4982-4A7E-8551-CA847DDC21C2
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - UART protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (36) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 213A75C9-7F3D-42DB-B32A-02DBD698319D
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - PCI Bus support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (37) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 0CCD5843-5BB5-4FC2-A732-DB17C414A43D
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - USB Bus support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (38) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 5AEA7246-BCF9-4BA4-81D2-832C984146F3
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - NVM Express Pass Thru protocol must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (39) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 5CB0CDB5-AC80-4983-B710-4B0BF0191563
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Boot from block-oriented NVMe peripheral
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (40) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 2B83418F-E7FB-4528-B6FF-C9D487AE2EFF
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Ext SCSI Pass Thru protocol must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (41) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 28C068F2-F398-488A-B059-534E982D9C85
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Boot from SCSI peripheral
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (42) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 6B7077A6-4B13-4E13-9B1F-0C4B3A8669E2
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Boot from iSCSI peripheral
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (43) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 3EE22696-0875-46F4-8884-BA124C7EAFF0
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Debug support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (44) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 329027CE-406E-48C8-8AC1-A02C1A6E3983
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Platform Driver Override protocols must be
+      implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (45) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 563F654F-ABA8-4539-804B-506305072623
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Ata Pass Thru protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (46) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 1D0A2F2A-0924-4B8C-9FC7-B185CC22E118
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - EBC Interpreter protocol is optional in this platform
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (47) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 2E6D1733-6D39-49AB-A886-1B6DE44566A8
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - DNS4 support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (48) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: E02A6EF3-4B70-40EC-AA23-50B7B972B065
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - DNS6 support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (49) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: CB6F7B77-0B15-43F7-A95B-8C7F9FD70B21
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - TLS support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (50) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+    This test checks the availability of the http service binding protocol and
+    the http utilities protocol. Even though EBBR requires HTTP Boot when the
+    platform supports network booting, EBBR does no require those specific
+    protocols.
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 77FDDB95-5969-4FB4-A218-5C0C760B0564
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - HTTP support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (51) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: F0DC12FA-3C4B-43F7-A69E-A5BE6FCC90A1
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - EAP Support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (52) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 87E50392-F5A2-42B8-8112-68BEC902B9BC
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - BlueTooth Classic Support protocols must be
+      implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (53) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: EFF461EB-4F56-44A5-895E-EE5EE42AD309
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - BlueTooth LE Support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (54) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: B27660E2-0E87-4794-82F1-E6BDBD8B7442
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - IPsec protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
 - rule: Force false-positive image services failures as ignored (EBBR Table 2.4
     Notable Deviations from UEFI § 2.6.2)
   criteria:
