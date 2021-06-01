@@ -1589,25 +1589,6 @@
   update:
     result: WAIVED
 
-- rule: Force simple network protocol failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    guid: 2143092E-03DD-4806-9FD6-08D42B9ABFC6
-    log: Status - Unsupported, Filter - 5500000000, Mask - 0,Count - 0(0),
-     Address - 0, 0, 0
-    name: EFI_SIMPLE_NETWORK_PROTOCOL.ReceiveFilters - Invoke ReceiveFilters()
-      to reset multicast receive filters list and verify interface correctness
-      within test case
-    result: FAILURE
-    revision: '0x00010001'
-    set guid: 7A1E587D-53AC-444E-A5A1-81CD3F4F04D4
-    sub set: ReceiveFilter_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
 - rule: Force misc runtime services failures also failing with U-Boot
     v2021.04-rc2 as waived
   criteria:
