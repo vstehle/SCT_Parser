@@ -1408,6 +1408,21 @@
   update:
     result: IGNORED
 
+- rule: Force simple text input ex protocol skipped as ignored
+    EBBR does not specifically require that a console device be always bound to
+    the Simple Text Input Ex Protocol.
+  criteria:
+    descr: Simple Text Input Ex Protocol Test
+    device path: No device path
+    group: ConsoleSupportTest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 2C3CA282-5644-41B6-AFC9-4387F25389BD
+    sub set: ReadKeyStrokeExFunctionAuto
+    test set: SimpleTextInputExProtocolTest
+  update:
+    result: IGNORED
+
 ###############################################################################
 #                                 Waived                                      #
 ###############################################################################
@@ -1658,20 +1673,6 @@
     revision: '0x00010000'
     set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
     sub set: SetStateConformance
-    test set: SimpleTextInputExProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple text input ex protocol skipped also with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Simple Text Input Ex Protocol Test
-    device path: No device path
-    group: ConsoleSupportTest
-    result: SKIPPED
-    revision: '0x00010000'
-    set guid: 2C3CA282-5644-41B6-AFC9-4387F25389BD
-    sub set: ReadKeyStrokeExFunctionAuto
     test set: SimpleTextInputExProtocolTest
   update:
     result: WAIVED
