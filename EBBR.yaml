@@ -1378,6 +1378,36 @@
   update:
     result: IGNORED
 
+- rule: Force variable services skipped as ignored
+    EBBR does not require Hardware Error Record Persistence (2.2 UEFI
+    Compliance); the HwErrRecSupport variable may not be present
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: CF94F695-7917-4F78-A0A8-F0B509099297
+    sub set: HardwareErrorRecord_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services (2) skipped as ignored
+    EBBR does not require Hardware Error Record Persistence (2.2 UEFI
+    Compliance); the HwErrRecSupport variable may not be present
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: EFABA332-13E8-4730-97CB-48CE9F0826C5
+    sub set: HardwareErrorRecord_Func
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
 ###############################################################################
 #                                 Waived                                      #
 ###############################################################################
@@ -1629,33 +1659,6 @@
     set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
     sub set: SetStateConformance
     test set: SimpleTextInputExProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services skipped also with U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    result: SKIPPED
-    revision: '0x00010000'
-    set guid: CF94F695-7917-4F78-A0A8-F0B509099297
-    sub set: HardwareErrorRecord_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services (2) skipped also with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    result: SKIPPED
-    revision: '0x00010000'
-    set guid: EFABA332-13E8-4730-97CB-48CE9F0826C5
-    sub set: HardwareErrorRecord_Func
-    test set: VariableServicesTest
   update:
     result: WAIVED
 
