@@ -1640,24 +1640,6 @@
   update:
     result: WAIVED
 
-- rule: Force simple text input ex protocol warnings also appearing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Simple Text Input Ex Protocol Test
-    device path: No device path
-    group: ConsoleSupportTest
-    guid: 6647A0E7-483C-4777-A94B-C8BCA3DFC79C
-    log: SimpleTextInputExBBTestConformance.c
-    name: SIMPLE_TEXT_INPUT_EX_PROTOCOL.SetState - SetState() returns
-      EFI_INVALID_PARAMETER with KeyToggleState being NULL.
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
-    sub set: SetStateConformance
-    test set: SimpleTextInputExProtocolTest
-  update:
-    result: WAIVED
-
 ###############################################################################
 #                         Known U-Boot limitations                            #
 ###############################################################################
@@ -1949,6 +1931,23 @@
     set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
     sub set: SetInfo_Func
     test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple text input ex protocol warnings as known U-Boot limitation
+  criteria:
+    descr: Simple Text Input Ex Protocol Test
+    device path: No device path
+    group: ConsoleSupportTest
+    guid: 6647A0E7-483C-4777-A94B-C8BCA3DFC79C
+    log: SimpleTextInputExBBTestConformance.c
+    name: SIMPLE_TEXT_INPUT_EX_PROTOCOL.SetState - SetState() returns
+      EFI_INVALID_PARAMETER with KeyToggleState being NULL.
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
+    sub set: SetStateConformance
+    test set: SimpleTextInputExProtocolTest
   update:
     result: KNOWN U-BOOT LIMITATION
 
