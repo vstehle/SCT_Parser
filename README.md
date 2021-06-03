@@ -76,7 +76,7 @@ Example command, suitable for triaging:
 $ ./parser.py --fields 'result,sub set,descr,name,log' ...
 ```
 
-The csv format can retain the fields order.
+The csv format and printing to stdout can retain the fields order.
 
 ### Collapsing duplicates
 
@@ -92,6 +92,28 @@ $ ./parser.py \
       --filter "x.update({'log': re.sub(r'/.*/', '', x['log'])}) \
                 or x['result'] != 'PASS'" \
       --fields 'count,result,sub set,descr,name,log' --uniq ...
+```
+
+### Printing a summary
+
+It is possible to print results to stdout using the `--print` option. This is
+more useful when only few fields are printed. Example command:
+
+Example printing command:
+
+``` {.sh}
+$ ./parser.py --fields 'result,name' --print ...
+```
+
+More condensed summaries can be obtained with further filtering.
+
+Example summary command:
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x.update({'log': re.sub(r'/.*/', '', x['log'])}) \
+                or x['result'] in ['FAILURE', 'WARNING']" \
+      --fields 'count,result,name' --uniq --print ...
 ```
 
 ## Configuration file

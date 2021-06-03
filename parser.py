@@ -480,6 +480,33 @@ def gen_template(cross_check, filename):
         yaml.dump(t, yamlfile, Dumper=Dumper)
 
 
+# Print to stdout
+# The fields to write are supplied as a list
+def do_print(cross_check, fields):
+    logging.debug(f'Print (fields: {fields})')
+
+    # First pass to find the width for each field except the last one
+    fm1 = fields[:len(fields) - 1]
+    w = {}
+
+    for f in fm1:
+        w[f] = len(f)
+
+    for x in cross_check:
+        for f in fm1:
+            w[f] = max(w[f], len(str(x[f])))
+
+    # Second pass where we print
+    print(' '.join([
+        *map(lambda f: f"{f:{w[f]}}", fm1),
+        fields[len(fields) - 1]]))
+
+    for x in cross_check:
+        print(' '.join([
+            *map(lambda f: f"{x[f]:{w[f]}}", fm1),
+            x[fields[len(fields) - 1]]]))
+
+
 # Combine or two databases db1 and db2 coming from ekl and seq files
 # respectively into a single cross_check database
 # Tests in db1, which were not meant to be run according to db2 have their
@@ -573,6 +600,8 @@ def main():
         '--fields', help='Comma-separated list of fields to write')
     parser.add_argument(
         '--uniq', action='store_true', help='Collapse duplicates')
+    parser.add_argument(
+        '--print', action='store_true', help='Print results to stdout')
     parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
@@ -705,6 +734,10 @@ def main():
     # Generate yaml if requested
     if 'yaml' in args and args.yaml is not None:
         gen_yaml(cross_check, args.yaml)
+
+    # Print if requested
+    if args.print:
+        do_print(cross_check, fields)
 
     # command line argument 3&4, key are to support a key & value search.
     # these will be displayed in CLI
