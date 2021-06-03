@@ -1432,40 +1432,6 @@
 # This section should become ultimately empty, as more and more tests are fixed
 # with latest U-Boot.
 
-- rule: Force variable services failures (4) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 2F9966BA-0091-4085-BF9D-09AA809F942E
-    log: VariableServicesBBTestConformance.c
-    name: RT.QueryVariableInfo - With being an invalid combination
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
-    sub set: QueryVariableInfo_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (5) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: E7F2EB9F-1624-45A9-A287-3EA6F2F74C5F
-    log: VariableServicesBBTestConformance.c
-    name: RT.QueryVariableInfo - With Attributes being 0
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
-    sub set: QueryVariableInfo_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
 - rule: Force time services failures also failing with U-Boot v2021.04-rc2 as
     waived
     (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
@@ -1586,57 +1552,6 @@
     set guid: D35AAEF2-55FB-4377-A07B-29DCA3201F19
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force misc runtime services failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Misc Runtime Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 145E4790-3342-4C8C-99F2-7F6500FD26E5
-    log: MiscRuntimeServicesBBTestConformance.c
-    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
-    sub set: UpdateCapsule_Conf
-    test set: MiscRuntimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force misc runtime services failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Misc Runtime Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 18F86BF8-76CF-4225-8E3E-1B1F63432600
-    log: MiscRuntimeServicesBBTestConformance.c
-    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
-    sub set: UpdateCapsule_Conf
-    test set: MiscRuntimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force misc runtime services failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Misc Runtime Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 304F6960-79D0-4F17-8811-620FC6BDB0D4
-    log: MiscRuntimeServicesBBTestConformance.c
-    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid ScatterGatherList
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
-    sub set: UpdateCapsule_Conf
-    test set: MiscRuntimeServicesTest
   update:
     result: WAIVED
 
