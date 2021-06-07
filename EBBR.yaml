@@ -1994,3 +1994,111 @@
     test set: SbbrBootServices
   update:
     comments: This is a known issue with ACS-IR v21.05_0.8_BETA-0
+
+- rule: Add comments to failure due to missing ESP
+  criteria:
+    descr: Image Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: A5BB81FA-1063-4358-97AF-AD57D42BF055
+    log: GetVariable service routine failed - Not Found
+    name: BS.ExitBootServices - ConsistencyTestCheckpoint1
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 303ABFAB-C865-4255-86E3-6EEF175E30DD
+    sub set: ExitBootServices_Conf
+    test set: ImageServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (2) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6AFDEA5E-1030-48AB-91DD-7CD3537CAD3B
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (3) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6AFDEA5E-1030-48AB-91DD-7CD3537CAD3B
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (4) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 653F14CC-8ECD-4AAF-ADD6-96C507112D67
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (5) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 653F14CC-8ECD-4AAF-ADD6-96C507112D67
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (6) due to missing ESP
+  criteria:
+    descr: SBBRRuntimeServices Tests
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: Status - Not Found
+    name: RS.GetVariable
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A5936AEB-3642-4D1D-B226-09E0E0A52BAF
+    sub set: Non-volatile Variable Reset Test
+    test set: SBBRRuntimeServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
