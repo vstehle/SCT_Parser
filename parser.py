@@ -7,6 +7,7 @@ import argparse
 import csv
 import logging
 import json
+import re
 from packaging import version
 
 try:
@@ -314,6 +315,21 @@ def use_config(cross_check, filename):
     sanitize_yaml(conf)
     apply_rules(cross_check, conf)
 
+
+# Filter tests data
+# Filter is a python expression, which is evaluated for each test
+# When the expression evaluates to True, the test is kept
+# Otherwise it is dropped
+def filter_data(cross_check, Filter):
+    logging.debug(f"Filtering with `{Filter}'")
+
+    # This function "wraps" the filter and is called for each test
+    def function(x):
+        return eval(Filter)
+
+    return list(filter(function, cross_check))
+
+
 # Sort tests data in-place
 # sort_keys is a comma-separated list
 # The first key has precedence, then the second, etc.
@@ -357,6 +373,44 @@ def gen_yaml(cross_check, filename):
 
     with open(filename, 'w') as yamlfile:
         yaml.dump(cross_check, yamlfile, Dumper=Dumper)
+
+
+# Generate yaml config template
+# This is to help writing yaml config.
+# We omit tests with result PASS.
+# We omit some tests keys: iteration and dates.
+# We remove the leading directory from C filename in log.
+def gen_template(cross_check, filename):
+    assert('yaml' in sys.modules)
+    logging.debug(f'Generate {filename}')
+    omitted_keys = set(['iteration', 'start date', 'start time'])
+    t = []
+    i = 1
+
+    for x in cross_check:
+        if x['result'] == 'PASS':
+            continue
+
+        r = {
+            'rule': f'Generated rule ({i})',
+            'criteria': {},
+            'update': {'result': 'TEMPLATE'},
+        }
+
+        for key, value in x.items():
+            if key in omitted_keys:
+                continue
+
+            if key == 'log':
+                value = re.sub(r'^/.*/', '', value)
+
+            r['criteria'][key] = value
+
+        t.append(r)
+        i += 1
+
+    with open(filename, 'w') as yamlfile:
+        yaml.dump(t, yamlfile, Dumper=Dumper)
 
 
 # Combine or two databases db1 and db2 coming from ekl and seq files
@@ -447,6 +501,7 @@ def main():
         '--debug', action='store_true', help='Turn on debug messages')
     parser.add_argument(
         '--sort', help='Comma-separated list of keys to sort output on')
+    parser.add_argument('--filter', help='Python expression to filter results')
     parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
@@ -462,6 +517,8 @@ def main():
         parser.add_argument(
             '--config', help='Input .yaml configuration filename')
         parser.add_argument('--yaml', help='Output .yaml filename')
+        parser.add_argument(
+            '--template', help='Output .yaml config template filename')
 
     args = parser.parse_args()
 
@@ -494,6 +551,10 @@ def main():
     # the tests results.
     if 'config' in args and args.config is not None:
         use_config(cross_check, args.config)
+
+    # Filter tests data, if requested
+    if args.filter is not None:
+        cross_check = filter_data(cross_check, args.filter)
 
     # Sort tests data in-place, if requested
     if args.sort is not None:
@@ -558,8 +619,12 @@ def main():
     if 'yaml' in args and args.yaml is not None:
         gen_yaml(cross_check, args.yaml)
 
-    #command line argument 3&4, key are to support a key & value search.
-    #these will be displayed in CLI
+    # Generate yaml config template if requested
+    if 'template' in args and args.template is not None:
+        gen_template(cross_check, args.template)
+
+    # command line argument 3&4, key are to support a key & value search.
+    # these will be displayed in CLI
     if args.find_key is not None and args.find_value is not None:
         found = key_value_find(db1, args.find_key, args.find_value)
         #print the dict

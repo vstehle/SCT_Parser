@@ -32,6 +32,21 @@ $ ./parser.py --sort \
       'group,descr,set guid,test set,sub set,guid,name,log' ...
 ```
 
+### Filtering data
+
+The `--filter` option allows to specify a python3 expression, which is used as a
+filter. The expression is evaluated for each test; if it evaluates to True the
+test is kept, otherwise it is omitted. The expression has access to the test
+as dict "x".
+
+Example command, which keeps only the failed tests:
+
+``` {.sh}
+$ ./parser.py --filter "x['result'] == 'FAILURE'" ...
+```
+
+Filtering takes place after the configuration rules, which are described below.
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config
@@ -96,6 +111,23 @@ Try it with:
 ``` {.sh}
 $ ./parser.py --config sample.yaml ...
 ```
+
+### Generating a configuration template
+
+To ease the writing of yaml configurations, there is a `--template` option to
+generate a configuration "template" from the results of a run:
+
+``` {.sh}
+$ ./parser.py --template template.yaml ...
+```
+
+This generated configuration can then be further edited manually.
+
+* Tests with result "PASS" are omitted.
+* The following tests fields are omitted from the generated rule "criteria":
+  "iteration", "start date" and "start time".
+* The generated rule "criteria" "log" field is filtered to remove the leading
+  path before C filename.
 
 ## Notes
 ### Known Issues:
