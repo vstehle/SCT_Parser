@@ -133,8 +133,8 @@ def ekl_parser (file):
                 tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
                 n += 1
-            except:
-                print("Line:",split_line)
+            except Exception:
+                print(f"Line {i+1}:", split_line)
                 sys.exit("your log may be corrupted")
         else:
             logging.error(f"Unparsed line {i} `{line}'")
