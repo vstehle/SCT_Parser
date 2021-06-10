@@ -16,7 +16,7 @@
 # `EBBR.seq'.
 
 - rule: Force false-positive simple network protocol ReceiveFilters failure as
-    pass (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+    ignored (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: Simple Network Protocol Test
     group: NetworkSupportTest
@@ -264,7 +264,7 @@
     guid: 5CB0CDB5-AC80-4983-B710-4B0BF0191563
     log: EfiCompliantBBTestPlatform_uefi.c
     name: UEFI Compliant - Boot from block-oriented NVMe peripheral
-    result: IGNORED
+    result: FAILURE
     revision: '0x00010001'
     set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
     sub set: PlatformSpecificElements
@@ -306,7 +306,7 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (17) as ignored (EBBR Table 2.4
+- rule: Force false-positive uefi compliant warning (17) as ignored (EBBR Table 2.4
     Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
@@ -546,7 +546,7 @@
     set guid: 39FF9C71-4B41-4E5B-AED7-87C794187D66
     sub set: GetInfo_Func
   update:
-    result: WAIVED
+    result: IGNORED
 
 - rule: Force dropped RNG (2) as ignored (Table 2.3 UEFI Platform-Specific
     Required Elements)
@@ -570,7 +570,7 @@
     set guid: DC5B2884-EDFB-4078-A288-4DFDA849A08D
     sub set: GetRNG_Func
   update:
-    result: WAIVED
+    result: IGNORED
 
 - rule: Force dropped RNG (4) as ignored (Table 2.3 UEFI Platform-Specific
     Required Elements)
@@ -582,7 +582,7 @@
     set guid: DDBBE5AB-206E-4F35-9556-186DA87C2A86
     sub set: GetRNG_Conf
   update:
-    result: WAIVED
+    result: IGNORED
 
 ###############################################################################
 #                                 Waived                                      #

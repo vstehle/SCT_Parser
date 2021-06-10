@@ -47,6 +47,24 @@ $ ./parser.py --filter "x['result'] == 'FAILURE'" ...
 
 Filtering takes place after the configuration rules, which are described below.
 
+This filtering mechanism can also be (ab)used to transform tests results.
+
+Example command, which adds a "comment" field (and keeps all the tests):
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x.update({'comment': 'Transformed'}) or True" ...
+```
+
+Example command, which removes filenames prefixes in the "log" field (and keeps
+all the tests):
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x.update({'log': re.sub(r'/.*/', '', x['log'])}) \
+                or True" ...
+```
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config
@@ -141,12 +159,8 @@ This generated configuration can then be further edited manually.
 It is possible to convert this `README.md` into `README.pdf` with pandoc using
 `make doc`. See `make help`.
 
-### TODO:
-* double check concatenation of all `.ekl` logs, preliminary tests show small Divergence between them and `summary.ekl` found in `Overall` folder. Cat.sh will generate this file.
-* look into large number of dropped tests.
-
-
 ### db structure:
+
 ``` {.python}
 tests = [
     test_dict,
