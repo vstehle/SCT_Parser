@@ -497,14 +497,16 @@ def do_print(cross_check, fields):
             w[f] = max(w[f], len(str(x[f])))
 
     # Second pass where we print
+    lf = fields[len(fields) - 1]
+
     print(' '.join([
         *map(lambda f: f"{f:{w[f]}}", fm1),
-        fields[len(fields) - 1]]))
+        lf]))
 
     for x in cross_check:
         print(' '.join([
-            *map(lambda f: f"{x[f]:{w[f]}}", fm1),
-            x[fields[len(fields) - 1]]]))
+            *map(lambda f: f"{x[f]:{w[f] if f in x else ''}}", fm1),
+            x[lf] if lf in x else '']))
 
 
 # Combine or two databases db1 and db2 coming from ekl and seq files
