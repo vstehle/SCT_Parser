@@ -1423,18 +1423,13 @@
   update:
     result: IGNORED
 
-###############################################################################
-#                                 Waived                                      #
-###############################################################################
+# We force the following tests result as `IGNORED', as they are not required by
+# EBBR. The language in EBBR will be made more explicit in a future revision, to
+# make it extra clear the concerned features are not mandated.
 
-# We force the following tests result as `WAIVED', as they are known to be still
-# failing with a recent U-Boot version.
-# This section should become ultimately empty, as more and more tests are fixed
-# with latest U-Boot.
-
-- rule: Force time services failures also failing with U-Boot v2021.04-rc2 as
-    waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures as ignored
+    Daylight is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1448,11 +1443,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures (2) also failing with U-Boot v2021.04-rc2
-    as waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures (2) as ignored
+    Daylight is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1466,11 +1461,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures (3) also failing with U-Boot v2021.04-rc2
-    as waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures (3) as ignored
+    Time zone is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1484,11 +1479,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures (4) also failing with U-Boot v2021.04-rc2
-    as waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures (4) as ignored
+    Time zone is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1502,7 +1497,7 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
 - rule: Force misc boot services failures also failing with U-Boot v2021.04-rc2
     as waived
