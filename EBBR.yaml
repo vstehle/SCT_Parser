@@ -1499,8 +1499,9 @@
   update:
     result: IGNORED
 
-- rule: Force misc boot services failures also failing with U-Boot v2021.04-rc2
-    as waived
+- rule: Force false-positive misc boot services failures as ignored
+    Monotonic count is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1514,10 +1515,11 @@
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force misc boot services failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force false-positive misc boot services failures (2) as ignored
+    Monotonic count is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1531,10 +1533,11 @@
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force misc boot services failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force false-positive misc boot services failures (3) as ignored
+    Monotonic count is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1548,7 +1551,7 @@
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
 ###############################################################################
 #                         Known U-Boot limitations                            #
