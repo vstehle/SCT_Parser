@@ -210,6 +210,11 @@ This generated configuration can then be further edited manually.
 It is possible to convert this `README.md` into `README.pdf` with pandoc using
 `make doc`. See `make help`.
 
+### Sanity checks
+
+To perform sanity checks, run `make check`. For the moment this runs `yamllint`,
+which will inspect all YAML files and report errors. See `make help`.
+
 ### db structure:
 
 ``` {.python}
