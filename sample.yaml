@@ -6,6 +6,7 @@
 # Only the first matching rule does actually update the test.
 # Criteria fields are matched in a "relaxed" manner (substrings can match).
 # See README.md for details.
+---
 
 - rule: A sample rule to force the result as `SAMPLE' and create a `System' key
     with value `Ready'.

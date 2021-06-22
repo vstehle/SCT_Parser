@@ -6,6 +6,7 @@
 # Only the first matching rule does actually update the test.
 # Criteria fields are matched in a "relaxed" manner (substrings can match).
 # See README.md for details.
+---
 
 ###############################################################################
 #                                Ignored                                      #
@@ -51,8 +52,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (2) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (2) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -68,8 +69,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (3) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (3) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -85,8 +86,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (4) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (4) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -102,8 +103,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (5) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements
+- rule: Force false-positive uefi compliant failure (5) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -119,8 +120,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (6) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (6) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -136,8 +137,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (7) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (7) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -153,15 +154,16 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (8) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (8) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
     group: GenericTest
     guid: 329027CE-406E-48C8-8AC1-A02C1A6E3983
     log: EfiCompliantBBTestPlatform_uefi.c
-    name: UEFI Compliant - Platform Driver Override protocols must be implemented
+    name: UEFI Compliant - Platform Driver Override protocols must be
+      implemented
     result: FAILURE
     revision: '0x00010001'
     set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
@@ -170,8 +172,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (9) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (9) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -187,8 +189,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (10) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (10) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -204,8 +206,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (11) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (11) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -221,8 +223,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (12) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (12) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -238,8 +240,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (13) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (13) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -255,8 +257,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failures (14) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failures (14) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -272,8 +274,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (15) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (15) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -289,8 +291,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (16) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (16) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -306,8 +308,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant warning (17) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant warning (17) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -323,15 +325,16 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (18) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (18) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
     group: GenericTest
     guid: 87E50392-F5A2-42B8-8112-68BEC902B9BC
     log: EfiCompliantBBTestPlatform_uefi.c
-    name: UEFI Compliant - BlueTooth Classic Support protocols must be implemented
+    name: UEFI Compliant - BlueTooth Classic Support protocols must be
+      implemented
     result: FAILURE
     revision: '0x00010001'
     set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
@@ -340,8 +343,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (19) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (19) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -357,8 +360,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (20) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (20) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -374,8 +377,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (21) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (21) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -391,8 +394,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (22) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (22) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -408,8 +411,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (23) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (23) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -425,8 +428,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (24) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (24) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -442,8 +445,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (25) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (25) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -459,8 +462,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (26) as ignored (Table 2.3 UEFI
-    Platform-Specific Required Elements)
+- rule: Force false-positive uefi compliant failure (26) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -476,8 +479,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (27) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (27) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
     This test checks the availability of the http service binding protocol and
     the http utilities protocol. Even though EBBR requires HTTP Boot when the
     platform supports network booting, EBBR does no require those specific
@@ -497,8 +500,8 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (28) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (28) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -515,16 +518,16 @@
   update:
     result: IGNORED
 
-- rule: Force false-positive uefi compliant failure (29) as ignored (EBBR Table 2.4
-    Notable Deviations from UEFI § 2.6.2)
+- rule: Force false-positive uefi compliant failure (29) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
     group: GenericTest
     guid: 98551AE7-5020-4DDD-861A-CFFFB4D60382
     log: EfiCompliantBBTestPlatform_uefi.c
-    name: UEFI Compliant - Validating a boot image received through a network device
-      must be implemented
+    name: UEFI Compliant - Validating a boot image received through a network
+      device must be implemented
     result: FAILURE
     revision: '0x00010001'
     set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
@@ -1179,8 +1182,8 @@
 # This section should become ultimately empty, as more and more tests are fixed
 # with latest U-Boot.
 
-- rule: Force simple file protocol failures also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1195,8 +1198,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (2) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (2) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1211,8 +1214,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (3) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (3) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1227,8 +1230,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (4) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (4) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1243,8 +1246,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (5) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (5) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1259,8 +1262,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (6) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (6) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1275,14 +1278,14 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (7) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (7) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
     guid: A9DF1E64-E769-4D16-A0D5-B559CE90CF2B
     log: SimpleFileSystemBBTestConformance.c
-    name: 'InternalGetInfo fail,FileInfo->Attribute should be EFI_FILE_READONLY '
+    name: 'InternalGetInfo fail,FileInfo->Attribute should be EFI_FILE_READONLY'
     result: FAILURE
     revision: '0x00010000'
     set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
@@ -1291,8 +1294,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (8) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (8) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1307,8 +1310,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (9) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (9) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1323,8 +1326,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (10) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (10) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1339,8 +1342,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (11) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (11) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1355,8 +1358,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (12) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (12) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1371,8 +1374,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (13) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (13) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1387,8 +1390,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (14) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (14) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1403,8 +1406,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (15) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (15) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1419,8 +1422,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (16) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (16) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1435,8 +1438,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (17) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (17) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1451,8 +1454,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (18) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (18) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1467,8 +1470,8 @@
   update:
     result: WAIVED
 
-- rule: Force simple file protocol failures (19) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force simple file protocol failures (19) also failing with U-Boot
+    v2021.04-rc2 as waived
   criteria:
     descr: Testing For Simple File System Protocol and EFI_FILE Protocol
     group: MediaAccessTest
@@ -1576,8 +1579,8 @@
     group: RuntimeServicesTest
     guid: AA6BF36F-DAE5-43ED-954D-C1C7979D32A0
     log: AuthVariableServicesBBTestFunction.c
-    name: RT.SetVariable - The 2nd Call SetVariable with the same Data, the return status
-      should be EFI_SECURITY_VIOLATION
+    name: RT.SetVariable - The 2nd Call SetVariable with the same Data, the
+      return status should be EFI_SECURITY_VIOLATION
     result: FAILURE
     revision: '0x00010000'
     set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
@@ -1621,8 +1624,8 @@
   update:
     result: WAIVED
 
-- rule: Force time services failures (2) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force time services failures (2) also failing with U-Boot v2021.04-rc2
+    as waived
     (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
   criteria:
     descr: Time Services Test
@@ -1639,8 +1642,8 @@
   update:
     result: WAIVED
 
-- rule: Force time services failures (3) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force time services failures (3) also failing with U-Boot v2021.04-rc2
+    as waived
     (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
   criteria:
     descr: Time Services Test
@@ -1657,8 +1660,8 @@
   update:
     result: WAIVED
 
-- rule: Force time services failures (4) also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force time services failures (4) also failing with U-Boot v2021.04-rc2
+    as waived
     (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
   criteria:
     descr: Time Services Test
@@ -1675,8 +1678,8 @@
   update:
     result: WAIVED
 
-- rule: Force misc boot services failures also failing with U-Boot v2021.04-rc2 as
-    waived
+- rule: Force misc boot services failures also failing with U-Boot v2021.04-rc2
+    as waived
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1783,10 +1786,11 @@
     descr: Simple Network Protocol Test
     group: NetworkSupportTest
     guid: 2143092E-03DD-4806-9FD6-08D42B9ABFC6
-    log: Status - Unsupported, Filter - 5500000000, Mask - 0,Count - 0(0), Address
-      - 0, 0, 0
-    name: EFI_SIMPLE_NETWORK_PROTOCOL.ReceiveFilters - Invoke ReceiveFilters() to reset
-      multicast receive filters list and verify interface correctness within test case
+    log: Status - Unsupported, Filter - 5500000000, Mask - 0,Count - 0(0),
+     Address - 0, 0, 0
+    name: EFI_SIMPLE_NETWORK_PROTOCOL.ReceiveFilters - Invoke ReceiveFilters()
+      to reset multicast receive filters list and verify interface correctness
+      within test case
     result: FAILURE
     revision: '0x00010001'
     set guid: 7A1E587D-53AC-444E-A5A1-81CD3F4F04D4
