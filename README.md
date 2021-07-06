@@ -65,6 +65,57 @@ $ ./parser.py \
                 or True" ...
 ```
 
+### Keeping only certain fields
+
+Except for the markdown and the config template formats, it is possible to
+specify which tests data fields to actually write using the `--fields` option.
+
+Example command, suitable for triaging:
+
+``` {.sh}
+$ ./parser.py --fields 'result,sub set,descr,name,log' ...
+```
+
+The csv format and printing to stdout can retain the fields order.
+
+### Collapsing duplicates
+
+It is possible to "collapse" duplicate tests data into a single entry using the
+`--uniq` option, much similar in principle to the UNIX `uniq -c` command.
+
+This step happens after tests and fields filtering, and it adds a "count" field.
+
+Example command, suitable for triaging:
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x.update({'log': re.sub(r'/.*/', '', x['log'])}) \
+                or x['result'] != 'PASS'" \
+      --fields 'count,result,sub set,descr,name,log' --uniq ...
+```
+
+### Printing a summary
+
+It is possible to print results to stdout using the `--print` option. This is
+more useful when only few fields are printed. Example command:
+
+Example printing command:
+
+``` {.sh}
+$ ./parser.py --fields 'result,name' --print ...
+```
+
+More condensed summaries can be obtained with further filtering.
+
+Example summary command:
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x.update({'log': re.sub(r'/.*/', '', x['log'])}) \
+                or x['result'] in ['FAILURE', 'WARNING']" \
+      --fields 'count,result,name' --uniq --print ...
+```
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config

@@ -133,8 +133,8 @@ def ekl_parser (file):
                 tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
                 n += 1
-            except:
-                print("Line:",split_line)
+            except Exception:
+                print(f"Line {i+1}:", split_line)
                 sys.exit("your log may be corrupted")
         else:
             logging.error(f"Unparsed line {i} `{line}'")
@@ -349,20 +349,78 @@ def sort_data(cross_check, sort_keys):
         cross_check.sort(key=lambda x: x[k])
 
 
-# Generate csv
-def gen_csv(cross_check, filename):
-    # Find keys
-    keys = set()
+# Keep only certain fields in data, in-place
+# The fields to write are supplied as a comma-separated list
+def keep_fields(cross_check, fields):
+    logging.debug(f"Keeping fields: `{fields}'")
+    s = set(fields.split(','))
 
     for x in cross_check:
-        keys = keys.union(x.keys())
+        for k in list(x.keys()):
+            if k not in s:
+                del x[k]
 
-    # Write csv
-    logging.debug(f'Generate {filename}')
+
+# Do a "uniq" pass on the data
+# All duplicate entries are collapsed into a single one
+# We add a "count" field
+def uniq(cross_check):
+    logging.debug("Collapsing duplicates")
+
+    # First pass to count all occurences
+    h = {}
+
+    for x in cross_check:
+        i = ''
+
+        for k in sorted(x.keys()):
+            i += f"{k}:{x[k]} "
+
+        if i not in h:
+            h[i] = {
+                'count': 0,
+                **x,
+            }
+
+        h[i]['count'] += 1
+
+    # Transform back to list
+    r = list(h.values())
+    logging.info(f"{len(r)} unique entries")
+    return r
+
+
+# Discover fields
+# The fields can be supplied as a comma-separated list
+# Order is preserved
+# Additional fields are auto-discovered and added to the list, sorted
+def discover_fields(cross_check, fields=None):
+    if fields is not None:
+        keys = fields.split(',')
+    else:
+        keys = []
+
+    # Find keys, not already listed
+    s = set()
+
+    for x in cross_check:
+        s = s.union(x.keys())
+
+    s = s.difference(keys)
+    keys += sorted(s)
+
+    logging.debug(f'Fields: {keys}')
+    return keys
+
+
+# Generate csv
+# The fields to write are supplied as a list
+def gen_csv(cross_check, filename, fields):
+    logging.debug(f'Generate {filename} (fields: {fields})')
 
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.DictWriter(
-            csvfile, fieldnames=sorted(keys), delimiter=';')
+            csvfile, fieldnames=fields, delimiter=';')
         writer.writeheader()
         writer.writerows(cross_check)
 
@@ -420,6 +478,33 @@ def gen_template(cross_check, filename):
 
     with open(filename, 'w') as yamlfile:
         yaml.dump(t, yamlfile, Dumper=Dumper)
+
+
+# Print to stdout
+# The fields to write are supplied as a list
+def do_print(cross_check, fields):
+    logging.debug(f'Print (fields: {fields})')
+
+    # First pass to find the width for each field except the last one
+    fm1 = fields[:len(fields) - 1]
+    w = {}
+
+    for f in fm1:
+        w[f] = len(f)
+
+    for x in cross_check:
+        for f in fm1:
+            w[f] = max(w[f], len(str(x[f])))
+
+    # Second pass where we print
+    print(' '.join([
+        *map(lambda f: f"{f:{w[f]}}", fm1),
+        fields[len(fields) - 1]]))
+
+    for x in cross_check:
+        print(' '.join([
+            *map(lambda f: f"{x[f]:{w[f]}}", fm1),
+            x[fields[len(fields) - 1]]]))
 
 
 # Combine or two databases db1 and db2 coming from ekl and seq files
@@ -511,6 +596,12 @@ def main():
     parser.add_argument(
         '--sort', help='Comma-separated list of keys to sort output on')
     parser.add_argument('--filter', help='Python expression to filter results')
+    parser.add_argument(
+        '--fields', help='Comma-separated list of fields to write')
+    parser.add_argument(
+        '--uniq', action='store_true', help='Collapse duplicates')
+    parser.add_argument(
+        '--print', action='store_true', help='Print results to stdout')
     parser.add_argument(
         'log_file', nargs='?', default='sample.ekl',
         help='Input .ekl filename')
@@ -616,9 +707,25 @@ def main():
             key_tree_2_md(bins[k], resultfile, "group")
             n += 1
 
+    # Generate yaml config template if requested
+    if 'template' in args and args.template is not None:
+        gen_template(cross_check, args.template)
+
+    # Filter fields before writing any other type of output
+    # Do not rely on specific fields being present after this step
+    if args.fields is not None:
+        keep_fields(cross_check, args.fields)
+
+    # Do a `uniq` pass if requested
+    if args.uniq:
+        cross_check = uniq(cross_check)
+
+    # Auto-discover the fields and take the option into account
+    fields = discover_fields(cross_check, args.fields)
+
     # Generate csv if requested
     if args.csv is not None:
-        gen_csv(cross_check, args.csv)
+        gen_csv(cross_check, args.csv, fields)
 
     # Generate json if requested
     if args.json is not None:
@@ -628,9 +735,9 @@ def main():
     if 'yaml' in args and args.yaml is not None:
         gen_yaml(cross_check, args.yaml)
 
-    # Generate yaml config template if requested
-    if 'template' in args and args.template is not None:
-        gen_template(cross_check, args.template)
+    # Print if requested
+    if args.print:
+        do_print(cross_check, fields)
 
     # command line argument 3&4, key are to support a key & value search.
     # these will be displayed in CLI
