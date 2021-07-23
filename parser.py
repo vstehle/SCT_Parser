@@ -24,6 +24,13 @@ except ImportError:
         'No yaml. You should install PyYAML/python3-yaml for configuration'
         ' file support...')
 
+try:
+    from junit_xml import TestSuite, TestCase
+except ImportError:
+    print(
+        'No junit_xml. You should install junit_xml for junit output'
+        ' support...')
+
 if 'yaml' in sys.modules:
     try:
         from yaml import CDumper as Dumper
@@ -520,6 +527,45 @@ def gen_json(cross_check, filename):
         json.dump(cross_check, jsonfile, sort_keys=True, indent=2)
 
 
+# Generate junit
+def gen_junit(cross_check, filename):
+    logging.debug(f'Generate {filename}')
+
+    testsuites = {}
+
+    for result in cross_check:
+        testcase = TestCase(
+            result['name'] if result['name'] else result['sub set'],
+            (result['test set'] if result['test set'] else
+                result['set guid']) + "." + result['sub set'],
+            0,
+            "Description: " + result['descr'] +
+            "\nSet GUID: " + result['set guid'] +
+            "\nGUID: " + result['guid'] +
+            "\nDevice Path: " + result['device path'] +
+            "\nStart Date: " + result['start date'] +
+            "\nStart Time: " + result['start time'] +
+            "\nRevision: " + result['revision'] +
+            "\nIteration: " + result['iteration'] +
+            "\nLog: " + result['log'],
+            "")
+        if result['result'] == 'FAILURE':
+            testcase.add_failure_info(result['result'])
+        elif result['result'] == 'SKIPPED':
+            testcase.add_skipped_info(result['result'])
+        elif result['result'] == 'DROPPED':
+            testcase.add_skipped_info(result['result'])
+
+        group = result['group'] if result['group'] else result['test set']
+        if group not in testsuites:
+            testsuites[group] = TestSuite(group)
+
+        testsuites[group].test_cases.append(testcase)
+
+    with open(filename, 'w') as file:
+        TestSuite.to_file(file, testsuites.values())
+
+
 # Generate yaml
 def gen_yaml(cross_check, filename):
     assert('yaml' in sys.modules)
@@ -876,6 +922,7 @@ if __name__ == '__main__':
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
     parser.add_argument('--json', help='Output .json filename')
+    parser.add_argument('--junit', help='Output .junit filename')
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
@@ -1038,6 +1085,10 @@ if __name__ == '__main__':
     # Generate json if requested
     if args.json is not None:
         gen_json(cross_check, args.json)
+
+    # Generate junit if requested
+    if args.junit is not None:
+        gen_junit(cross_check, args.junit)
 
     # Generate yaml if requested
     if 'yaml' in args and args.yaml is not None:
