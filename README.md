@@ -203,6 +203,26 @@ This generated configuration can then be further edited manually.
 * The generated rule "criteria" "log" field is filtered to remove the leading
   path before C filename.
 
+### EBBR configuration
+
+The `EBBR.yaml` file is a configuration file meant for [EBBR] testing. It can
+override the result of some tests with the following ones:
+
+-------------------------------------------------------------------------------
+                   Result  Description
+-------------------------  ----------------------------------------------------
+                `IGNORED`  False-positive test failure, not mandated by [EBBR]
+                           and too fine-grained to be removed from the
+                           `EBBR.seq` sequence file.
+
+`KNOWN U-BOOT LIMITATION`  Genuine bugs, which much ultimately be fixed.
+                           We know about them; they are due to U-Boot FAT
+                           filesystem implementation limitations and they do
+                           not prevent an OS to boot.
+-------------------------------------------------------------------------------
+
+Some of the rules just add a `comments` field with some help text.
+
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.
