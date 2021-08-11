@@ -1,11 +1,13 @@
 # SCT_Parser
 
-This is an external parser script for UEFI SCT. (WIP)
+This is an external parser script for [UEFI SCT]. (WIP)
 
-It's designed to read a `.ekl` results log from an UEFI SCT run, and a generated `.seq` from UEFI SCT configurator.
+It's designed to read a `.ekl` results log from an [UEFI SCT] run, and a
+generated `.seq` from [UEFI SCT] configurator.
 
 It will proceed to generate a Markdown file listing number of failures, passes, each test from the sequence file set that was Silently dropped, and a list of all failures and warnings.
 
+[UEFI SCT]: https://uefi.org/testtools
 
 ## Usage
 Usage to generate a "result md" is such. `python3 parser.py <log_file.ekl> <seq_file.seq>`
@@ -123,19 +125,20 @@ It is possible to use a configuration file with command line option `--config
 This configuration file describes operations to perform on the tests results,
 such as marking tests as false positives or waiving failures.
 
-Example command for EBBR:
+Example command for [EBBR]:
 
 ``` {.sh}
 $ ./parser.py --config EBBR.yaml /path/to/Summary.ekl EBBR.seq ...
 ```
 
-You need to install the PyYAML module for this to work (see
-<https://github.com/yaml/pyyaml>).
+You need to install the [PyYAML] module for this to work.
+
+[EBBR]: https://github.com/ARM-software/ebbr
+[PyYAML]: https://github.com/yaml/pyyaml
 
 ### Configuration file format
 
-The configuration file is in YAML format (see <https://yaml.org>).
-It contains a list of rules:
+The configuration file is in [YAML] format. It contains a list of rules:
 
 ``` {.yaml}
 - rule: name/description (optional)
@@ -149,6 +152,8 @@ It contains a list of rules:
     ...
 - rule...
 ```
+
+[YAML]: https://yaml.org
 
 ### Rule processing
 
@@ -201,7 +206,7 @@ This generated configuration can then be further edited manually.
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.
-* some SCT tests have shared GUIDs,
+* some [UEFI SCT] tests have shared GUIDs,
 * some lines in ekl file follow Different naming Conventions
 * some tests in the sequence file are not strongly Associated with the test spec.
 
@@ -213,7 +218,7 @@ It is possible to convert this `README.md` into `README.pdf` with pandoc using
 ### Sanity checks
 
 To perform sanity checks, run `make check`. For the moment this runs `yamllint`,
-which will inspect all YAML files and report errors. See `make help`.
+which will inspect all [YAML] files and report errors. See `make help`.
 
 ### db structure:
 
