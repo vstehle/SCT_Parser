@@ -536,8 +536,687 @@
   update:
     result: IGNORED
 
-# We force the following dropped tests result as `IGNORED' because they are run
-# only when some platform features are present, which are not mandated by EBBR.
+- rule: Force false-positive uefi compliant warning (30) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 72BA0E86-58E5-48DD-8529-88C68383118D
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Graphic Console Device
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (31) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 18670DB1-89FB-4DE4-B10F-898E047D952A
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Pointer protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (32) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: BF38A3FD-58AC-419A-ABC2-C60BAE9CFE67
+    log: Block IO - Yes, Disk IO - No, Simple FS - Yes, Unicode Collation - Yes
+    name: UEFI Compliant - Boot from disk protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (33) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 98551AE7-5020-4DDD-861A-CFFFB4D60382
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Validating a boot image received through a network
+      device must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (34) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 4C82EB2D-C785-410C-95D1-AE27122144C8
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - UEFI V6 General Network Application required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (35) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 517BCBEB-4982-4A7E-8551-CA847DDC21C2
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - UART protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (36) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 213A75C9-7F3D-42DB-B32A-02DBD698319D
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - PCI Bus support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (37) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 0CCD5843-5BB5-4FC2-A732-DB17C414A43D
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - USB Bus support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (38) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 5AEA7246-BCF9-4BA4-81D2-832C984146F3
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - NVM Express Pass Thru protocol must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (39) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 5CB0CDB5-AC80-4983-B710-4B0BF0191563
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Boot from block-oriented NVMe peripheral
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (40) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 2B83418F-E7FB-4528-B6FF-C9D487AE2EFF
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Ext SCSI Pass Thru protocol must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (41) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 28C068F2-F398-488A-B059-534E982D9C85
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Boot from SCSI peripheral
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (42) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 6B7077A6-4B13-4E13-9B1F-0C4B3A8669E2
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Boot from iSCSI peripheral
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (43) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 3EE22696-0875-46F4-8884-BA124C7EAFF0
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Debug support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (44) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 329027CE-406E-48C8-8AC1-A02C1A6E3983
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Platform Driver Override protocols must be
+      implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (45) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 563F654F-ABA8-4539-804B-506305072623
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - Ata Pass Thru protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (46) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 1D0A2F2A-0924-4B8C-9FC7-B185CC22E118
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - EBC Interpreter protocol is optional in this platform
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (47) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 2E6D1733-6D39-49AB-A886-1B6DE44566A8
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - DNS4 support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (48) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: E02A6EF3-4B70-40EC-AA23-50B7B972B065
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - DNS6 support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (49) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: CB6F7B77-0B15-43F7-A95B-8C7F9FD70B21
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - TLS support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (50) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+    This test checks the availability of the http service binding protocol and
+    the http utilities protocol. Even though EBBR requires HTTP Boot when the
+    platform supports network booting, EBBR does no require those specific
+    protocols.
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 77FDDB95-5969-4FB4-A218-5C0C760B0564
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - HTTP support is required
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (51) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: F0DC12FA-3C4B-43F7-A69E-A5BE6FCC90A1
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - EAP Support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (52) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: 87E50392-F5A2-42B8-8112-68BEC902B9BC
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - BlueTooth Classic Support protocols must be
+      implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (53) as ignored (Table 2.3
+    UEFI Platform-Specific Required Elements)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: EFF461EB-4F56-44A5-895E-EE5EE42AD309
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - BlueTooth LE Support protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive uefi compliant warning (54) as ignored (EBBR Table
+    2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: UEFI Compliant Test
+    device path: No device path
+    group: GenericTest
+    guid: B27660E2-0E87-4794-82F1-E6BDBD8B7442
+    log: EfiCompliantBBTestPlatform_uefi.c
+    name: UEFI Compliant - IPsec protocols must be implemented
+    result: WARNING
+    revision: '0x00010001'
+    set guid: A0A8BED3-3D6F-4AD8-907A-84D52EE1543B
+    sub set: PlatformSpecificElements
+    test set: EFICompliantTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive image services failures as ignored (EBBR Table 2.4
+    Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Image Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 1D8B160C-7601-47C9-8102-68C0F801314B
+    log: ImageBBTestFunction.c
+    name: BS.LoadImage - InterfaceTestCheckpoint8
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 2FF0431A-8E07-4CDB-A298-D004566A74D4
+    sub set: LoadImage_Func
+    test set: ImageServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive protocol handler boot services failures as ignored
+    (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Protocol Handler Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 25CFFDF5-D252-4515-AF8F-D8DB68F022C3
+    log: ProtocolHandlerBBTestFunction_3.c
+    name: BS.ConnectController - InterfaceTestCheckpoint14
+    result: FAILURE
+    revision: '0x00010002'
+    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
+    sub set: ConnectController_Func
+    test set: ProtocolHandlerServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive protocol handler boot services failures (2) as
+    ignored (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Protocol Handler Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 4643E80E-A6BF-412C-B4FF-9629282BC831
+    log: ProtocolHandlerBBTestFunction_3.c
+    name: BS.ConnectController - InterfaceTestCheckpoint14
+    result: FAILURE
+    revision: '0x00010002'
+    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
+    sub set: ConnectController_Func
+    test set: ProtocolHandlerServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive protocol handler boot services failures (3) as
+    ignored (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Protocol Handler Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: 555913E8-BA56-4C68-80B5-A96B8A3AFCB1
+    log: ProtocolHandlerBBTestFunction_3.c
+    name: BS.ConnectController - InterfaceTestCheckpoint14
+    result: FAILURE
+    revision: '0x00010002'
+    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
+    sub set: ConnectController_Func
+    test set: ProtocolHandlerServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings as ignored (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestConformance.c
+    name: RT.GetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 735BA337-2A44-46A2-AFAB-AFBED7358F08
+    sub set: GetWakeupTime_Conf
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings (2) as ignored (EBBR Table
+    2.6 EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestConformance.c
+    name: RT.SetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 8721B500-F13A-40FA-8217-70ACDDDC67BF
+    sub set: SetWakeupTime_Conf
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings (3) as ignored (EBBR Table
+    2.6 EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestFunction.c
+    name: RT.SetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 8A878BFB-6BE1-4226-8F69-4EBF7A1FF9A5
+    sub set: SetWakeupTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services warnings (4) as ignored (EBBR Table
+    2.6 EFI_RUNTIME_SERVICES Implementation Requirements)
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: TimeServicesBBTestFunction.c
+    name: RT.GetWakeupTime - Unsupported
+    result: WARNING
+    revision: '0x00010000'
+    set guid: F508572D-74F7-4C6C-9CEF-DBA49C56F7AE
+    sub set: GetWakeupTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 2534ABC0-1F01-48A0-96DE-F8BBA745C364
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.SetVariable - Set Auth Variable with valid cert.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (2) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 55AF8FAD-1B12-45AD-B042-A643962F0470
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.SetVariable - Set Auth Variable with invalid cert.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (3) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: E9893BCB-EF2B-495C-82F0-D0630DA79476
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.SetVariable - Set Invalid Time Base Auth Variable
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (4) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: AA6BF36F-DAE5-43ED-954D-C1C7979D32A0
+    log: AuthVariableServicesBBTestFunction.c
+    name: RT.SetVariable - The 2nd Call SetVariable with the same Data, the
+      return status should be EFI_SECURITY_VIOLATION
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
+    sub set: AuthVar_Func
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (5) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6D0740FB-388A-491F-B818-9B5CB5170F95
+    log: AuthVariableServicesBBTestConformance.c
+    name: RT.QueryVariableInfo - Query Auth Variable.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services failures (6) as ignored
+    EBBR does not require authenticated EFI variables (Table 2.3 UEFI
+    Platform-Specific Required Elements)
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 008E18A5-C345-48AE-9134-61A692E30B87
+    log: AuthVariableServicesBBTestFunction.c
+    name: RT.SetVariable - Create one Time Base Auth Variable, the expect return
+      status should be EFI_SUCCESS
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
+    sub set: AuthVar_Func
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+# We force the following dropped or skipped tests result as `IGNORED' because
+# they are run only when some platform features are present, which are not
+# mandated by EBBR.
 
 - rule: Force dropped RNG as ignored (Table 2.3 UEFI Platform-Specific Required
     Elements)
@@ -587,1028 +1266,170 @@
   update:
     result: IGNORED
 
-###############################################################################
-#                                 Waived                                      #
-###############################################################################
-
-# We force the following tests result as `WAIVED', as they are known to work
-# with a recent U-Boot version.
-# This section should become ultimately empty, as devices stop to use old U-Boot
-# versions.
-
-- rule: Force simple file system protocol failure working with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force skipped simple network protocol test as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
   criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: C7900513-E931-404A-A5E3-E348407AB2A2
-    log: SimpleFileSystemBBTestConformance.c
-    name: Flush() Conformance Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 41E00D7C-E0F7-455F-A617-FC6356182414
-    sub set: Flush_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (2) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 033273AE-2471-4C08-B08D-EBD9DDBD5781
-    log: SimpleFileSystemExBBTestConformance.c
-    name: OpenEx() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 614CF090-E3A6-49B6-AF93-31BABA0761B4
-    sub set: OpenEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (3) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: AD02D93D-F2E8-4F25-93CE-940677B6E1B2
-    log: SimpleFileSystemExBBTestConformance.c
-    name: OpenEx() Conformance Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 614CF090-E3A6-49B6-AF93-31BABA0761B4
-    sub set: OpenEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (4) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: CAB7C260-A290-4845-B703-B19FEDF984EB
-    log: SimpleFileSystemExBBTestConformance.c
-    name: OpenEx() Conformance Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 614CF090-E3A6-49B6-AF93-31BABA0761B4
-    sub set: OpenEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (5) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 0A6985E4-FE17-4740-957A-E9C05B4502E0
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Test1---Sync
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (6) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: D5C326A3-07AD-490E-9BDC-A8E34D7AAE8A
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 -- Test5 -- Sync---Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (7) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: F87622CF-13C6-412E-86A6-8E7FF2630A8E
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1---Test4 --- Sync
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (8) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: AFD40EC9-5027-42A8-B02C-0CB58086D79C
-    log: SimpleFileSystemExBBTestFunction_FlushEx.c
-    name: FlushEx() Basic Test - checkpoint2----Sync
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
-    sub set: FlushEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (9) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: CE7774FA-D04C-45A6-B70B-CD91A276F915
-    log: SimpleFileSystemExBBTestConformance.c
-    name: FlushEx() Conformance Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2EF8D8C-3662-462F-9011-CDDD5DC03C6B
-    sub set: FlushEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (10) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 12BC7AB7-4AC5-4CF3-A554-6B34C95D0CEA
-    log: SimpleFileSystemExBBTestConformance.c
-    name: ReadEx() Conformance Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B877944F-7D05-427F-BB9C-BCCF78073488
-    sub set: ReadEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (11) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 864C9887-7205-4E15-AD9F-7A94ECF0C2D8
-    log: SimpleFileSystemExBBTestConformance.c
-    name: ReadEx() Conformance Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B877944F-7D05-427F-BB9C-BCCF78073488
-    sub set: ReadEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (12) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: C9AF9973-76AF-4701-88C0-FF610E37740A
-    log: SimpleFileSystemExBBTestConformance.c
-    name: WriteEx() Conformance Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: BFFE42D6-CE26-4B63-8609-51E69A1668A1
-    sub set: WriteEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (13) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: E8E8665C-A44F-491B-B7E0-5609C2BC20EE
-    log: SimpleFileSystemExBBTestFunction_ReadEx.c
-    name: ReadEx() Basic Test - checkpoint4----Sync Read Dir
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: C54B642D-4D3E-4897-9DD5-1F722165E00E
-    sub set: ReadEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (14) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 3C64E927-68E7-4668-AEA8-C2C7DC150C3F
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1---Test2---Sync Create Dir
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (15) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 8EB7F8CC-6D0D-4C10-BD94-DC327D2E6D3D
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1---Test3---Sync ---Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (16) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: CCB9106F-79EE-4EC1-98A5-168DE1A6B8F3
-    log: SimpleFileSystemExBBTestFunction_ReadEx.c
-    name: ReadEx() Basic Test - checkpoint2---Sync
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: C54B642D-4D3E-4897-9DD5-1F722165E00E
-    sub set: ReadEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (17) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 41FE9684-113B-415F-AFBF-EE48108A70C2
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Async -- Test5---Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (18) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 43AD5688-BC02-4870-B885-0286DD54B276
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Async----Test3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (19) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 5E767A63-577A-4628-B6E9-91B7D9AA05CB
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Test1--Async
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (20) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6277CCAC-481C-4CB2-AC96-899679F2A919
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Test2---Async---Open Dir
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (21) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 7D9EACF0-0167-4EF7-A7F2-31B53EC4CB8A
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Async----Test4 ----Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (22) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 8FFD05E8-AA76-4FCB-93E4-19A20C2BA904
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Async----Test5---Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (23) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 90908639-141F-4632-85CA-7D6E83E55747
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Async
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (24) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: EF745935-0937-4B11-A7CA-65AF0BF04544
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Test2---Async --- Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (25) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: F9DAD61F-FC35-4FD6-860B-7B8B2EBF8963
-    log: SimpleFileSystemExBBTestFunction_OpenEx.c
-    name: OpenEx() Basic Test - checkpoint1 ---Async -- Test4----Open File
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 7E68498E-343B-4B61-8E3F-FAE285D919F5
-    sub set: OpenEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (26) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 55702A2C-0EEF-4DED-A6D9-2FD79ABB885F
-    log: SimpleFileSystemExBBTestFunction_FlushEx.c
-    name: FlushEx() Basic Test - checkpoint1---Async
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
-    sub set: FlushEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (27) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 93EBE8A5-F66B-4532-9577-51E9DCDAB681
-    log: SimpleFileSystemExBBTestFunction_FlushEx.c
-    name: FlushEx() Basic Test - checkpoint4----Sync
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
-    sub set: FlushEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (28) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: AC3897AD-D9C1-4442-844B-5CA15C32800B
-    log: SimpleFileSystemExBBTestFunction_FlushEx.c
-    name: FlushEx() Basic Test - checkpoint3---Async
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
-    sub set: FlushEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (29) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 05241CBF-F260-41D7-B193-3B277F72124C
-    log: SimpleFileSystemExBBTestFunction_ReadEx.c
-    name: ReadEx() Basic Test - checkpoint3----Async Read Dir
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: C54B642D-4D3E-4897-9DD5-1F722165E00E
-    sub set: ReadEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file system protocol failures (30) working with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 05857EBF-C920-474A-974D-858D8398816F
-    log: SimpleFileSystemExBBTestFunction_ReadEx.c
-    name: ReadEx() Basic Test - checkpoint1---Async
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: C54B642D-4D3E-4897-9DD5-1F722165E00E
-    sub set: ReadEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force event timer and task priority services failures working with
-    U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Event, Timer, and Task Priority Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: BD6D4465-AEE3-4A07-8470-2ABA247BC865
-    log: EventTimerTaskPriorityServicesBBTestCreateEvent.c
-    name: BS.CreateEvent - Create event with invalid notify TPL.
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 50BF9D26-B53D-4CFF-BC10-BC6581BF509D
-    sub set: CreateEvent_Conf
-    test set: EventTimerandPriorityServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force event timer and task priority services failures (2) working with
-    U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Event, Timer, and Task Priority Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: A74A802F-D632-49F0-A3DE-13C55D9C9E06
-    log: EventTimerTaskPriorityServicesBBTestCreateEventEx.c
-    name: BS.CreateEventEx - Create event with invalid notify TPL.
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: F9B16C34-EAB5-4C9C-BE90-01B12E64F117
-    sub set: CreateEventEx_Conf
-    test set: EventTimerandPriorityServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time services failures working with U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 2D5CDBE5-1055-4EF6-8E90-0C993F93F698
-    log: TimeServicesBBTestFunction.c
-    name: RT.SetTime - Verify month after change
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
-    sub set: SetTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time service failures (2) working with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 3B96A20C-2B1F-44EA-BAA9-F96FEE131D05
-    log: TimeServicesBBTestFunction.c
-    name: RT.SetTime - Verify year after change
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
-    sub set: SetTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time service failures (3) working with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: DA4B19E7-F605-4FB9-A181-CCD335290BFE
-    log: TimeServicesBBTestFunction.c
-    name: RT.SetTime - Verify month after change
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
-    sub set: SetTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time service failures (4) working with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: E664E1D7-B733-410D-BC53-D4CFF2464355
-    log: TimeServicesBBTestFunction.c
-    name: RT.SetTime - Verify year after change
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
-    sub set: SetTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-# We force the following tests result as `WAIVED', as they are known to be still
-# failing with a recent U-Boot version.
-# This section should become ultimately empty, as more and more tests are fixed
-# with latest U-Boot.
-
-- rule: Force simple file protocol failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: set file position fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 11F22AEB-5FA8-412A-A12A-E3D46015368C
-    sub set: Flush_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: set file size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 22372DD8-AA00-4EDA-99E8-6FC14AB1FB3C
-    sub set: Write_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: Set File  Size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 38150EBD-8835-46C5-B085-6A6C626EA972
-    sub set: GetPosition_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (4) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemExBBTestFunction_WriteEx.c
-    name: set file size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44B63E71-6A74-4A23-9C2D-ED333DD5DDE2
-    sub set: WriteEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (5) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 36D0ED31-21F0-48C2-8974-6B6ECA41203C
-    log: SimpleFileSystemBBTestConformance.c
-    name: SetInfo() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (6) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestConformance.c
-    name: InternalSetFileSize fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (7) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: A9DF1E64-E769-4D16-A0D5-B559CE90CF2B
-    log: SimpleFileSystemBBTestConformance.c
-    name: 'InternalGetInfo fail,FileInfo->Attribute should be EFI_FILE_READONLY'
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (8) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: C7BFE9BF-92BF-4301-8217-75662EA52437
-    log: SimpleFileSystemBBTestConformance.c
-    name: SetInfo() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
-    sub set: SetInfo_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (9) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: Set File  Size fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 4867091F-5988-4A0C-9F21-440755479A1B
-    sub set: SetPosition_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (10) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: create file fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
-    sub set: Open_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (11) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemBBTestFunction.c
-    name: set file info fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
-    sub set: Open_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (12) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: SimpleFileSystemExBBTestFunction_FlushEx.c
-    name: set file position fail
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
-    sub set: FlushEx_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (13) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: A056BCFF-DB0B-4733-889A-B1CA52AC58E9
-    log: SimpleFileSystemExBBTestConformance.c
-    name: WriteEx() Conformance Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: BFFE42D6-CE26-4B63-8609-51E69A1668A1
-    sub set: WriteEx_Conf
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (14) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 12B68173-7C8D-4023-AFCC-F1C6BEB61CEF
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (15) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 19F9C6F4-2B6D-4EB3-80FB-255558F8472F
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (16) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 4BE420A1-D7E7-4327-8E63-5941EF4BFD2A
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (17) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 57880CD6-6EB1-40B5-A3EF-2826949AF89C
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint2
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (18) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 5EB09D11-22EE-43F7-A6C1-9592B50470E7
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint1
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple file protocol failures (19) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
-    group: MediaAccessTest
-    guid: 6E869806-1BC2-40D5-B302-61F8CE56EBFE
-    log: SimpleFileSystemBBTestFunction.c
-    name: SetInfo() Basic Test - checkpoint3
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
-    sub set: SetInfo_Func
-    test set: SimpleFileSystemProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures also failing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 2534ABC0-1F01-48A0-96DE-F8BBA745C364
-    log: AuthVariableServicesBBTestConformance.c
-    name: RT.SetVariable - Set Auth Variable with valid cert.
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
-    sub set: AuthVar_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 55AF8FAD-1B12-45AD-B042-A643962F0470
-    log: AuthVariableServicesBBTestConformance.c
-    name: RT.SetVariable - Set Auth Variable with invalid cert.
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
-    sub set: AuthVar_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: E9893BCB-EF2B-495C-82F0-D0630DA79476
-    log: AuthVariableServicesBBTestConformance.c
-    name: RT.SetVariable - Set Invalid Time Base Auth Variable
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
-    sub set: AuthVar_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (4) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 2F9966BA-0091-4085-BF9D-09AA809F942E
-    log: VariableServicesBBTestConformance.c
-    name: RT.QueryVariableInfo - With being an invalid combination
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
-    sub set: QueryVariableInfo_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (5) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: E7F2EB9F-1624-45A9-A287-3EA6F2F74C5F
-    log: VariableServicesBBTestConformance.c
-    name: RT.QueryVariableInfo - With Attributes being 0
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
-    sub set: QueryVariableInfo_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services failures (6) also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: AA6BF36F-DAE5-43ED-954D-C1C7979D32A0
-    log: AuthVariableServicesBBTestFunction.c
-    name: RT.SetVariable - The 2nd Call SetVariable with the same Data, the
-      return status should be EFI_SECURITY_VIOLATION
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 9338D0EC-807B-4750-986A-8F2A91BB3616
-    sub set: AuthVar_Func
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force image services failures also failing with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Image Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 1D8B160C-7601-47C9-8102-68C0F801314B
-    log: ImageBBTestFunction.c
-    name: BS.LoadImage - InterfaceTestCheckpoint8
-    result: FAILURE
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
     revision: '0x00010001'
-    set guid: 2FF0431A-8E07-4CDB-A298-D004566A74D4
-    sub set: LoadImage_Func
-    test set: ImageServicesTest
+    set guid: 426BE7F5-3F47-4919-9F77-C142BB0C9B27
+    sub set: NVData_Func
+    test set: SimpleNetworkProtocolTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures also failing with U-Boot v2021.04-rc2 as
-    waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force skipped simple network protocol test (2) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 534A9E0F-B31B-40C5-AD60-DF02C55361D4
+    sub set: ReceiveFilter_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (3) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: BA628A58-E318-4E4A-BAC2-A7833ADF42D9
+    sub set: Reset_Func
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (4) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 5408EB9D-B40A-47DD-BD04-E9A8B906661F
+    sub set: NVData_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (5) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: EC8714E0-2AB9-46E9-8F35-508334B118A7
+    sub set: StationAddress_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (6) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 762FCCB6-5CDB-4E23-8890-45CD233CD16F
+    sub set: StationAddress_Func
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force skipped simple network protocol test (7) as ignored
+    A full implementation of the UEFI general purpose networking ABIs is not
+    required (EBBR Table 2.4 Notable Deviations from UEFI § 2.6.2)
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: 122DD1F0-AF8E-4D3B-884B-14C2FF7AEFA7
+    sub set: Statistics_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive misc boot services skipped as ignored
+    EBBR does not require watchdog timer
+  criteria:
+    descr: Misc. Boot Services Test
+    device path: No device path
+    group: BootServicesTest
+    result: SKIPPED
+    revision: '0x00010001'
+    set guid: FF388AE5-4C51-45C6-9D37-6DE04BF9219A
+    sub set: SetWatchdogTimer_Conf
+    test set: MiscBootServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services skipped as ignored
+    EBBR does not require Hardware Error Record Persistence (2.2 UEFI
+    Compliance); the HwErrRecSupport variable may not be present
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: CF94F695-7917-4F78-A0A8-F0B509099297
+    sub set: HardwareErrorRecord_Conf
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force variable services (2) skipped as ignored
+    EBBR does not require Hardware Error Record Persistence (2.2 UEFI
+    Compliance); the HwErrRecSupport variable may not be present
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: EFABA332-13E8-4730-97CB-48CE9F0826C5
+    sub set: HardwareErrorRecord_Func
+    test set: VariableServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force simple text input ex protocol skipped as ignored
+    EBBR does not specifically require that a console device be always bound to
+    the Simple Text Input Ex Protocol.
+  criteria:
+    descr: Simple Text Input Ex Protocol Test
+    device path: No device path
+    group: ConsoleSupportTest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 2C3CA282-5644-41B6-AFC9-4387F25389BD
+    sub set: ReadKeyStrokeExFunctionAuto
+    test set: SimpleTextInputExProtocolTest
+  update:
+    result: IGNORED
+
+# We force the following tests result as `IGNORED', as they are not required by
+# EBBR. The language in EBBR will be made more explicit in a future revision, to
+# make it extra clear the concerned features are not mandated.
+
+- rule: Force false-positive time services failures as ignored
+    Daylight is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1622,11 +1443,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures (2) also failing with U-Boot v2021.04-rc2
-    as waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures (2) as ignored
+    Daylight is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1640,11 +1461,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures (3) also failing with U-Boot v2021.04-rc2
-    as waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures (3) as ignored
+    Time zone is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1658,11 +1479,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force time services failures (4) also failing with U-Boot v2021.04-rc2
-    as waived
-    (https://lists.linaro.org/pipermail/boot-architecture/2021-February/001674.html)
+- rule: Force false-positive time services failures (4) as ignored
+    Time zone is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Time Services Test
     device path: No device path
@@ -1676,10 +1497,11 @@
     sub set: SetTime_Func
     test set: TimeServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force misc boot services failures also failing with U-Boot v2021.04-rc2
-    as waived
+- rule: Force false-positive misc boot services failures as ignored
+    Monotonic count is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1693,10 +1515,11 @@
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force misc boot services failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force false-positive misc boot services failures (2) as ignored
+    Monotonic count is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1710,10 +1533,11 @@
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force misc boot services failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force false-positive misc boot services failures (3) as ignored
+    Monotonic count is not required by EBBR.
+    Explicit justification in a future revision of EBBR is pending.
   criteria:
     descr: Misc. Boot Services Test
     device path: No device path
@@ -1727,131 +1551,303 @@
     sub set: GetNextMonotonicCount_Func
     test set: MiscBootServicesTest
   update:
-    result: WAIVED
+    result: IGNORED
 
-- rule: Force protocol handler boot services failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Protocol Handler Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 25CFFDF5-D252-4515-AF8F-D8DB68F022C3
-    log: ProtocolHandlerBBTestFunction_3.c
-    name: BS.ConnectController - InterfaceTestCheckpoint14
-    result: FAILURE
-    revision: '0x00010002'
-    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
-    sub set: ConnectController_Func
-    test set: ProtocolHandlerServicesTest
-  update:
-    result: WAIVED
+###############################################################################
+#                         Known U-Boot limitations                            #
+###############################################################################
 
-- rule: Force protocol handler boot services failures (2) also failing with
-    U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Protocol Handler Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 4643E80E-A6BF-412C-B4FF-9629282BC831
-    log: ProtocolHandlerBBTestFunction_3.c
-    name: BS.ConnectController - InterfaceTestCheckpoint14
-    result: FAILURE
-    revision: '0x00010002'
-    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
-    sub set: ConnectController_Func
-    test set: ProtocolHandlerServicesTest
-  update:
-    result: WAIVED
+# We force the following tests result as `KNOWN U-BOOT LIMITATION'. They are
+# genuine bugs, which much ultimately be fixed. We know about them; they are due
+# to U-Boot FAT filesystem implementation limitations and they do not prevent an
+# OS to boot.
 
-- rule: Force protocol handler boot services failures (3) also failing with
-    U-Boot v2021.04-rc2 as waived
+- rule: Force simple file protocol failures as known U-Boot limitation
   criteria:
-    descr: Protocol Handler Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    guid: 555913E8-BA56-4C68-80B5-A96B8A3AFCB1
-    log: ProtocolHandlerBBTestFunction_3.c
-    name: BS.ConnectController - InterfaceTestCheckpoint14
-    result: FAILURE
-    revision: '0x00010002'
-    set guid: 705E2497-1B8F-4307-91E1-F33F2F2B5506
-    sub set: ConnectController_Func
-    test set: ProtocolHandlerServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    guid: 2143092E-03DD-4806-9FD6-08D42B9ABFC6
-    log: Status - Unsupported, Filter - 5500000000, Mask - 0,Count - 0(0),
-     Address - 0, 0, 0
-    name: EFI_SIMPLE_NETWORK_PROTOCOL.ReceiveFilters - Invoke ReceiveFilters()
-      to reset multicast receive filters list and verify interface correctness
-      within test case
-    result: FAILURE
-    revision: '0x00010001'
-    set guid: 7A1E587D-53AC-444E-A5A1-81CD3F4F04D4
-    sub set: ReceiveFilter_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force misc runtime services failures also failing with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Misc Runtime Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 145E4790-3342-4C8C-99F2-7F6500FD26E5
-    log: MiscRuntimeServicesBBTestConformance.c
-    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: set file position fail
     result: FAILURE
     revision: '0x00010000'
-    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
-    sub set: UpdateCapsule_Conf
-    test set: MiscRuntimeServicesTest
+    set guid: 11F22AEB-5FA8-412A-A12A-E3D46015368C
+    sub set: Flush_Func
+    test set: SimpleFileSystemProtocolTest
   update:
-    result: WAIVED
+    result: KNOWN U-BOOT LIMITATION
 
-- rule: Force misc runtime services failures (2) also failing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force simple file protocol failures (2) as known U-Boot limitation
   criteria:
-    descr: Misc Runtime Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 18F86BF8-76CF-4225-8E3E-1B1F63432600
-    log: MiscRuntimeServicesBBTestConformance.c
-    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: set file size fail
     result: FAILURE
     revision: '0x00010000'
-    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
-    sub set: UpdateCapsule_Conf
-    test set: MiscRuntimeServicesTest
+    set guid: 22372DD8-AA00-4EDA-99E8-6FC14AB1FB3C
+    sub set: Write_Func
+    test set: SimpleFileSystemProtocolTest
   update:
-    result: WAIVED
+    result: KNOWN U-BOOT LIMITATION
 
-- rule: Force misc runtime services failures (3) also failing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force simple file protocol failures (3) as known U-Boot limitation
   criteria:
-    descr: Misc Runtime Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 304F6960-79D0-4F17-8811-620FC6BDB0D4
-    log: MiscRuntimeServicesBBTestConformance.c
-    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid ScatterGatherList
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: Set File  Size fail
     result: FAILURE
     revision: '0x00010000'
-    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
-    sub set: UpdateCapsule_Conf
-    test set: MiscRuntimeServicesTest
+    set guid: 38150EBD-8835-46C5-B085-6A6C626EA972
+    sub set: GetPosition_Func
+    test set: SimpleFileSystemProtocolTest
   update:
-    result: WAIVED
+    result: KNOWN U-BOOT LIMITATION
 
-- rule: Force simple text input ex protocol warnings also appearing with U-Boot
-    v2021.04-rc2 as waived
+- rule: Force simple file protocol failures (4) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemExBBTestFunction_WriteEx.c
+    name: set file size fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44B63E71-6A74-4A23-9C2D-ED333DD5DDE2
+    sub set: WriteEx_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (5) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 36D0ED31-21F0-48C2-8974-6B6ECA41203C
+    log: SimpleFileSystemBBTestConformance.c
+    name: SetInfo() Conformance Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (6) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestConformance.c
+    name: InternalSetFileSize fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (7) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: A9DF1E64-E769-4D16-A0D5-B559CE90CF2B
+    log: SimpleFileSystemBBTestConformance.c
+    name: 'InternalGetInfo fail,FileInfo->Attribute should be EFI_FILE_READONLY'
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (8) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: C7BFE9BF-92BF-4301-8217-75662EA52437
+    log: SimpleFileSystemBBTestConformance.c
+    name: SetInfo() Conformance Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 44BEC963-DABD-43E1-B38A-955ABA3B18FF
+    sub set: SetInfo_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (9) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: Set File  Size fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 4867091F-5988-4A0C-9F21-440755479A1B
+    sub set: SetPosition_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (10) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: create file fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
+    sub set: Open_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (11) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemBBTestFunction.c
+    name: set file info fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A6B309B3-A0AD-409D-A500-FF343E490740
+    sub set: Open_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (12) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: SimpleFileSystemExBBTestFunction_FlushEx.c
+    name: set file position fail
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: B2AF35D8-8E2B-48B1-A3FC-B4C67D80F99D
+    sub set: FlushEx_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (13) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: A056BCFF-DB0B-4733-889A-B1CA52AC58E9
+    log: SimpleFileSystemExBBTestConformance.c
+    name: WriteEx() Conformance Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: BFFE42D6-CE26-4B63-8609-51E69A1668A1
+    sub set: WriteEx_Conf
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (14) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 12B68173-7C8D-4023-AFCC-F1C6BEB61CEF
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (15) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 19F9C6F4-2B6D-4EB3-80FB-255558F8472F
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint1
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (16) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 4BE420A1-D7E7-4327-8E63-5941EF4BFD2A
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint2
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (17) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 57880CD6-6EB1-40B5-A3EF-2826949AF89C
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint2
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (18) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 5EB09D11-22EE-43F7-A6C1-9592B50470E7
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint1
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple file protocol failures (19) as known U-Boot limitation
+  criteria:
+    descr: Testing For Simple File System Protocol and EFI_FILE Protocol
+    group: MediaAccessTest
+    guid: 6E869806-1BC2-40D5-B302-61F8CE56EBFE
+    log: SimpleFileSystemBBTestFunction.c
+    name: SetInfo() Basic Test - checkpoint3
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: EBA448E7-59E6-474A-875E-56DDEE9E3BFE
+    sub set: SetInfo_Func
+    test set: SimpleFileSystemProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force simple text input ex protocol warnings as known U-Boot limitation
   criteria:
     descr: Simple Text Input Ex Protocol Test
     device path: No device path
@@ -1866,227 +1862,17 @@
     sub set: SetStateConformance
     test set: SimpleTextInputExProtocolTest
   update:
-    result: WAIVED
+    result: KNOWN U-BOOT LIMITATION
 
-- rule: Force time services warnings also appearing with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestConformance.c
-    name: RT.GetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 735BA337-2A44-46A2-AFAB-AFBED7358F08
-    sub set: GetWakeupTime_Conf
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
+###############################################################################
+#                                Comments                                     #
+###############################################################################
 
-- rule: Force time services warnings (2) also appearing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestConformance.c
-    name: RT.SetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 8721B500-F13A-40FA-8217-70ACDDDC67BF
-    sub set: SetWakeupTime_Conf
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
+# We add comments to the following tests result, as they are known to fail with
+# small terminals.
 
-- rule: Force time services warnings (3) also appearing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestFunction.c
-    name: RT.SetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 8A878BFB-6BE1-4226-8F69-4EBF7A1FF9A5
-    sub set: SetWakeupTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force time services warnings (4) also appearing with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Time Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
-    log: TimeServicesBBTestFunction.c
-    name: RT.GetWakeupTime - Unsupported
-    result: WARNING
-    revision: '0x00010000'
-    set guid: F508572D-74F7-4C6C-9CEF-DBA49C56F7AE
-    sub set: GetWakeupTime_Func
-    test set: TimeServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services skipped also with U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    result: SKIPPED
-    revision: '0x00010000'
-    set guid: CF94F695-7917-4F78-A0A8-F0B509099297
-    sub set: HardwareErrorRecord_Conf
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force variable services (2) skipped also with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Variable Services Test
-    device path: No device path
-    group: RuntimeServicesTest
-    result: SKIPPED
-    revision: '0x00010000'
-    set guid: EFABA332-13E8-4730-97CB-48CE9F0826C5
-    sub set: HardwareErrorRecord_Func
-    test set: VariableServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force misc boot services skipped also with U-Boot v2021.04-rc2 as waived
-  criteria:
-    descr: Misc. Boot Services Test
-    device path: No device path
-    group: BootServicesTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: FF388AE5-4C51-45C6-9D37-6DE04BF9219A
-    sub set: SetWatchdogTimer_Conf
-    test set: MiscBootServicesTest
-  update:
-    result: WAIVED
-
-- rule: Force simple text input ex protocol skipped also with U-Boot
-    v2021.04-rc2 as waived
-  criteria:
-    descr: Simple Text Input Ex Protocol Test
-    device path: No device path
-    group: ConsoleSupportTest
-    result: SKIPPED
-    revision: '0x00010000'
-    set guid: 2C3CA282-5644-41B6-AFC9-4387F25389BD
-    sub set: ReadKeyStrokeExFunctionAuto
-    test set: SimpleTextInputExProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol skipped also with U-Boot v2021.04-rc2 as
-    waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 426BE7F5-3F47-4919-9F77-C142BB0C9B27
-    sub set: NVData_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (2) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 534A9E0F-B31B-40C5-AD60-DF02C55361D4
-    sub set: ReceiveFilter_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (3) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: BA628A58-E318-4E4A-BAC2-A7833ADF42D9
-    sub set: Reset_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (4) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 5408EB9D-B40A-47DD-BD04-E9A8B906661F
-    sub set: NVData_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (5) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: EC8714E0-2AB9-46E9-8F35-508334B118A7
-    sub set: StationAddress_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (6) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 762FCCB6-5CDB-4E23-8890-45CD233CD16F
-    sub set: StationAddress_Func
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-- rule: Force simple network protocol (7) skipped also with U-Boot v2021.04-rc2
-    as waived
-  criteria:
-    descr: Simple Network Protocol Test
-    group: NetworkSupportTest
-    result: SKIPPED
-    revision: '0x00010001'
-    set guid: 122DD1F0-AF8E-4D3B-884B-14C2FF7AEFA7
-    sub set: Statistics_Conf
-    test set: SimpleNetworkProtocolTest
-  update:
-    result: WAIVED
-
-# We force the following tests result as `WAIVED', as they are known to fail
-# with small terminals.
-
-- rule: Force simple text output protocol failures with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -2100,11 +1886,10 @@
     sub set: ClearScreen_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (2) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (2) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -2118,11 +1903,10 @@
     sub set: EnableCursor_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (3) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (3) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -2136,11 +1920,10 @@
     sub set: Reset_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (4) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (4) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -2154,11 +1937,10 @@
     sub set: SetAttribute_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (5) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (5) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -2172,11 +1954,10 @@
     sub set: SetCursorPosition_Conf
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
 
-- rule: Force simple text output protocol failures (6) with small terminals as
-    waived
-    Mode 1 necessitates a 80x50 terminal
+- rule: Add comments to simple text output protocol failures (6) with small
+    terminals
   criteria:
     descr: Simple Text Output Protocol Test
     device path: No device path
@@ -2190,4 +1971,132 @@
     sub set: SetCursorPosition_Func
     test set: SimpleOutputProtocolTest
   update:
-    result: WAIVED
+    comments: Mode 1 necessitates a 80x50 terminal
+
+# We add comments to the following tests failures for which we know a likely
+# cause, to help triaging/debugging.
+
+- rule: Add comments to boot services memory map test failure with ACS-IR
+    v21.05_0.8_BETA-0
+  criteria:
+    descr: SbbrBootServices Tests
+    device path: No device path
+    group: BootServicesTest
+    guid: 58A44F17-760E-478B-BAEF-E20BFBCD7457
+    log: MemoryMap Not Found
+    name: MemoryMap
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 8540C12D-5413-4A0B-A545-89A8E3C7DA4B
+    sub set: MemoryMap
+    test set: SbbrBootServices
+  update:
+    comments: This is a known issue with ACS-IR v21.05_0.8_BETA-0
+
+- rule: Add comments to failure due to missing ESP
+  criteria:
+    descr: Image Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: A5BB81FA-1063-4358-97AF-AD57D42BF055
+    log: GetVariable service routine failed - Not Found
+    name: BS.ExitBootServices - ConsistencyTestCheckpoint1
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 303ABFAB-C865-4255-86E3-6EEF175E30DD
+    sub set: ExitBootServices_Conf
+    test set: ImageServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (2) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6AFDEA5E-1030-48AB-91DD-7CD3537CAD3B
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (3) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6AFDEA5E-1030-48AB-91DD-7CD3537CAD3B
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (4) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 653F14CC-8ECD-4AAF-ADD6-96C507112D67
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (5) due to missing ESP
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 653F14CC-8ECD-4AAF-ADD6-96C507112D67
+    log: Status - Not Found, Expected - Success
+    name: RT.SetVariable - Non-volatile variable after system reset
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D4700FE8-9832-4353-961F-74682D3701F6
+    sub set: SetVariable_Func
+    test set: VariableServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
+
+- rule: Add comments to failure (6) due to missing ESP
+  criteria:
+    descr: SBBRRuntimeServices Tests
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: Status - Not Found
+    name: RS.GetVariable
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A5936AEB-3642-4D1D-B226-09E0E0A52BAF
+    sub set: Non-volatile Variable Reset Test
+    test set: SBBRRuntimeServicesTest
+  update:
+    comments: Check logs for messages such as "No EFI system partition" or
+      "Failed to persist EFI variables" and check that system has an EFI System
+      Partition
