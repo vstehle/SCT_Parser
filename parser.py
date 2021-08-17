@@ -215,16 +215,17 @@ def key_tree_2_md(input_list, file):
 def dict_2_md(input_list, file):
     if len(input_list) > 0:
         file.write("\n\n")
+        k = input_list[0].keys()
         # create header for MD table using dict keys
         temp_string1, temp_string2 = "|", "|"
-        for x in (input_list[0].keys()):
+        for x in k:
             temp_string1 += (x + "|")
             temp_string2 += ("---|")
         file.write(temp_string1 + "\n" + temp_string2 + "\n")
         # print each item from the dict into the table
         for x in input_list:
             test_string = "|"
-            for y in x.keys():
+            for y in k:
                 test_string += (x[y] + "|")
             file.write(test_string + '\n')
     # seprate table from other items in MD
