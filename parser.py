@@ -652,6 +652,65 @@ def gen_md(md, res_keys, bins):
             n += 1
 
 
+# Read back results from a previously generated summary markdown file.
+# From this, we re-create a database the best we can and we return it.
+def read_md(input_md):
+    logging.debug(f'Read {input_md}')
+    tables = []
+
+    with open(input_md, 'r') as f:
+        t = None
+
+        for i, line in enumerate(f):
+            line = line.rstrip()
+
+            if re.match(r'^\|', line):
+                # Split the line. We need to take care of preserving special
+                # cases such as "Pci(0|0)" for example
+                line = re.sub(r'\((\w+)\|(\w+)\)', r'(\1%\2)', line)
+                x = line.split('|')
+                x = x[1:len(x) - 1]
+                x = [re.sub(r'%', '|', e) for e in x]
+
+                if t is None:
+                    t = []
+                    logging.debug(f'Table line {i + 1}, keys: {x}')
+
+                t.append(x)
+
+            elif t is not None:
+                tables.append(t)
+                t = None
+
+        assert(t is None)
+
+    # Remove summary table
+    assert(len(tables[0][0]) == 2)
+    del tables[0]
+
+    # Transform tables lines to dicts and merge everything
+    cross_check = []
+
+    for t in tables:
+        # Save keys
+        keys = t.pop(0)
+        n = len(keys)
+        # Drop underlines
+        t.pop(0)
+
+        # Convert lines
+        for i, x in enumerate(t):
+            assert(len(x) == n)
+            y = {}
+
+            for j, k in enumerate(keys):
+                y[k] = x[j]
+
+            cross_check.append(y)
+
+    return cross_check
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
@@ -678,6 +737,7 @@ if __name__ == '__main__':
         '--uniq', action='store_true', help='Collapse duplicates')
     parser.add_argument(
         '--print', action='store_true', help='Print results to stdout')
+    parser.add_argument('--input-md', help='Input .md filename')
     parser.add_argument('log_file', help='Input .ekl filename')
     parser.add_argument('seq_file', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
@@ -698,10 +758,14 @@ if __name__ == '__main__':
         format='%(levelname)s %(funcName)s: %(message)s',
         level=logging.DEBUG if args.debug else logging.INFO)
 
-    # Command line argument 1 is the ekl file to open. Command line argument 2
-    # is the seq file to open. Read both and combine them into a single
-    # cross_check database.
-    cross_check = read_log_and_seq(args.log_file, args.seq_file)
+    if args.input_md is not None:
+        cross_check = read_md(args.input_md)
+    else:
+        # Command line argument 1 is the ekl file to open.
+        # Command line argument 2 is the seq file to open.
+        # Read both and combine them into a single cross_check database.
+        cross_check = read_log_and_seq(args.log_file, args.seq_file)
+
     logging.debug('{} combined test(s)'.format(len(cross_check)))
 
     # Take configuration file into account. This can perform transformations on
@@ -740,7 +804,10 @@ if __name__ == '__main__':
     logging.info(', '.join(s))
 
     # generate MD summary
-    gen_md(args.md, res_keys, bins)
+    # As a special case, we skip generation when we are reading from a markdown
+    # summary, which has the same name as the output.
+    if args.input_md is None or args.input_md != args.md:
+        gen_md(args.md, res_keys, bins)
 
     # Generate yaml config template if requested
     if 'template' in args and args.template is not None:

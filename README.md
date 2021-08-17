@@ -131,6 +131,23 @@ $ ./parser.py \
       --fields 'count,result,name' --uniq --print ...
 ```
 
+### Re-reading markdown results
+
+It is possible to re-read a previously generated markdown results file with the
+`--input-md` option. This can be useful to perform further processing on the
+tests.
+
+Example command to read a previously generated markdown:
+
+``` {.sh}
+$ ./parser.py --input-md 'result.md' ...
+```
+
+* By default an output markdown is still generated, except in the case where the
+  input and output markdown have the same filename.
+* The generated markdown results do not contain the "passed" tests. They can
+  therefore not be re-read.
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config
