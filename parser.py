@@ -624,6 +624,34 @@ def read_log_and_seq(log_file, seq_file):
     return combine_dbs(db1, db2)
 
 
+# generate MD summary
+def gen_md(md, res_keys, bins):
+    logging.debug(f'Generate {md}')
+
+    with open(md, 'w') as resultfile:
+        resultfile.write("# SCT Summary \n\n")
+        resultfile.write("|  |  |\n")
+        resultfile.write("|--|--|\n")
+
+        # Loop on all the result values we found for the summary
+        for k in sorted(res_keys):
+            resultfile.write(
+                "|{}:|{}|\n".format(k.title(), len(bins[k])))
+
+        resultfile.write("\n\n")
+
+        # Loop on all the result values we found (except PASS) for the sections
+        # listing the tests by group
+        n = 1
+        res_keys_np = set(res_keys)
+        res_keys_np.remove('PASS')
+
+        for k in sorted(res_keys_np):
+            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
+            key_tree_2_md(bins[k], resultfile)
+            n += 1
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
@@ -712,30 +740,7 @@ if __name__ == '__main__':
     logging.info(', '.join(s))
 
     # generate MD summary
-    logging.debug(f'Generate {args.md}')
-
-    with open(args.md, 'w') as resultfile:
-        resultfile.write("# SCT Summary \n\n")
-        resultfile.write("|  |  |\n")
-        resultfile.write("|--|--|\n")
-
-        # Loop on all the result values we found for the summary
-        for k in sorted(res_keys):
-            resultfile.write(
-                "|{}:|{}|\n".format(k.title(), len(bins[k])))
-
-        resultfile.write("\n\n")
-
-        # Loop on all the result values we found (except PASS) for the sections
-        # listing the tests by group
-        n = 1
-        res_keys_np = set(res_keys)
-        res_keys_np.remove('PASS')
-
-        for k in sorted(res_keys_np):
-            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
-            key_tree_2_md(bins[k], resultfile)
-            n += 1
+    gen_md(args.md, res_keys, bins)
 
     # Generate yaml config template if requested
     if 'template' in args and args.template is not None:
