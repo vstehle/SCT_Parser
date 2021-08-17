@@ -740,7 +740,7 @@ if __name__ == '__main__':
     # command line argument 3&4, key are to support a key & value search.
     # these will be displayed in CLI
     if args.find_key is not None and args.find_value is not None:
-        found = key_value_find(db1, args.find_key, args.find_value)
+        found = key_value_find(cross_check, args.find_key, args.find_value)
         #print the dict
         print("found:",len(found),"items with search constraints")
         for x in found:
