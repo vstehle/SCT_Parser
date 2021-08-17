@@ -192,27 +192,23 @@ def seq_parser(file):
     return temp_dict
 
 
-# group items by key, and print by key
-# we slowly iterate through the list, group and print groups
-def key_tree_2_md(input_list, file, key):
-    # make a copy so we don't destroy the first list.
-    temp_list = input_list.copy()
-    while temp_list:
-        test_dict = temp_list.pop()
-        found, not_found = [test_dict], []
-        # go through whole list looking for key match
-        while temp_list:
-            next_dict = temp_list.pop()
-            # if match add to found
-            if next_dict[key] == test_dict[key]:
-                found.append(next_dict)
-            # else not found
-            else:
-                not_found.append(next_dict)
-        # start over with found items removed
-        temp_list = not_found
-        file.write("### " + test_dict[key])
-        dict_2_md(found, file)
+# Print items by "group"
+def key_tree_2_md(input_list, file):
+    h = {}
+
+    # Bin by group
+    for t in input_list:
+        g = t['group']
+
+        if g not in h:
+            h[g] = []
+
+        h[g].append(t)
+
+    # Print each group
+    for g in sorted(h.keys()):
+        file.write("### " + g)
+        dict_2_md(h[g], file)
 
 
 # generic writer, takes a list of dicts and turns the dicts into an MD table.
@@ -737,7 +733,7 @@ if __name__ == '__main__':
 
         for k in sorted(res_keys_np):
             resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
-            key_tree_2_md(bins[k], resultfile, "group")
+            key_tree_2_md(bins[k], resultfile)
             n += 1
 
     # Generate yaml config template if requested
