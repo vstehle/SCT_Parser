@@ -578,6 +578,35 @@ def combine_dbs(db1, db2):
     return cross_check
 
 
+# Read the .ekl log file and the .seq file and combine them into a single
+# database, which we return.
+def read_log_and_seq(log_file, seq_file):
+    # ekl file to open
+    # "database 1" all tests.
+    db1 = list()
+    logging.debug(f'Read {log_file}')
+
+    # files are encoded in utf-16
+    with open(log_file, "r", encoding="utf-16") as f:
+        db1 = ekl_parser(f.readlines())
+
+    logging.debug('{} test(s)'.format(len(db1)))
+
+    # seq file to open
+    # "database 2" all test sets that should run
+    db2 = dict()
+    logging.debug(f'Read {seq_file}')
+
+    # files are encoded in utf-16
+    with open(seq_file, "r", encoding="utf-16") as f:
+        db2 = seq_parser(f)
+
+    logging.debug('{} test set(s)'.format(len(db2)))
+
+    # Produce a single cross_check database from our two db1 and db2 databases.
+    return combine_dbs(db1, db2)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
@@ -624,26 +653,11 @@ if __name__ == '__main__':
         format='%(levelname)s %(funcName)s: %(message)s',
         level=logging.DEBUG if args.debug else logging.INFO)
 
-    #Command line argument 1, ekl file to open
-    db1 = list() #"database 1" all tests.
-    logging.debug(f'Read {args.log_file}')
-
-    with open(args.log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
-        db1 = ekl_parser(f.readlines())
-
-    logging.debug('{} test(s)'.format(len(db1)))
-
-    #Command line argument 2, seq file to open
-    db2 = dict() #"database 2" all test sets that should run
-    logging.debug(f'Read {args.seq_file}')
-
-    with open(args.seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
-        db2 = seq_parser(f)
-
-    logging.debug('{} test set(s)'.format(len(db2)))
-
-    # Produce a single cross_check database from our two db1 and db2 databases.
-    cross_check = combine_dbs(db1, db2)
+    # Command line argument 1 is the ekl file to open. Command line argument 2
+    # is the seq file to open. Read both and combine them into a single
+    # cross_check database.
+    cross_check = read_log_and_seq(args.log_file, args.seq_file)
+    logging.debug('{} combined test(s)'.format(len(cross_check)))
 
     # Take configuration file into account. This can perform transformations on
     # the tests results.
