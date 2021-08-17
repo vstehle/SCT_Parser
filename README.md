@@ -250,8 +250,18 @@ It is possible to convert this `README.md` into `README.pdf` with pandoc using
 
 ### Sanity checks
 
-To perform sanity checks, run `make check`. For the moment this runs `yamllint`,
-which will inspect all [YAML] files and report errors. See `make help`.
+To perform sanity checks, run `make check`. It runs a number of checkers and
+reports errors:
+
+-------------------------------
+      Checker  Target
+-------------  ----------------
+     `flake8`  Python scripts.
+   `yamllint`  [YAML] files.
+ `shellcheck`  Shell scripts.
+-------------------------------
+
+See `make help`.
 
 ### db structure:
 
