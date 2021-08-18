@@ -1,4 +1,4 @@
-# SCT_Parser
+# EDK2 SCT Results Parser
 
 This is an external parser script for [UEFI SCT]. (WIP)
 
@@ -8,6 +8,19 @@ generated `.seq` from [UEFI SCT] configurator.
 It will proceed to generate a Markdown file listing number of failures, passes, each test from the sequence file set that was Silently dropped, and a list of all failures and warnings.
 
 [UEFI SCT]: https://uefi.org/testtools
+
+## Quick Start
+
+If you're using this tool to analyze EBBR test results, use the following
+command. The parsed report can be found in `result.md`.
+
+``` {.sh}
+$ ./parser.py --config EBBR.yaml \
+		</path/to/sct_results/Overall/Summary.ekl> \
+		<path/to/sct_results/Sequence/EBBR.seq>
+INFO apply_rules: Updated 200 test(s) out of 12206 after applying 124 rule(s)
+INFO main: 0 dropped(s), 1 failure(s), 93 ignored(s), 106 known u-boot limitation(s), 12006 pass(s), 0 warning(s)
+```
 
 ## Usage
 Usage to generate a "result md" is such. `python3 parser.py <log_file.ekl> <seq_file.seq>`
