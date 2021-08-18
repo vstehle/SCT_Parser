@@ -578,7 +578,7 @@ def combine_dbs(db1, db2):
     return cross_check
 
 
-def main():
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
@@ -604,12 +604,8 @@ def main():
         '--uniq', action='store_true', help='Collapse duplicates')
     parser.add_argument(
         '--print', action='store_true', help='Print results to stdout')
-    parser.add_argument(
-        'log_file', nargs='?', default='sample.ekl',
-        help='Input .ekl filename')
-    parser.add_argument(
-        'seq_file', nargs='?', default='sample.seq',
-        help='Input .seq filename')
+    parser.add_argument('log_file', help='Input .ekl filename')
+    parser.add_argument('seq_file', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
     parser.add_argument('find_value', nargs='?', help='Search value')
 
@@ -751,6 +747,3 @@ def main():
             print(
                 x["guid"], ":", x["name"], "with", args.find_key, ":",
                 x[args.find_key])
-
-
-main()
