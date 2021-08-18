@@ -578,7 +578,7 @@ def combine_dbs(db1, db2):
     return cross_check
 
 
-def main():
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
@@ -751,6 +751,3 @@ def main():
             print(
                 x["guid"], ":", x["name"], "with", args.find_key, ":",
                 x[args.find_key])
-
-
-main()
