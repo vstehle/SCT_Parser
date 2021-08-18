@@ -226,7 +226,8 @@ def dict_2_md(input_list, file):
         for x in input_list:
             test_string = "|"
             for y in k:
-                test_string += (x[y] + "|")
+                v = x[y] if y in x else ''
+                test_string += v + "|"
             file.write(test_string + '\n')
     # seprate table from other items in MD
     file.write("\n\n")
