@@ -30,8 +30,7 @@ Usage to generate a `result.md` is such:
 $ python3 parser.py <log_file.ekl> <seq_file.seq>
 ```
 
-If you do no provided any command line arguments it will use `sample.ekl` and
-`sample.seq`. The output filename can be specified with the `--md` option:
+The output filename can be specified with the `--md` option:
 
 ``` {.sh}
 $ ./parser.py --md out.md ...
@@ -223,13 +222,13 @@ tests.
 
 ### Sample
 
-A `sample.yaml` configuration file is provided as example, to use with the
-`sample.ekl` and `sample.seq` files.
+In the folder `sample`, a `sample.yaml` configuration file is provided as
+example, to use with the `sample.ekl` and `sample.seq` files.
 
 Try it with:
 
 ``` {.sh}
-$ ./parser.py --config sample.yaml ...
+$ ./parser.py --config sample/sample.yaml sample/sample.ekl sample/sample.seq
 ```
 
 ### Generating a configuration template
