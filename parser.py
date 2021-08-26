@@ -500,6 +500,7 @@ def gen_template(cross_check, filename):
 
 # Print to stdout
 # The fields to write are supplied as a list
+# We handle the case where not all fields are present for all records
 def do_print(cross_check, fields):
     logging.debug(f'Print (fields: {fields})')
 
@@ -512,7 +513,7 @@ def do_print(cross_check, fields):
 
     for x in cross_check:
         for f in fm1:
-            w[f] = max(w[f], len(str(x[f])))
+            w[f] = max(w[f], len(str(x[f]) if f in x else ''))
 
     # Second pass where we print
     lf = fields[len(fields) - 1]
@@ -523,7 +524,7 @@ def do_print(cross_check, fields):
 
     for x in cross_check:
         print(' '.join([
-            *map(lambda f: f"{x[f]:{w[f] if f in x else ''}}", fm1),
+            *map(lambda f: f"{x[f] if f in x else '':{w[f]}}", fm1),
             x[lf] if lf in x else '']))
 
 
