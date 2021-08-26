@@ -2043,6 +2043,26 @@
   update:
     result: KNOWN ACS LIMITATION
 
+- rule: Force boot services memory map test warnings with ACS-IR
+    v21.07_0.9_BETA as known ACS limitation.
+    U-Boot is using an identity mapping for its virtual memory.
+  criteria:
+    descr: SbbrBootServices Tests
+    device path: No device path
+    group: BootServicesTest
+    guid: 58A44F17-760E-478B-BAEF-E20BFBCD7457
+    log: is Identity Mapped. UEFI runtime environment must not be written with
+      any assumption of an identity mapping between virtual and physical memory
+      maps.
+    name: MemoryMap
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 8540C12D-5413-4A0B-A545-89A8E3C7DA4B
+    sub set: MemoryMap
+    test set: SbbrBootServices
+  update:
+    result: KNOWN ACS LIMITATION
+
 ###############################################################################
 #                                Comments                                     #
 ###############################################################################
