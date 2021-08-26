@@ -2022,6 +2022,27 @@
   update:
     result: KNOWN ACS LIMITATION
 
+- rule: Force event services create event test failures with ACS-IR
+    v21.05_0.8_BETA-0 as known ACS limitation.
+    The ACS BETA 0 has an old version of the SCT, which erroneously creates
+    events with Tpl level high.
+    This is fixed in ACS BETA 1 and up.
+  criteria:
+    descr: Event, Timer, and Task Priority Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: EF317ADE-8668-456F-BED9-766056672DFF
+    log: NotifyTpl - 31
+    name: BS.CreateEvent - Create event with all valid event type and supported
+      TPL.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 83CF7F0B-C274-4918-AEA6-413DA9CF68CF
+    sub set: CreateEvent_Func
+    test set: EventTimerandPriorityServicesTest
+  update:
+    result: KNOWN ACS LIMITATION
+
 ###############################################################################
 #                                Comments                                     #
 ###############################################################################
