@@ -23,11 +23,26 @@ INFO main: 0 dropped(s), 1 failure(s), 93 ignored(s), 106 known u-boot limitatio
 ```
 
 ## Usage
-Usage to generate a "result md" is such. `python3 parser.py <log_file.ekl> <seq_file.seq>`
-If you do no provided any command line arguments it will use `sample.ekl` and `sample.seq`.
-The output filename can be specified with `--md <filename>`.
+
+Usage to generate a `result.md` is such:
+
+``` {.sh}
+$ python3 parser.py <log_file.ekl> <seq_file.seq>
+```
+
+The output filename can be specified with the `--md` option:
+
+``` {.sh}
+$ ./parser.py --md out.md ...
+```
 
 An online help is available with the `-h` option.
+
+The generated `result md` can be easily converted to HTML using `pandoc` with:
+
+``` {.sh}
+$ pandoc -oresult.html result.md
+```
 
 ### Custom search
 For a custom Key:value search, the next two arguments *MUST be included together.* The program will search and display files that met that constraint, without the crosscheck, and display the names, guid, and key:value to the command line. `python3 parser.py <file.ekl> <file.seq> <search key> <search value>`
@@ -131,6 +146,23 @@ $ ./parser.py \
       --fields 'count,result,name' --uniq --print ...
 ```
 
+### Re-reading markdown results
+
+It is possible to re-read a previously generated markdown results file with the
+`--input-md` option. This can be useful to perform further processing on the
+tests.
+
+Example command to read a previously generated markdown:
+
+``` {.sh}
+$ ./parser.py --input-md 'result.md' ...
+```
+
+* By default an output markdown is still generated, except in the case where the
+  input and output markdown have the same filename.
+* The generated markdown results do not contain the "passed" tests. They can
+  therefore not be re-read.
+
 ## Configuration file
 
 It is possible to use a configuration file with command line option `--config
@@ -190,13 +222,13 @@ tests.
 
 ### Sample
 
-A `sample.yaml` configuration file is provided as example, to use with the
-`sample.ekl` and `sample.seq` files.
+In the folder `sample`, a `sample.yaml` configuration file is provided as
+example, to use with the `sample.ekl` and `sample.seq` files.
 
 Try it with:
 
 ``` {.sh}
-$ ./parser.py --config sample.yaml ...
+$ ./parser.py --config sample/sample.yaml sample/sample.ekl sample/sample.seq
 ```
 
 ### Generating a configuration template
@@ -232,6 +264,10 @@ override the result of some tests with the following ones:
                            We know about them; they are due to U-Boot FAT
                            filesystem implementation limitations and they do
                            not prevent an OS to boot.
+
+   `KNOWN ACS LIMITATION` Genuine bugs, which are fixed in a more recent version
+                          of the ACS or which must ultimately be fixed and which
+                          we know about.
 -------------------------------------------------------------------------------
 
 Some of the rules just add a `comments` field with some help text.
@@ -250,8 +286,18 @@ It is possible to convert this `README.md` into `README.pdf` with pandoc using
 
 ### Sanity checks
 
-To perform sanity checks, run `make check`. For the moment this runs `yamllint`,
-which will inspect all [YAML] files and report errors. See `make help`.
+To perform sanity checks, run `make check`. It runs a number of checkers and
+reports errors:
+
+-------------------------------
+      Checker  Target
+-------------  ----------------
+     `flake8`  Python scripts.
+   `yamllint`  [YAML] files.
+ `shellcheck`  Shell scripts.
+-------------------------------
+
+See `make help`.
 
 ### db structure:
 
@@ -326,3 +372,19 @@ their test run according to the log file.
 
 We create artificial tests entries for those dropped tests sets, with the
 "result" fields set to "SKIPPED".
+
+## Contributed files
+
+A few contributed files are stored in sub-folders under `contrib` for
+convenience:
+
+-------------------------------------------------------------------------------
+           Sub-folder  Contents
+---------------------  --------------------------------------------------------
+ `v21.05_0.8_BETA-0/`  EBBR sequence file from [ACS-IR v21.05_0.8_BETA-0].
+
+   `v21.07_0.9_BETA/`  EBBR sequence files from [ACS-IR v21.07_0.9_BETA].
+-------------------------------------------------------------------------------
+
+[ACS-IR v21.05_0.8_BETA-0]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.05_0.8_BETA-0
+[ACS-IR v21.07_0.9_BETA]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.07_0.9_BETA

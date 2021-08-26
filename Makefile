@@ -6,7 +6,8 @@ all: doc
 help:
 	@echo 'Targets:'
 	@echo '  all'
-	@echo '  check   Perform sanity checks (currently yamllint)'
+	@echo '  check   Perform sanity checks'
+	@echo '          (currently yamllint, shellcheck and flake8)'
 	@echo '  clean'
 	@echo '  doc     Generate README.pdf'
 	@echo '  help    Print this help.'
@@ -18,6 +19,8 @@ doc: README.pdf
 
 check:
 	yamllint .
+	shellcheck $$(find -name '*.sh')
+	flake8
 
 clean:
 	-rm -f README.pdf

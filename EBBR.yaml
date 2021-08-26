@@ -1553,12 +1553,88 @@
   update:
     result: IGNORED
 
+- rule: Force false-positive time services set time failure as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 3B96A20C-2B1F-44EA-BAA9-F96FEE131D05
+    log: Status - Success, TPL - 4
+    name: RT.SetTime - Verify year after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services set time failure (2) as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 2D5CDBE5-1055-4EF6-8E90-0C993F93F698
+    log: Status - Success, TPL - 4
+    name: RT.SetTime - Verify month after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services set time failure (3) as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: E664E1D7-B733-410D-BC53-D4CFF2464355
+    log: Status - Success, TPL - 8
+    name: RT.SetTime - Verify year after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services set time failure (4) as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: DA4B19E7-F605-4FB9-A181-CCD335290BFE
+    log: Status - Success, TPL - 8
+    name: RT.SetTime - Verify month after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
 ###############################################################################
 #                         Known U-Boot limitations                            #
 ###############################################################################
 
 # We force the following tests result as `KNOWN U-BOOT LIMITATION'. They are
-# genuine bugs, which much ultimately be fixed. We know about them; they are due
+# genuine bugs, which must ultimately be fixed. We know about them; they are due
 # to U-Boot FAT filesystem implementation limitations and they do not prevent an
 # OS to boot.
 
@@ -1864,6 +1940,109 @@
   update:
     result: KNOWN U-BOOT LIMITATION
 
+- rule: Force misc runtime services update capsule conformance failure as known
+    U-Boot limitation
+    UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
+    check properly for all invalid inputs conditions
+  criteria:
+    descr: Misc Runtime Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 304F6960-79D0-4F17-8811-620FC6BDB0D4
+    log: Status - Unsupported
+    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid ScatterGatherList
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
+    sub set: UpdateCapsule_Conf
+    test set: MiscRuntimeServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force misc runtime services update capsule conformance failure (2) as
+    known U-Boot limitation
+    UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
+    check properly for all invalid inputs conditions
+  criteria:
+    descr: Misc Runtime Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 18F86BF8-76CF-4225-8E3E-1B1F63432600
+    log: Status - Unsupported
+    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
+    sub set: UpdateCapsule_Conf
+    test set: MiscRuntimeServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force misc runtime services update capsule conformance failure (3) as
+    known U-Boot limitation
+    UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
+    check properly for all invalid inputs conditions
+  criteria:
+    descr: Misc Runtime Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 145E4790-3342-4C8C-99F2-7F6500FD26E5
+    log: Status - Unsupported
+    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
+    sub set: UpdateCapsule_Conf
+    test set: MiscRuntimeServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+###############################################################################
+#                           Known ACS limitations                             #
+###############################################################################
+
+# We force the following tests result as `KNOWN ACS LIMITATION'. They are
+# genuine bugs, which are fixed in a more recent version of the ACS or which
+# must ultimately be fixed and which we know about.
+
+- rule: Force boot services memory map test failure with ACS-IR
+    v21.05_0.8_BETA-0 as known ACS limitation
+  criteria:
+    descr: SbbrBootServices Tests
+    device path: No device path
+    group: BootServicesTest
+    guid: 58A44F17-760E-478B-BAEF-E20BFBCD7457
+    log: MemoryMap Not Found
+    name: MemoryMap
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 8540C12D-5413-4A0B-A545-89A8E3C7DA4B
+    sub set: MemoryMap
+    test set: SbbrBootServices
+  update:
+    result: KNOWN ACS LIMITATION
+
+- rule: Force event services create event test failures with ACS-IR
+    v21.05_0.8_BETA-0 as known ACS limitation.
+    The ACS BETA 0 has an old version of the SCT, which erroneously creates
+    events with Tpl level high.
+    This is fixed in ACS BETA 1 and up.
+  criteria:
+    descr: Event, Timer, and Task Priority Services Test
+    device path: No device path
+    group: BootServicesTest
+    guid: EF317ADE-8668-456F-BED9-766056672DFF
+    log: NotifyTpl - 31
+    name: BS.CreateEvent - Create event with all valid event type and supported
+      TPL.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 83CF7F0B-C274-4918-AEA6-413DA9CF68CF
+    sub set: CreateEvent_Func
+    test set: EventTimerandPriorityServicesTest
+  update:
+    result: KNOWN ACS LIMITATION
+
 ###############################################################################
 #                                Comments                                     #
 ###############################################################################
@@ -1975,23 +2154,6 @@
 
 # We add comments to the following tests failures for which we know a likely
 # cause, to help triaging/debugging.
-
-- rule: Add comments to boot services memory map test failure with ACS-IR
-    v21.05_0.8_BETA-0
-  criteria:
-    descr: SbbrBootServices Tests
-    device path: No device path
-    group: BootServicesTest
-    guid: 58A44F17-760E-478B-BAEF-E20BFBCD7457
-    log: MemoryMap Not Found
-    name: MemoryMap
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 8540C12D-5413-4A0B-A545-89A8E3C7DA4B
-    sub set: MemoryMap
-    test set: SbbrBootServices
-  update:
-    comments: This is a known issue with ACS-IR v21.05_0.8_BETA-0
 
 - rule: Add comments to failure due to missing ESP
   criteria:

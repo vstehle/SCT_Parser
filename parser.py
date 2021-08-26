@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#SCT log parser
+# SCT log parser
 
 
 import sys
@@ -33,7 +33,7 @@ else:
     yaml_load_args = {}
 
 
-#based loosley on https://stackoverflow.com/a/4391978
+# based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
 def key_value_find(list_1, key, value):
@@ -44,21 +44,25 @@ def key_value_find(list_1, key, value):
     return found
 
 
-#Were we intrept test logs into test dicts
+# Were we intrept test logs into test dicts
 def test_parser(string, current):
     test_list = {
-      "name": string[2], #FIXME:Sometimes, SCT has name and Description,
-      "result": string[1],
-      **current,
-      "guid": string[0], #FIXME:GUID's overlap
-      #"comment": string[-1], #FIXME:need to hash this out, sometime there is no comments
-      "log": ' '.join(string[3:])
+        "name": string[2],
+        # FIXME:Sometimes, SCT has name and Description,
+        "result": string[1],
+        **current,
+        "guid": string[0],
+        # FIXME:GUID's overlap
+        # "comment": string[-1], # FIXME:need to hash this out,
+        # sometime there is no comments
+        "log": ' '.join(string[3:])
     }
     return test_list
 
-#Parse the ekl file, and create a map of the tests
-def ekl_parser (file):
-    #create our "database" dict
+
+# Parse the ekl file, and create a map of the tests
+def ekl_parser(file):
+    # create our "database" dict
     temp_list = list()
     # All tests are grouped by the "HEAD" line, which precedes them.
     current = {}
@@ -122,14 +126,17 @@ def ekl_parser (file):
                 'device path': '|'.join(split_line[13:]),
             }
 
-        #FIXME:? EKL file has an inconsistent line structure,
+        # FIXME:? EKL file has an inconsistent line structure,
         # sometime we see a line that consits ' dump of GOP->I\n'
-        #easiest way to skip is check for blank space in the first char
+        # easiest way to skip is check for blank space in the first char
         elif split_line[0] != '' and split_line[0][0] != " ":
             try:
-                #deliminiate on ':' for tests
-                split_test = [new_string for old_string in split_line for new_string in old_string.split(':')]
-                #put the test into a dict, and then place that dict in another dict with GUID as key
+                # deliminiate on ':' for tests
+                split_test = [new_string for old_string in
+                              split_line for new_string in
+                              old_string.split(':')]
+                # put the test into a dict, and then place that dict in another
+                # dict with GUID as key
                 tmp_dict = test_parser(split_test, current)
                 temp_list.append(tmp_dict)
                 n += 1
@@ -144,74 +151,85 @@ def ekl_parser (file):
 
     return temp_list
 
-#Parse Seq file, used to tell which tests should run.
+
+# Parse Seq file, used to tell which tests should run.
 def seq_parser(file):
     temp_dict = list()
-    lines=file.readlines()
-    magic=7 #a test in a seq file is 7 lines, if not mod7, something wrong..
-    if len(lines)%magic != 0:
+    lines = file.readlines()
+    magic = 7
+    # a test in a seq file is 7 lines, if not mod7, something wrong..
+    if len(lines) % magic != 0:
         sys.exit("seqfile cut short, should be mod7")
-    #the utf-16 char makes this looping a bit harder, so we use x+(i) where i is next 0-6th
-    for x in range(0,len(lines),magic): #loop ever "7 lines"
-        #(x+0)[Test Case]
-        #(x+1)Revision=0x10000
-        #(x+2)Guid=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-        #(x+3)Name=InstallAcpiTableFunction
-        #(x+4)Order=0xFFFFFFFF
-        #(x+5)Iterations=0xFFFFFFFF
-        #(x+6)(utf-16 char)
-        #currently only add tests that are supposed to run, should add all?
-        #0xFFFFFFFF in "Iterations" means the test is NOT supposed to run
-        if not "0xFFFFFFFF" in lines[x+5]:
+    # the utf-16 char makes this looping a bit harder, so we use x+(i) where i
+    # is next 0-6th
+    # loop ever "7 lines"
+    for x in range(0, len(lines), magic):
+        # (x+0)[Test Case]
+        # (x+1)Revision=0x10000
+        # (x+2)Guid=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+        # (x+3)Name=InstallAcpiTableFunction
+        # (x+4)Order=0xFFFFFFFF
+        # (x+5)Iterations=0xFFFFFFFF
+        # (x+6)(utf-16 char)
+        # currently only add tests that are supposed to run, should add all?
+        # 0xFFFFFFFF in "Iterations" means the test is NOT supposed to run
+        if "0xFFFFFFFF" not in lines[x + 5]:
             seq_dict = {
-                "name": lines[x+3][5:-1],#from after "Name=" to end (5char long)
-                "guid": lines[x+2][5:-1],#from after"Guid=" to the end, (5char long)
-                "Iteration": lines[x+5][11:-1],#from after "Iterations=" (11char long)
-                "rev": lines[x+1][9:-1],#from after "Revision=" (9char long)
-                "Order": lines[x+4][6:-1]#from after "Order=" (6char long)
+                # from after "Name=" to end (5char long)
+                "name": lines[x + 3][5:-1],
+                # from after"Guid=" to the end, (5char long)
+                "guid": lines[x + 2][5:-1],
+                # from after "Iterations=" (11char long)
+                "Iteration": lines[x + 5][11:-1],
+                # from after "Revision=" (9char long)
+                "rev": lines[x + 1][9:-1],
+                # from after "Order=" (6char long)
+                "Order": lines[x + 4][6:-1]
             }
-            temp_dict.append(seq_dict) #put in a dict based on guid
+            # put in a dict based on guid
+            temp_dict.append(seq_dict)
 
     return temp_dict
 
-#group items by key, and print by key
-#we slowly iterate through the list, group and print groups
-def key_tree_2_md(input_list,file,key):
-    #make a copy so we don't destroy the first list.
-    temp_list = input_list.copy()
-    while temp_list:
-        test_dict = temp_list.pop()
-        found, not_found = [test_dict],[]
-        #go through whole list looking for key match
-        while temp_list:
-            next_dict = temp_list.pop()
-            if next_dict[key] == test_dict[key]: #if match add to found
-                found.append(next_dict)
-            else: #else not found
-                not_found.append(next_dict)
-        temp_list = not_found #start over with found items removed
-        file.write("### " + test_dict[key])
-        dict_2_md(found,file)
+
+# Print items by "group"
+def key_tree_2_md(input_list, file):
+    h = {}
+
+    # Bin by group
+    for t in input_list:
+        g = t['group']
+
+        if g not in h:
+            h[g] = []
+
+        h[g].append(t)
+
+    # Print each group
+    for g in sorted(h.keys()):
+        file.write("### " + g)
+        dict_2_md(h[g], file)
 
 
-
-#generic writer, takes a list of dicts and turns the dicts into an MD table.
-def dict_2_md(input_list,file):
+# generic writer, takes a list of dicts and turns the dicts into an MD table.
+def dict_2_md(input_list, file):
     if len(input_list) > 0:
         file.write("\n\n")
-        #create header for MD table using dict keys
+        k = input_list[0].keys()
+        # create header for MD table using dict keys
         temp_string1, temp_string2 = "|", "|"
-        for x in (input_list[0].keys()):
+        for x in k:
             temp_string1 += (x + "|")
             temp_string2 += ("---|")
-        file.write(temp_string1+"\n"+temp_string2+"\n")
-        #print each item from the dict into the table
+        file.write(temp_string1 + "\n" + temp_string2 + "\n")
+        # print each item from the dict into the table
         for x in input_list:
             test_string = "|"
-            for y in x.keys():
-                test_string += (x[y] + "|")
-            file.write(test_string+'\n')
-    #seprate table from other items in MD
+            for y in k:
+                v = x[y] if y in x else ''
+                test_string += v + "|"
+            file.write(test_string + '\n')
+    # seprate table from other items in MD
     file.write("\n\n")
 
 
@@ -482,6 +500,7 @@ def gen_template(cross_check, filename):
 
 # Print to stdout
 # The fields to write are supplied as a list
+# We handle the case where not all fields are present for all records
 def do_print(cross_check, fields):
     logging.debug(f'Print (fields: {fields})')
 
@@ -494,7 +513,7 @@ def do_print(cross_check, fields):
 
     for x in cross_check:
         for f in fm1:
-            w[f] = max(w[f], len(str(x[f])))
+            w[f] = max(w[f], len(str(x[f]) if f in x else ''))
 
     # Second pass where we print
     lf = fields[len(fields) - 1]
@@ -505,7 +524,7 @@ def do_print(cross_check, fields):
 
     for x in cross_check:
         print(' '.join([
-            *map(lambda f: f"{x[f]:{w[f] if f in x else ''}}", fm1),
+            *map(lambda f: f"{x[f] if f in x else '':{w[f]}}", fm1),
             x[lf] if lf in x else '']))
 
 
@@ -578,6 +597,122 @@ def combine_dbs(db1, db2):
     return cross_check
 
 
+# Read the .ekl log file and the .seq file and combine them into a single
+# database, which we return.
+def read_log_and_seq(log_file, seq_file):
+    # ekl file to open
+    # "database 1" all tests.
+    db1 = list()
+    logging.debug(f'Read {log_file}')
+
+    # files are encoded in utf-16
+    with open(log_file, "r", encoding="utf-16") as f:
+        db1 = ekl_parser(f.readlines())
+
+    logging.debug('{} test(s)'.format(len(db1)))
+
+    # seq file to open
+    # "database 2" all test sets that should run
+    db2 = dict()
+    logging.debug(f'Read {seq_file}')
+
+    # files are encoded in utf-16
+    with open(seq_file, "r", encoding="utf-16") as f:
+        db2 = seq_parser(f)
+
+    logging.debug('{} test set(s)'.format(len(db2)))
+
+    # Produce a single cross_check database from our two db1 and db2 databases.
+    return combine_dbs(db1, db2)
+
+
+# generate MD summary
+def gen_md(md, res_keys, bins):
+    logging.debug(f'Generate {md}')
+
+    with open(md, 'w') as resultfile:
+        resultfile.write("# SCT Summary \n\n")
+        resultfile.write("|  |  |\n")
+        resultfile.write("|--|--|\n")
+
+        # Loop on all the result values we found for the summary
+        for k in sorted(res_keys):
+            resultfile.write(
+                "|{}:|{}|\n".format(k.title(), len(bins[k])))
+
+        resultfile.write("\n\n")
+
+        # Loop on all the result values we found (except PASS) for the sections
+        # listing the tests by group
+        n = 1
+        res_keys_np = set(res_keys)
+        res_keys_np.remove('PASS')
+
+        for k in sorted(res_keys_np):
+            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
+            key_tree_2_md(bins[k], resultfile)
+            n += 1
+
+
+# Read back results from a previously generated summary markdown file.
+# From this, we re-create a database the best we can and we return it.
+def read_md(input_md):
+    logging.debug(f'Read {input_md}')
+    tables = []
+
+    with open(input_md, 'r') as f:
+        t = None
+
+        for i, line in enumerate(f):
+            line = line.rstrip()
+
+            if re.match(r'^\|', line):
+                # Split the line. We need to take care of preserving special
+                # cases such as "Pci(0|0)" for example
+                line = re.sub(r'\((\w+)\|(\w+)\)', r'(\1%\2)', line)
+                x = line.split('|')
+                x = x[1:len(x) - 1]
+                x = [re.sub(r'%', '|', e) for e in x]
+
+                if t is None:
+                    t = []
+                    logging.debug(f'Table line {i + 1}, keys: {x}')
+
+                t.append(x)
+
+            elif t is not None:
+                tables.append(t)
+                t = None
+
+        assert(t is None)
+
+    # Remove summary table
+    assert(len(tables[0][0]) == 2)
+    del tables[0]
+
+    # Transform tables lines to dicts and merge everything
+    cross_check = []
+
+    for t in tables:
+        # Save keys
+        keys = t.pop(0)
+        n = len(keys)
+        # Drop underlines
+        t.pop(0)
+
+        # Convert lines
+        for i, x in enumerate(t):
+            assert(len(x) == n)
+            y = {}
+
+            for j, k in enumerate(keys):
+                y[k] = x[j]
+
+            cross_check.append(y)
+
+    return cross_check
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
@@ -604,6 +739,7 @@ if __name__ == '__main__':
         '--uniq', action='store_true', help='Collapse duplicates')
     parser.add_argument(
         '--print', action='store_true', help='Print results to stdout')
+    parser.add_argument('--input-md', help='Input .md filename')
     parser.add_argument('log_file', help='Input .ekl filename')
     parser.add_argument('seq_file', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
@@ -624,26 +760,15 @@ if __name__ == '__main__':
         format='%(levelname)s %(funcName)s: %(message)s',
         level=logging.DEBUG if args.debug else logging.INFO)
 
-    #Command line argument 1, ekl file to open
-    db1 = list() #"database 1" all tests.
-    logging.debug(f'Read {args.log_file}')
+    if args.input_md is not None:
+        cross_check = read_md(args.input_md)
+    else:
+        # Command line argument 1 is the ekl file to open.
+        # Command line argument 2 is the seq file to open.
+        # Read both and combine them into a single cross_check database.
+        cross_check = read_log_and_seq(args.log_file, args.seq_file)
 
-    with open(args.log_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
-        db1 = ekl_parser(f.readlines())
-
-    logging.debug('{} test(s)'.format(len(db1)))
-
-    #Command line argument 2, seq file to open
-    db2 = dict() #"database 2" all test sets that should run
-    logging.debug(f'Read {args.seq_file}')
-
-    with open(args.seq_file,"r",encoding="utf-16") as f: #files are encoded in utf-16
-        db2 = seq_parser(f)
-
-    logging.debug('{} test set(s)'.format(len(db2)))
-
-    # Produce a single cross_check database from our two db1 and db2 databases.
-    cross_check = combine_dbs(db1, db2)
+    logging.debug('{} combined test(s)'.format(len(cross_check)))
 
     # Take configuration file into account. This can perform transformations on
     # the tests results.
@@ -660,7 +785,8 @@ if __name__ == '__main__':
 
     # search for failures, warnings, passes & others
     # We detect all present keys in additions to the expected ones. This is
-    # handy with config rules overriding the result field with arbitrary values.
+    # handy with config rules overriding the result field
+    # with arbitrary values.
     res_keys = set(['DROPPED', 'FAILURE', 'WARNING', 'PASS'])
 
     for x in cross_check:
@@ -680,30 +806,10 @@ if __name__ == '__main__':
     logging.info(', '.join(s))
 
     # generate MD summary
-    logging.debug(f'Generate {args.md}')
-
-    with open(args.md, 'w') as resultfile:
-        resultfile.write("# SCT Summary \n\n")
-        resultfile.write("|  |  |\n")
-        resultfile.write("|--|--|\n")
-
-        # Loop on all the result values we found for the summary
-        for k in sorted(res_keys):
-            resultfile.write(
-                "|{}:|{}|\n".format(k.title(), len(bins[k])))
-
-        resultfile.write("\n\n")
-
-        # Loop on all the result values we found (except PASS) for the sections
-        # listing the tests by group
-        n = 1
-        res_keys_np = set(res_keys)
-        res_keys_np.remove('PASS')
-
-        for k in sorted(res_keys_np):
-            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
-            key_tree_2_md(bins[k], resultfile, "group")
-            n += 1
+    # As a special case, we skip generation when we are reading from a markdown
+    # summary, which has the same name as the output.
+    if args.input_md is None or args.input_md != args.md:
+        gen_md(args.md, res_keys, bins)
 
     # Generate yaml config template if requested
     if 'template' in args and args.template is not None:
@@ -740,9 +846,9 @@ if __name__ == '__main__':
     # command line argument 3&4, key are to support a key & value search.
     # these will be displayed in CLI
     if args.find_key is not None and args.find_value is not None:
-        found = key_value_find(db1, args.find_key, args.find_value)
-        #print the dict
-        print("found:",len(found),"items with search constraints")
+        found = key_value_find(cross_check, args.find_key, args.find_value)
+        # print the dict
+        print("found:", len(found), "items with search constraints")
         for x in found:
             print(
                 x["guid"], ":", x["name"], "with", args.find_key, ":",
