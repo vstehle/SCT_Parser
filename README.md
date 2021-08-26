@@ -264,6 +264,10 @@ override the result of some tests with the following ones:
                            We know about them; they are due to U-Boot FAT
                            filesystem implementation limitations and they do
                            not prevent an OS to boot.
+
+   `KNOWN ACS LIMITATION` Genuine bugs, which are fixed in a more recent version
+                          of the ACS or which must ultimately be fixed and which
+                          we know about.
 -------------------------------------------------------------------------------
 
 Some of the rules just add a `comments` field with some help text.

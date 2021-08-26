@@ -1558,7 +1558,7 @@
 ###############################################################################
 
 # We force the following tests result as `KNOWN U-BOOT LIMITATION'. They are
-# genuine bugs, which much ultimately be fixed. We know about them; they are due
+# genuine bugs, which must ultimately be fixed. We know about them; they are due
 # to U-Boot FAT filesystem implementation limitations and they do not prevent an
 # OS to boot.
 
@@ -1865,6 +1865,31 @@
     result: KNOWN U-BOOT LIMITATION
 
 ###############################################################################
+#                           Known ACS limitations                             #
+###############################################################################
+
+# We force the following tests result as `KNOWN ACS LIMITATION'. They are
+# genuine bugs, which are fixed in a more recent version of the ACS or which
+# must ultimately be fixed and which we know about.
+
+- rule: Force boot services memory map test failure with ACS-IR
+    v21.05_0.8_BETA-0 as known ACS limitation
+  criteria:
+    descr: SbbrBootServices Tests
+    device path: No device path
+    group: BootServicesTest
+    guid: 58A44F17-760E-478B-BAEF-E20BFBCD7457
+    log: MemoryMap Not Found
+    name: MemoryMap
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 8540C12D-5413-4A0B-A545-89A8E3C7DA4B
+    sub set: MemoryMap
+    test set: SbbrBootServices
+  update:
+    result: KNOWN ACS LIMITATION
+
+###############################################################################
 #                                Comments                                     #
 ###############################################################################
 
@@ -1975,23 +2000,6 @@
 
 # We add comments to the following tests failures for which we know a likely
 # cause, to help triaging/debugging.
-
-- rule: Add comments to boot services memory map test failure with ACS-IR
-    v21.05_0.8_BETA-0
-  criteria:
-    descr: SbbrBootServices Tests
-    device path: No device path
-    group: BootServicesTest
-    guid: 58A44F17-760E-478B-BAEF-E20BFBCD7457
-    log: MemoryMap Not Found
-    name: MemoryMap
-    result: FAILURE
-    revision: '0x00010000'
-    set guid: 8540C12D-5413-4A0B-A545-89A8E3C7DA4B
-    sub set: MemoryMap
-    test set: SbbrBootServices
-  update:
-    comments: This is a known issue with ACS-IR v21.05_0.8_BETA-0
 
 - rule: Add comments to failure due to missing ESP
   criteria:
