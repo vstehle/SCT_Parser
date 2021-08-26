@@ -1553,6 +1553,82 @@
   update:
     result: IGNORED
 
+- rule: Force false-positive time services set time failure as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 3B96A20C-2B1F-44EA-BAA9-F96FEE131D05
+    log: Status - Success, TPL - 4
+    name: RT.SetTime - Verify year after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services set time failure (2) as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 2D5CDBE5-1055-4EF6-8E90-0C993F93F698
+    log: Status - Success, TPL - 4
+    name: RT.SetTime - Verify month after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services set time failure (3) as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: E664E1D7-B733-410D-BC53-D4CFF2464355
+    log: Status - Success, TPL - 8
+    name: RT.SetTime - Verify year after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
+- rule: Force false-positive time services set time failure (4) as ignored.
+    SetTime does not retain year properly with U-Boot RTC emulation.
+    SetTime is required only when an RTC is present (EBBR Table 2.6
+    EFI_RUNTIME_SERVICES Implementation Requirements).
+  criteria:
+    descr: Time Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: DA4B19E7-F605-4FB9-A181-CCD335290BFE
+    log: Status - Success, TPL - 8
+    name: RT.SetTime - Verify month after change
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 603B46BE-7E14-408A-93D7-DD9DEC732968
+    sub set: SetTime_Func
+    test set: TimeServicesTest
+  update:
+    result: IGNORED
+
 ###############################################################################
 #                         Known U-Boot limitations                            #
 ###############################################################################
