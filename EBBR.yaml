@@ -1864,6 +1864,63 @@
   update:
     result: KNOWN U-BOOT LIMITATION
 
+- rule: Force misc runtime services update capsule conformance failure as known
+    U-Boot limitation
+    UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
+    check properly for all invalid inputs conditions
+  criteria:
+    descr: Misc Runtime Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 304F6960-79D0-4F17-8811-620FC6BDB0D4
+    log: Status - Unsupported
+    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid ScatterGatherList
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
+    sub set: UpdateCapsule_Conf
+    test set: MiscRuntimeServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force misc runtime services update capsule conformance failure (2) as
+    known U-Boot limitation
+    UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
+    check properly for all invalid inputs conditions
+  criteria:
+    descr: Misc Runtime Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 18F86BF8-76CF-4225-8E3E-1B1F63432600
+    log: Status - Unsupported
+    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
+    sub set: UpdateCapsule_Conf
+    test set: MiscRuntimeServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force misc runtime services update capsule conformance failure (3) as
+    known U-Boot limitation
+    UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
+    check properly for all invalid inputs conditions
+  criteria:
+    descr: Misc Runtime Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 145E4790-3342-4C8C-99F2-7F6500FD26E5
+    log: Status - Unsupported
+    name: RT.UpdateCapsule - invoke UpdateCapsule with invalid Flags
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 7227CFAC-CA96-4680-9314-E3FBC60A2A61
+    sub set: UpdateCapsule_Conf
+    test set: MiscRuntimeServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
 ###############################################################################
 #                           Known ACS limitations                             #
 ###############################################################################
