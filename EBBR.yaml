@@ -1997,6 +1997,63 @@
   update:
     result: KNOWN U-BOOT LIMITATION
 
+- rule: Force runtime services variable test conformance failure as known U-Boot
+    limitation
+    QueryVariableInfo implementation in U-Boot does not check properly for all
+    invalid inputs conditions
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: E7F2EB9F-1624-45A9-A287-3EA6F2F74C5F
+    log: Status - Success, Expected - Invalid Parameter
+    name: RT.QueryVariableInfo - With Attributes being 0
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
+    sub set: QueryVariableInfo_Conf
+    test set: VariableServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force runtime services variable test conformance failure (2) as known
+    U-Boot limitation
+    QueryVariableInfo implementation in U-Boot does not check properly for all
+    invalid inputs conditions
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 2F9966BA-0091-4085-BF9D-09AA809F942E
+    log: Status - Success, Expected - Invalid Parameter (Variable Attribute 0x4)
+    name: RT.QueryVariableInfo - With being an invalid combination
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
+    sub set: QueryVariableInfo_Conf
+    test set: VariableServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force runtime services variable test conformance failure (3) as known
+    U-Boot limitation
+    QueryVariableInfo implementation in U-Boot does not check properly for all
+    invalid inputs conditions
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 2F9966BA-0091-4085-BF9D-09AA809F942E
+    log: Status - Success, Expected - Invalid Parameter (Variable Attribute 0x5)
+    name: RT.QueryVariableInfo - With being an invalid combination
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
+    sub set: QueryVariableInfo_Conf
+    test set: VariableServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
 ###############################################################################
 #                           Known ACS limitations                             #
 ###############################################################################
