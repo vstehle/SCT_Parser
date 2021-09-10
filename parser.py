@@ -504,26 +504,29 @@ def gen_template(cross_check, filename):
 def do_print(cross_check, fields):
     logging.debug(f'Print (fields: {fields})')
 
-    # First pass to find the width for each field except the last one
-    fm1 = fields[:len(fields) - 1]
+    # First pass to find the width for each field
     w = {}
 
-    for f in fm1:
+    for f in fields:
         w[f] = len(f)
 
     for x in cross_check:
-        for f in fm1:
+        for f in fields:
             w[f] = max(w[f], len(str(x[f]) if f in x else ''))
 
     # Second pass where we print
+    fm1 = fields[:len(fields) - 1]
     lf = fields[len(fields) - 1]
+    sep = '  '
 
-    print(' '.join([
-        *map(lambda f: f"{f:{w[f]}}", fm1),
-        lf]))
+    print(sep.join([
+        *map(lambda f: f"{f.capitalize():{w[f]}}", fm1),
+        lf.capitalize()]))
+
+    print(sep.join([*map(lambda f: '-' * w[f], fields)]))
 
     for x in cross_check:
-        print(' '.join([
+        print(sep.join([
             *map(lambda f: f"{x[f] if f in x else '':{w[f]}}", fm1),
             x[lf] if lf in x else '']))
 
