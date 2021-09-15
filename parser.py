@@ -8,6 +8,8 @@ import csv
 import logging
 import json
 import re
+import hashlib
+import os
 
 try:
     from packaging import version
@@ -600,6 +602,50 @@ def combine_dbs(db1, db2):
     return cross_check
 
 
+# Load the database of known sequence files.
+def load_known_seq(seq_db):
+    known_seqs = {}
+
+    with open(seq_db, 'r') as f:
+        for line in f:
+            line = line.rstrip()
+            line = re.sub(r'#.*', '', line)
+            m = re.match(r'\s*([0-9a-fA-F]+)\s+(.*)', line)
+
+            if not m:
+                continue
+
+            kh = m.group(1)
+            d = m.group(2)
+            assert(kh not in known_seqs)
+            logging.debug(f'{kh} {d}')
+            known_seqs[kh] = d
+
+    logging.debug(f'{len(known_seqs)} known seq file(s)')
+    return known_seqs
+
+
+# Try to identify the .seq file in a list of known versions using its sha256.
+def ident_seq(seq_file, seq_db):
+    known_seqs = load_known_seq(seq_db)
+
+    # Hash seq file
+    hm = 'sha256'
+    hl = hashlib.new(hm)
+
+    with open(seq_file, 'rb') as f:
+        hl.update(f.read())
+
+    h = hl.hexdigest()
+    logging.debug(f'{hm} {h} {seq_file}')
+
+    # Try to identify the seq file
+    if h in known_seqs:
+        logging.info(f"""Identified `{seq_file}' as "{known_seqs[h]}".""")
+    else:
+        logging.debug(f"Could not identify `{seq_file}'...")
+
+
 # Read the .ekl log file and the .seq file and combine them into a single
 # database, which we return.
 def read_log_and_seq(log_file, seq_file):
@@ -717,6 +763,8 @@ def read_md(input_md):
 
 
 if __name__ == '__main__':
+    me = os.path.realpath(__file__)
+    here = os.path.dirname(me)
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
@@ -743,6 +791,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '--print', action='store_true', help='Print results to stdout')
     parser.add_argument('--input-md', help='Input .md filename')
+    parser.add_argument(
+        '--seq-db', help='Known sequence files database filename',
+        default=f'{here}/seq.db')
     parser.add_argument('log_file', help='Input .ekl filename')
     parser.add_argument('seq_file', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
@@ -768,6 +819,10 @@ if __name__ == '__main__':
     else:
         # Command line argument 1 is the ekl file to open.
         # Command line argument 2 is the seq file to open.
+
+        # Try to identify the sequence file
+        ident_seq(args.seq_file, args.seq_db)
+
         # Read both and combine them into a single cross_check database.
         cross_check = read_log_and_seq(args.log_file, args.seq_file)
 

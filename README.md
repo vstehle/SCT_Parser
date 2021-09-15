@@ -265,12 +265,28 @@ override the result of some tests with the following ones:
                            filesystem implementation limitations and they do
                            not prevent an OS to boot.
 
-   `KNOWN ACS LIMITATION` Genuine bugs, which are fixed in a more recent version
-                          of the ACS or which must ultimately be fixed and which
-                          we know about.
+   `KNOWN ACS LIMITATION`  Genuine bugs, which are fixed in a more recent
+                           version of the ACS or which must ultimately be fixed
+                           and which we know about.
 -------------------------------------------------------------------------------
 
 Some of the rules just add a `comments` field with some help text.
+
+### Database of sequence files
+
+The `seq.db` file contains a list of known sequence files, which allows to
+identify the input sequence file.
+
+This database file contains lines describing each known sequence file in turn,
+in the following format:
+
+```
+sha256 description
+```
+
+Everything appearing after a '#' sign is treated as a comment and ignored.
+
+The database filename can be specified with the `--seq-db` option.
 
 ## Notes
 ### Known Issues:
