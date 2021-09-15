@@ -803,7 +803,8 @@ if __name__ == '__main__':
     # could actually import yaml.
     if 'yaml' in sys.modules:
         parser.add_argument(
-            '--config', help='Input .yaml configuration filename')
+            '--config', help='Input .yaml configuration filename',
+            default=f'{here}/EBBR.yaml')
         parser.add_argument('--yaml', help='Output .yaml filename')
         parser.add_argument(
             '--template', help='Output .yaml config template filename')

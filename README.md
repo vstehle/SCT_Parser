@@ -15,12 +15,14 @@ If you're using this tool to analyze EBBR test results, use the following
 command. The parsed report can be found in `result.md`.
 
 ``` {.sh}
-$ ./parser.py --config EBBR.yaml \
-		</path/to/sct_results/Overall/Summary.ekl> \
+$ ./parser.py \
+                </path/to/sct_results/Overall/Summary.ekl> \
 		contrib/v21.07_0.9_BETA/EBBR.seq
 INFO apply_rules: Updated 200 test(s) out of 12206 after applying 124 rule(s)
 INFO main: 0 dropped(s), 1 failure(s), 93 ignored(s), 106 known u-boot limitation(s), 12006 pass(s), 0 warning(s)
 ```
+
+(The `EBBR.yaml' configuration file is used to process results by default.)
 
 ## Usage
 
@@ -165,18 +167,15 @@ $ ./parser.py --input-md 'result.md' ...
 
 ## Configuration file
 
-It is possible to use a configuration file with command line option `--config
-<filename>`.
-This configuration file describes operations to perform on the tests results,
+By default, the `EBBR.yaml' configuration file is used to process results. It is
+intended to help triaging failures when testing specifically for [EBBR]
+compliance. It describes operations to perform on the tests results,
 such as marking tests as false positives or waiving failures.
+It is possible to specify another configuration file with the command line
+option `--config <filename>`.
 
-Example command for [EBBR]:
-
-``` {.sh}
-$ ./parser.py --config EBBR.yaml /path/to/Summary.ekl EBBR.seq ...
-```
-
-You need to install the [PyYAML] module for this to work.
+You need to install the [PyYAML] module for the configuration file to be loaded
+correctly.
 
 [EBBR]: https://github.com/ARM-software/ebbr
 [PyYAML]: https://github.com/yaml/pyyaml
@@ -250,8 +249,9 @@ This generated configuration can then be further edited manually.
 
 ### EBBR configuration
 
-The `EBBR.yaml` file is a configuration file meant for [EBBR] testing. It can
-override the result of some tests with the following ones:
+The `EBBR.yaml` file is the configuration file used by default. It is meant for
+[EBBR] testing and can override the result of some tests with the following
+ones:
 
 -------------------------------------------------------------------------------
                    Result  Description
