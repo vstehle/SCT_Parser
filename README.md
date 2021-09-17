@@ -272,6 +272,14 @@ ones:
 
 Some of the rules just add a `comments` field with some help text.
 
+Example command to see those comments:
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x['result'] == 'FAILURE'" \
+      --fields 'count,result,name,comments' --uniq --print ...
+```
+
 ### Database of sequence files
 
 The `seq.db` file contains a list of known sequence files, which allows to
