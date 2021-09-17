@@ -2339,3 +2339,67 @@
     comments: Check logs for messages such as "No EFI system partition" or
       "Failed to persist EFI variables" and check that system has an EFI System
       Partition
+
+- rule: Add comments to failure due to ethernet cable unplugged
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    guid: EA3773EA-0E0F-45A3-82A0-64D485A10B52
+    log: Status - Not Ready
+    name: EFI_SIMPLE_NETWORK_PROTOCOL.Transmit - Invoke Transmit() with
+      HeaderSize is nonzero and not equal to MediaHeaderSize.
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 5DDF5C49-7ACA-4724-9553-614A53EE998A
+    sub set: Transmit_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    comments: Check if ethernet cable is unplugged
+
+- rule: Add comments to failure (2) due to ethernet cable unplugged
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    guid: DE544DE1-178E-4B5F-97D7-19119B1B7B18
+    log: Status - Not Ready
+    name: EFI_SIMPLE_NETWORK_PROTOCOL.Transmit - Invoke Transmit() with
+      BufferSize is less than  MediaHeaderSize.
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 5DDF5C49-7ACA-4724-9553-614A53EE998A
+    sub set: Transmit_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    comments: Check if ethernet cable is unplugged
+
+- rule: Add comments to failure (3) due to ethernet cable unplugged
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    guid: A449842C-F5F8-47E9-987B-4B6141AEBD45
+    log: Status - Not Ready
+    name: EFI_SIMPLE_NETWORK_PROTOCOL.Transmit - Invoke Transmit() with
+      HeaderSize is nonzero and DestAddr is NULL.
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 5DDF5C49-7ACA-4724-9553-614A53EE998A
+    sub set: Transmit_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    comments: Check if ethernet cable is unplugged
+
+- rule: Add comments to failure (4) due to ethernet cable unplugged
+  criteria:
+    descr: Simple Network Protocol Test
+    group: NetworkSupportTest
+    guid: 2E3DD087-DD0C-426E-85BA-65E58310B1DE
+    log: Status - Not Ready
+    name: EFI_SIMPLE_NETWORK_PROTOCOL.Transmit - Invoke Transmit() with
+      HeaderSize is nonzero and Protocol is NULL.
+    result: FAILURE
+    revision: '0x00010001'
+    set guid: 5DDF5C49-7ACA-4724-9553-614A53EE998A
+    sub set: Transmit_Conf
+    test set: SimpleNetworkProtocolTest
+  update:
+    comments: Check if ethernet cable is unplugged
