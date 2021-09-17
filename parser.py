@@ -14,12 +14,14 @@ import os
 try:
     from packaging import version
 except ImportError:
-    print('No packaging...')
+    print('No packaging. You should install python3-packaging...')
 
 try:
     import yaml
 except ImportError:
-    print('No yaml...')
+    print(
+        'No yaml. You should install PyYAML/python3-yaml for configuration'
+        ' file support...')
 
 if 'yaml' in sys.modules:
     try:

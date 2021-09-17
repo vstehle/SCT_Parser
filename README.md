@@ -9,6 +9,24 @@ It will proceed to generate a Markdown file listing number of failures, passes, 
 
 [UEFI SCT]: https://uefi.org/testtools
 
+## Dependencies
+
+You need to install the [PyYAML] module for the configuration file to be loaded
+correctly. Depending on your Linux distribution, this might be available as the
+`python3-yaml` package.
+It is also recommended to install the [packaging] library for smooth version
+detection. Depending on your Linux distribution, this might be available as the
+`python3-packaging` package.
+See [Configuration file].
+
+If you want to generate the pdf version of this documentation or convert
+markdown results to HTML, you need to install [pandoc]. See [Usage] and
+[Documentation].
+
+[PyYAML]: https://github.com/yaml/pyyaml
+[packaging]: https://github.com/pypa/packaging
+[pandoc]: https://pandoc.org
+
 ## Quick Start
 
 If you're using this tool to analyze EBBR test results, use the following
@@ -40,11 +58,13 @@ $ ./parser.py --md out.md ...
 
 An online help is available with the `-h` option.
 
-The generated `result md` can be easily converted to HTML using `pandoc` with:
+The generated `result md` can be easily converted to HTML using [pandoc] with:
 
 ``` {.sh}
 $ pandoc -oresult.html result.md
 ```
+
+See [Dependencies].
 
 ### Custom search
 For a custom Key:value search, the next two arguments *MUST be included together.* The program will search and display files that met that constraint, without the crosscheck, and display the names, guid, and key:value to the command line. `python3 parser.py <file.ekl> <file.seq> <search key> <search value>`
@@ -167,7 +187,7 @@ $ ./parser.py --input-md 'result.md' ...
 
 ## Configuration file
 
-By default, the `EBBR.yaml' configuration file is used to process results. It is
+By default, the `EBBR.yaml` configuration file is used to process results. It is
 intended to help triaging failures when testing specifically for [EBBR]
 compliance. It describes operations to perform on the tests results,
 such as marking tests as false positives or waiving failures.
@@ -175,10 +195,10 @@ It is possible to specify another configuration file with the command line
 option `--config <filename>`.
 
 You need to install the [PyYAML] module for the configuration file to be loaded
-correctly.
+correctly, and installing the [packaging] library is recommended. See
+[Dependencies].
 
 [EBBR]: https://github.com/ARM-software/ebbr
-[PyYAML]: https://github.com/yaml/pyyaml
 
 ### Configuration file format
 
@@ -305,8 +325,8 @@ The database filename can be specified with the `--seq-db` option.
 
 ### Documentation
 
-It is possible to convert this `README.md` into `README.pdf` with pandoc using
-`make doc`. See `make help`.
+It is possible to convert this `README.md` into `README.pdf` with [pandoc] using
+`make doc`. See `make help` and [Dependencies].
 
 ### Sanity checks
 
