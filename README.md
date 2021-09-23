@@ -9,18 +9,38 @@ It will proceed to generate a Markdown file listing number of failures, passes, 
 
 [UEFI SCT]: https://uefi.org/testtools
 
+## Dependencies
+
+You need to install the [PyYAML] module for the configuration file to be loaded
+correctly. Depending on your Linux distribution, this might be available as the
+`python3-yaml` package.
+It is also recommended to install the [packaging] library for smooth version
+detection. Depending on your Linux distribution, this might be available as the
+`python3-packaging` package.
+See [Configuration file].
+
+If you want to generate the pdf version of this documentation or convert
+markdown results to HTML, you need to install [pandoc]. See [Usage] and
+[Documentation].
+
+[PyYAML]: https://github.com/yaml/pyyaml
+[packaging]: https://github.com/pypa/packaging
+[pandoc]: https://pandoc.org
+
 ## Quick Start
 
 If you're using this tool to analyze EBBR test results, use the following
 command. The parsed report can be found in `result.md`.
 
 ``` {.sh}
-$ ./parser.py --config EBBR.yaml \
-		</path/to/sct_results/Overall/Summary.ekl> \
+$ ./parser.py \
+                </path/to/sct_results/Overall/Summary.ekl> \
 		contrib/v21.07_0.9_BETA/EBBR.seq
 INFO apply_rules: Updated 200 test(s) out of 12206 after applying 124 rule(s)
 INFO main: 0 dropped(s), 1 failure(s), 93 ignored(s), 106 known u-boot limitation(s), 12006 pass(s), 0 warning(s)
 ```
+
+(The `EBBR.yaml' configuration file is used to process results by default.)
 
 ## Usage
 
@@ -38,11 +58,13 @@ $ ./parser.py --md out.md ...
 
 An online help is available with the `-h` option.
 
-The generated `result md` can be easily converted to HTML using `pandoc` with:
+The generated `result md` can be easily converted to HTML using [pandoc] with:
 
 ``` {.sh}
 $ pandoc -oresult.html result.md
 ```
+
+See [Dependencies].
 
 ### Custom search
 For a custom Key:value search, the next two arguments *MUST be included together.* The program will search and display files that met that constraint, without the crosscheck, and display the names, guid, and key:value to the command line. `python3 parser.py <file.ekl> <file.seq> <search key> <search value>`
@@ -165,21 +187,18 @@ $ ./parser.py --input-md 'result.md' ...
 
 ## Configuration file
 
-It is possible to use a configuration file with command line option `--config
-<filename>`.
-This configuration file describes operations to perform on the tests results,
+By default, the `EBBR.yaml` configuration file is used to process results. It is
+intended to help triaging failures when testing specifically for [EBBR]
+compliance. It describes operations to perform on the tests results,
 such as marking tests as false positives or waiving failures.
+It is possible to specify another configuration file with the command line
+option `--config <filename>`.
 
-Example command for [EBBR]:
-
-``` {.sh}
-$ ./parser.py --config EBBR.yaml /path/to/Summary.ekl EBBR.seq ...
-```
-
-You need to install the [PyYAML] module for this to work.
+You need to install the [PyYAML] module for the configuration file to be loaded
+correctly, and installing the [packaging] library is recommended. See
+[Dependencies].
 
 [EBBR]: https://github.com/ARM-software/ebbr
-[PyYAML]: https://github.com/yaml/pyyaml
 
 ### Configuration file format
 
@@ -250,8 +269,9 @@ This generated configuration can then be further edited manually.
 
 ### EBBR configuration
 
-The `EBBR.yaml` file is a configuration file meant for [EBBR] testing. It can
-override the result of some tests with the following ones:
+The `EBBR.yaml` file is the configuration file used by default. It is meant for
+[EBBR] testing and can override the result of some tests with the following
+ones:
 
 -------------------------------------------------------------------------------
                    Result  Description
@@ -265,12 +285,36 @@ override the result of some tests with the following ones:
                            filesystem implementation limitations and they do
                            not prevent an OS to boot.
 
-   `KNOWN ACS LIMITATION` Genuine bugs, which are fixed in a more recent version
-                          of the ACS or which must ultimately be fixed and which
-                          we know about.
+   `KNOWN ACS LIMITATION`  Genuine bugs, which are fixed in a more recent
+                           version of the ACS or which must ultimately be fixed
+                           and which we know about.
 -------------------------------------------------------------------------------
 
 Some of the rules just add a `comments` field with some help text.
+
+Example command to see those comments:
+
+``` {.sh}
+$ ./parser.py \
+      --filter "x['result'] == 'FAILURE'" \
+      --fields 'count,result,name,comments' --uniq --print ...
+```
+
+### Database of sequence files
+
+The `seq.db` file contains a list of known sequence files, which allows to
+identify the input sequence file.
+
+This database file contains lines describing each known sequence file in turn,
+in the following format:
+
+```
+sha256 description
+```
+
+Everything appearing after a '#' sign is treated as a comment and ignored.
+
+The database filename can be specified with the `--seq-db` option.
 
 ## Notes
 ### Known Issues:
@@ -281,8 +325,8 @@ Some of the rules just add a `comments` field with some help text.
 
 ### Documentation
 
-It is possible to convert this `README.md` into `README.pdf` with pandoc using
-`make doc`. See `make help`.
+It is possible to convert this `README.md` into `README.pdf` with [pandoc] using
+`make doc`. See `make help` and [Dependencies].
 
 ### Sanity checks
 
@@ -384,7 +428,10 @@ convenience:
  `v21.05_0.8_BETA-0/`  EBBR sequence file from [ACS-IR v21.05_0.8_BETA-0].
 
    `v21.07_0.9_BETA/`  EBBR sequence files from [ACS-IR v21.07_0.9_BETA].
+
+         `v21.09_1.0`  EBBR sequence files from [ACS-IR v21.09_1.0].
 -------------------------------------------------------------------------------
 
 [ACS-IR v21.05_0.8_BETA-0]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.05_0.8_BETA-0
 [ACS-IR v21.07_0.9_BETA]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.07_0.9_BETA
+[ACS-IR v21.09_1.0]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.09_1.0

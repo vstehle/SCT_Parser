@@ -8,16 +8,20 @@ import csv
 import logging
 import json
 import re
+import hashlib
+import os
 
 try:
     from packaging import version
 except ImportError:
-    print('No packaging...')
+    print('No packaging. You should install python3-packaging...')
 
 try:
     import yaml
 except ImportError:
-    print('No yaml...')
+    print(
+        'No yaml. You should install PyYAML/python3-yaml for configuration'
+        ' file support...')
 
 if 'yaml' in sys.modules:
     try:
@@ -504,26 +508,29 @@ def gen_template(cross_check, filename):
 def do_print(cross_check, fields):
     logging.debug(f'Print (fields: {fields})')
 
-    # First pass to find the width for each field except the last one
-    fm1 = fields[:len(fields) - 1]
+    # First pass to find the width for each field
     w = {}
 
-    for f in fm1:
+    for f in fields:
         w[f] = len(f)
 
     for x in cross_check:
-        for f in fm1:
+        for f in fields:
             w[f] = max(w[f], len(str(x[f]) if f in x else ''))
 
     # Second pass where we print
+    fm1 = fields[:len(fields) - 1]
     lf = fields[len(fields) - 1]
+    sep = '  '
 
-    print(' '.join([
-        *map(lambda f: f"{f:{w[f]}}", fm1),
-        lf]))
+    print(sep.join([
+        *map(lambda f: f"{f.capitalize():{w[f]}}", fm1),
+        lf.capitalize()]))
+
+    print(sep.join([*map(lambda f: '-' * w[f], fields)]))
 
     for x in cross_check:
-        print(' '.join([
+        print(sep.join([
             *map(lambda f: f"{x[f] if f in x else '':{w[f]}}", fm1),
             x[lf] if lf in x else '']))
 
@@ -595,6 +602,50 @@ def combine_dbs(db1, db2):
         logging.debug(f'{n} dropped test set(s)')
 
     return cross_check
+
+
+# Load the database of known sequence files.
+def load_known_seq(seq_db):
+    known_seqs = {}
+
+    with open(seq_db, 'r') as f:
+        for line in f:
+            line = line.rstrip()
+            line = re.sub(r'#.*', '', line)
+            m = re.match(r'\s*([0-9a-fA-F]+)\s+(.*)', line)
+
+            if not m:
+                continue
+
+            kh = m.group(1)
+            d = m.group(2)
+            assert(kh not in known_seqs)
+            logging.debug(f'{kh} {d}')
+            known_seqs[kh] = d
+
+    logging.debug(f'{len(known_seqs)} known seq file(s)')
+    return known_seqs
+
+
+# Try to identify the .seq file in a list of known versions using its sha256.
+def ident_seq(seq_file, seq_db):
+    known_seqs = load_known_seq(seq_db)
+
+    # Hash seq file
+    hm = 'sha256'
+    hl = hashlib.new(hm)
+
+    with open(seq_file, 'rb') as f:
+        hl.update(f.read())
+
+    h = hl.hexdigest()
+    logging.debug(f'{hm} {h} {seq_file}')
+
+    # Try to identify the seq file
+    if h in known_seqs:
+        logging.info(f"""Identified `{seq_file}' as "{known_seqs[h]}".""")
+    else:
+        logging.debug(f"Could not identify `{seq_file}'...")
 
 
 # Read the .ekl log file and the .seq file and combine them into a single
@@ -714,6 +765,8 @@ def read_md(input_md):
 
 
 if __name__ == '__main__':
+    me = os.path.realpath(__file__)
+    here = os.path.dirname(me)
     parser = argparse.ArgumentParser(
         description='Process SCT results.'
                     ' This program takes the SCT summary and sequence files,'
@@ -740,6 +793,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '--print', action='store_true', help='Print results to stdout')
     parser.add_argument('--input-md', help='Input .md filename')
+    parser.add_argument(
+        '--seq-db', help='Known sequence files database filename',
+        default=f'{here}/seq.db')
     parser.add_argument('log_file', help='Input .ekl filename')
     parser.add_argument('seq_file', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
@@ -749,7 +805,8 @@ if __name__ == '__main__':
     # could actually import yaml.
     if 'yaml' in sys.modules:
         parser.add_argument(
-            '--config', help='Input .yaml configuration filename')
+            '--config', help='Input .yaml configuration filename',
+            default=f'{here}/EBBR.yaml')
         parser.add_argument('--yaml', help='Output .yaml filename')
         parser.add_argument(
             '--template', help='Output .yaml config template filename')
@@ -765,6 +822,10 @@ if __name__ == '__main__':
     else:
         # Command line argument 1 is the ekl file to open.
         # Command line argument 2 is the seq file to open.
+
+        # Try to identify the sequence file
+        ident_seq(args.seq_file, args.seq_db)
+
         # Read both and combine them into a single cross_check database.
         cross_check = read_log_and_seq(args.log_file, args.seq_file)
 
