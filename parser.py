@@ -10,6 +10,7 @@ import json
 import re
 import hashlib
 import os
+import curses
 
 try:
     from packaging import version
@@ -35,6 +36,21 @@ if 'packaging.version' in sys.modules and \
     yaml_load_args = {'Loader': yaml.FullLoader}
 else:
     yaml_load_args = {}
+
+# Colors
+normal = ''
+red = ''
+yellow = ''
+green = ''
+
+if os.isatty(sys.stdout.fileno()):
+    curses.setupterm()
+    setafb = curses.tigetstr('setaf') or ''
+    setaf = setafb.decode()
+    normal = curses.tigetstr('sgr0').decode() or ''
+    red = curses.tparm(setafb, curses.COLOR_RED).decode() or ''
+    yellow = curses.tparm(setafb, curses.COLOR_YELLOW).decode() or ''
+    green = curses.tparm(setafb, curses.COLOR_GREEN).decode() or ''
 
 
 # based loosley on https://stackoverflow.com/a/4391978
@@ -145,8 +161,9 @@ def ekl_parser(file):
                 temp_list.append(tmp_dict)
                 n += 1
             except Exception:
-                print(f"Line {i+1}:", split_line)
-                sys.exit("your log may be corrupted")
+                logging.error(f"Line {i+1}: {split_line}")
+                logging.error("your log may be corrupted")
+                sys.exit(1)
         else:
             logging.error(f"Unparsed line {i} `{line}'")
 
@@ -163,7 +180,8 @@ def seq_parser(file):
     magic = 7
     # a test in a seq file is 7 lines, if not mod7, something wrong..
     if len(lines) % magic != 0:
-        sys.exit("seqfile cut short, should be mod7")
+        logging.error("seqfile cut short, should be mod7")
+        sys.exit(1)
     # the utf-16 char makes this looping a bit harder, so we use x+(i) where i
     # is next 0-6th
     # loop ever "7 lines"
@@ -816,6 +834,11 @@ if __name__ == '__main__':
     logging.basicConfig(
         format='%(levelname)s %(funcName)s: %(message)s',
         level=logging.DEBUG if args.debug else logging.INFO)
+
+    ln = logging.getLevelName(logging.WARNING)
+    logging.addLevelName(logging.WARNING, f"{yellow}{ln}{normal}")
+    ln = logging.getLevelName(logging.ERROR)
+    logging.addLevelName(logging.ERROR, f"{red}{ln}{normal}")
 
     if args.input_md is not None:
         cross_check = read_md(args.input_md)
