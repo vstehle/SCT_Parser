@@ -353,7 +353,8 @@ def apply_rules(cross_check, conf):
     if n:
         r = len(conf)
         logging.info(
-            f'Updated {n} test(s) out of {s} after applying {r} rule(s)')
+            f"Updated {n} {maybe_plural(n, 'test')} out of {s}"
+            f" after applying {r} {maybe_plural(r, 'rule')}")
 
 
 # Use YAML configuration file and perform all the transformations described in
@@ -388,7 +389,8 @@ def filter_data(cross_check, Filter):
 
     r = list(filter(function, cross_check))
     after = len(r)
-    logging.info(f"Filtered out {before - after} test(s), kept {after}")
+    n = before - after
+    logging.info(f"Filtered out {n} {maybe_plural(n, 'test')}, kept {after}")
     return r
 
 
