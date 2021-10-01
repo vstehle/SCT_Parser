@@ -53,6 +53,19 @@ if os.isatty(sys.stdout.fileno()):
     green = curses.tparm(setafb, curses.COLOR_GREEN).decode() or ''
 
 
+# Compute the plural of a word.
+def maybe_plural(n, word):
+    if n < 2:
+        return word
+
+    ll = word[len(word) - 1].lower()
+
+    if ll == 'd' or ll == 's':
+        return word
+    else:
+        return f'{word}s'
+
+
 # based loosley on https://stackoverflow.com/a/4391978
 # returns a filtered dict of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
@@ -782,6 +795,29 @@ def read_md(input_md):
     return cross_check
 
 
+# Print a one-line summary
+# We know how to colorize some categories when they are non-zero.
+def print_summary(bins, res_keys):
+    colors = {
+        'DROPPED': red,
+        'FAILURE': red,
+        'PASS': green,
+        'SKIPPED': yellow,
+        'WARNING': yellow,
+    }
+
+    d = {}
+
+    for k in res_keys:
+        n = len(bins[k])
+        d[k] = f'{n} {maybe_plural(n, k.lower())}'
+
+        if n > 0 and k in colors:
+            d[k] = f'{colors[k]}{d[k]}{normal}'
+
+    logging.info(', '.join(map(lambda k: d[k], sorted(res_keys))))
+
+
 if __name__ == '__main__':
     me = os.path.realpath(__file__)
     here = os.path.dirname(me)
@@ -883,11 +919,7 @@ if __name__ == '__main__':
         bins[k] = key_value_find(cross_check, "result", k)
 
     # Print a one-line summary
-    s = map(
-        lambda k: '{} {}(s)'.format(len(bins[k]), k.lower()),
-        sorted(res_keys))
-
-    logging.info(', '.join(s))
+    print_summary(bins, res_keys)
 
     # generate MD summary
     # As a special case, we skip generation when we are reading from a markdown
