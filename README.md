@@ -288,6 +288,10 @@ ones:
    `KNOWN ACS LIMITATION`  Genuine bugs, which are fixed in a more recent
                            version of the ACS or which must ultimately be fixed
                            and which we know about.
+
+   `KNOWN SCT LIMITATION`  Genuine bugs, which are fixed in a more recent
+                           version of the SCT or which must ultimately be fixed
+                           and which we know about.
 -------------------------------------------------------------------------------
 
 Some of the rules just add a `comments` field with some help text.

@@ -2176,6 +2176,32 @@
     result: KNOWN ACS LIMITATION
 
 ###############################################################################
+#                           Known SCT limitations                             #
+###############################################################################
+
+# We force the following tests result as `KNOWN SCT LIMITATION'. They are
+# genuine bugs, which are fixed in a more recent version of the SCT or which
+# must ultimately be fixed and which we know about.
+
+- rule: Force simple text input ex protocol warning as known SCT limitation
+    Unsupported is a valid return value for SetState().
+  criteria:
+    descr: Simple Text Input Ex Protocol Test
+    device path: No device path
+    group: ConsoleSupportTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: Status = Unsupported
+    name: EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL.SetState - SetState() doesn't return
+      EFI_SUCCESS with EFI_KEY_STATE_EXPOSED
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 2C3CA282-5644-41B6-AFC9-4387F25389BD
+    sub set: ReadKeyStrokeExFunctionAuto
+    test set: SimpleTextInputExProtocolTest
+  update:
+    result: KNOWN SCT LIMITATION
+
+###############################################################################
 #                                Comments                                     #
 ###############################################################################
 
