@@ -439,6 +439,10 @@ def uniq(cross_check):
 
         h[i]['count'] += 1
 
+    # Transform all counts to string.
+    for k in h.keys():
+        h[k]['count'] = str(h[k]['count'])
+
     # Transform back to list
     r = list(h.values())
     logging.info(f"{len(r)} unique entries")
