@@ -1959,23 +1959,6 @@
   update:
     result: KNOWN U-BOOT LIMITATION
 
-- rule: Force simple text input ex protocol warnings as known U-Boot limitation
-  criteria:
-    descr: Simple Text Input Ex Protocol Test
-    device path: No device path
-    group: ConsoleSupportTest
-    guid: 6647A0E7-483C-4777-A94B-C8BCA3DFC79C
-    log: SimpleTextInputExBBTestConformance.c
-    name: SIMPLE_TEXT_INPUT_EX_PROTOCOL.SetState - SetState() returns
-      EFI_INVALID_PARAMETER with KeyToggleState being NULL.
-    result: WARNING
-    revision: '0x00010000'
-    set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
-    sub set: SetStateConformance
-    test set: SimpleTextInputExProtocolTest
-  update:
-    result: KNOWN U-BOOT LIMITATION
-
 - rule: Force misc runtime services update capsule conformance failure as known
     U-Boot limitation
     UpdateCapsule implementation in U-Boot up to (at least) v2021.07 does not
@@ -2175,16 +2158,10 @@
   update:
     result: KNOWN ACS LIMITATION
 
-###############################################################################
-#                           Known SCT limitations                             #
-###############################################################################
-
-# We force the following tests result as `KNOWN SCT LIMITATION'. They are
-# genuine bugs, which are fixed in a more recent version of the SCT or which
-# must ultimately be fixed and which we know about.
-
-- rule: Force simple text input ex protocol warning as known SCT limitation
-    Unsupported is a valid return value for SetState().
+- rule: Force simple text input ex protocol warning as known ACS limitation
+    Unsupported is a valid return value for SetState() and this is a limitation
+    in the SCT.
+    https://bugzilla.tianocore.org/show_bug.cgi?id=3390
   criteria:
     descr: Simple Text Input Ex Protocol Test
     device path: No device path
@@ -2199,7 +2176,27 @@
     sub set: ReadKeyStrokeExFunctionAuto
     test set: SimpleTextInputExProtocolTest
   update:
-    result: KNOWN SCT LIMITATION
+    result: KNOWN ACS LIMITATION
+
+- rule: Force simple text input ex protocol warning (2) as known ACS limitation
+    Unsupported is a valid return value for SetState() and this is a limitation
+    in the SCT.
+    https://bugzilla.tianocore.org/show_bug.cgi?id=3390
+  criteria:
+    descr: Simple Text Input Ex Protocol Test
+    device path: No device path
+    group: ConsoleSupportTest
+    guid: 6647A0E7-483C-4777-A94B-C8BCA3DFC79C
+    log: Status - Unsupported
+    name: SIMPLE_TEXT_INPUT_EX_PROTOCOL.SetState - SetState() returns
+      EFI_INVALID_PARAMETER with KeyToggleState being NULL.
+    result: WARNING
+    revision: '0x00010000'
+    set guid: 5B40A8A9-F77A-4134-9FF1-417720B765B4
+    sub set: SetStateConformance
+    test set: SimpleTextInputExProtocolTest
+  update:
+    result: KNOWN ACS LIMITATION
 
 ###############################################################################
 #                                Comments                                     #
