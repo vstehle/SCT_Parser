@@ -45,7 +45,7 @@ green = ''
 
 if os.isatty(sys.stdout.fileno()):
     curses.setupterm()
-    setafb = curses.tigetstr('setaf') or ''
+    setafb = curses.tigetstr('setaf') or bytes()
     setaf = setafb.decode()
     normal = curses.tigetstr('sgr0').decode() or ''
     red = curses.tparm(setafb, curses.COLOR_RED).decode() or ''
