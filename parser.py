@@ -175,10 +175,10 @@ def ekl_parser(file):
                 n += 1
             except Exception:
                 logging.error(f"Line {i+1}: {split_line}")
-                logging.error("your log may be corrupted")
+                logging.error(f"{red}your log may be corrupted{normal}")
                 sys.exit(1)
         else:
-            logging.error(f"Unparsed line {i} `{line}'")
+            logging.error(f"{red}Unparsed line{normal} {i} `{line}'")
 
     if s:
         logging.debug(f'{s} skipped test set(s)')
@@ -193,7 +193,7 @@ def seq_parser(file):
     magic = 7
     # a test in a seq file is 7 lines, if not mod7, something wrong..
     if len(lines) % magic != 0:
-        logging.error("seqfile cut short, should be mod7")
+        logging.error(f"{red}seqfile cut short{normal}, should be mod7")
         sys.exit(1)
     # the utf-16 char makes this looping a bit harder, so we use x+(i) where i
     # is next 0-6th
@@ -284,13 +284,14 @@ def sanitize_yaml(conf):
             conf[i] = r
 
         if r['rule'] in rules:
-            logging.warning(f"Duplicate rule {i} `{r['rule']}'")
+            logging.warning(
+                f"{yellow}Duplicate rule{normal} {i} `{r['rule']}'")
 
         rules.add(r['rule'])
 
         if 'criteria' not in r or not type(r['criteria']) is dict or \
            'update' not in r or not type(r['update']) is dict:
-            logging.error(f"Bad rule {i} `{r}'")
+            logging.error(f"{red}Bad rule{normal} {i} `{r}'")
             raise Exception()
 
 
@@ -680,9 +681,11 @@ def ident_seq(seq_file, seq_db):
 
     # Try to identify the seq file
     if h in known_seqs:
-        logging.info(f"""Identified `{seq_file}' as "{known_seqs[h]}".""")
+        logging.info(
+            f"""{green}Identified{normal} `{seq_file}'"""
+            f""" as "{known_seqs[h]}".""")
     else:
-        logging.debug(f"Could not identify `{seq_file}'...")
+        logging.warning(f"{yellow}Could not identify{normal} `{seq_file}'...")
 
 
 # Read the .ekl log file and the .seq file and combine them into a single
