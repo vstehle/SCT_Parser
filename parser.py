@@ -10,6 +10,7 @@ import json
 import re
 import hashlib
 import os
+import curses
 
 try:
     from packaging import version
@@ -35,6 +36,34 @@ if 'packaging.version' in sys.modules and \
     yaml_load_args = {'Loader': yaml.FullLoader}
 else:
     yaml_load_args = {}
+
+# Colors
+normal = ''
+red = ''
+yellow = ''
+green = ''
+
+if os.isatty(sys.stdout.fileno()):
+    curses.setupterm()
+    setafb = curses.tigetstr('setaf') or ''
+    setaf = setafb.decode()
+    normal = curses.tigetstr('sgr0').decode() or ''
+    red = curses.tparm(setafb, curses.COLOR_RED).decode() or ''
+    yellow = curses.tparm(setafb, curses.COLOR_YELLOW).decode() or ''
+    green = curses.tparm(setafb, curses.COLOR_GREEN).decode() or ''
+
+
+# Compute the plural of a word.
+def maybe_plural(n, word):
+    if n < 2:
+        return word
+
+    ll = word[len(word) - 1].lower()
+
+    if ll == 'd' or ll == 's':
+        return word
+    else:
+        return f'{word}s'
 
 
 # based loosley on https://stackoverflow.com/a/4391978
@@ -145,8 +174,9 @@ def ekl_parser(file):
                 temp_list.append(tmp_dict)
                 n += 1
             except Exception:
-                print(f"Line {i+1}:", split_line)
-                sys.exit("your log may be corrupted")
+                logging.error(f"Line {i+1}: {split_line}")
+                logging.error("your log may be corrupted")
+                sys.exit(1)
         else:
             logging.error(f"Unparsed line {i} `{line}'")
 
@@ -163,7 +193,8 @@ def seq_parser(file):
     magic = 7
     # a test in a seq file is 7 lines, if not mod7, something wrong..
     if len(lines) % magic != 0:
-        sys.exit("seqfile cut short, should be mod7")
+        logging.error("seqfile cut short, should be mod7")
+        sys.exit(1)
     # the utf-16 char makes this looping a bit harder, so we use x+(i) where i
     # is next 0-6th
     # loop ever "7 lines"
@@ -322,7 +353,8 @@ def apply_rules(cross_check, conf):
     if n:
         r = len(conf)
         logging.info(
-            f'Updated {n} test(s) out of {s} after applying {r} rule(s)')
+            f"Updated {n} {maybe_plural(n, 'test')} out of {s}"
+            f" after applying {r} {maybe_plural(r, 'rule')}")
 
 
 # Use YAML configuration file and perform all the transformations described in
@@ -357,7 +389,8 @@ def filter_data(cross_check, Filter):
 
     r = list(filter(function, cross_check))
     after = len(r)
-    logging.info(f"Filtered out {before - after} test(s), kept {after}")
+    n = before - after
+    logging.info(f"Filtered out {n} {maybe_plural(n, 'test')}, kept {after}")
     return r
 
 
@@ -764,6 +797,29 @@ def read_md(input_md):
     return cross_check
 
 
+# Print a one-line summary
+# We know how to colorize some categories when they are non-zero.
+def print_summary(bins, res_keys):
+    colors = {
+        'DROPPED': red,
+        'FAILURE': red,
+        'PASS': green,
+        'SKIPPED': yellow,
+        'WARNING': yellow,
+    }
+
+    d = {}
+
+    for k in res_keys:
+        n = len(bins[k])
+        d[k] = f'{n} {maybe_plural(n, k.lower())}'
+
+        if n > 0 and k in colors:
+            d[k] = f'{colors[k]}{d[k]}{normal}'
+
+    logging.info(', '.join(map(lambda k: d[k], sorted(res_keys))))
+
+
 if __name__ == '__main__':
     me = os.path.realpath(__file__)
     here = os.path.dirname(me)
@@ -817,6 +873,11 @@ if __name__ == '__main__':
         format='%(levelname)s %(funcName)s: %(message)s',
         level=logging.DEBUG if args.debug else logging.INFO)
 
+    ln = logging.getLevelName(logging.WARNING)
+    logging.addLevelName(logging.WARNING, f"{yellow}{ln}{normal}")
+    ln = logging.getLevelName(logging.ERROR)
+    logging.addLevelName(logging.ERROR, f"{red}{ln}{normal}")
+
     if args.input_md is not None:
         cross_check = read_md(args.input_md)
     else:
@@ -860,11 +921,7 @@ if __name__ == '__main__':
         bins[k] = key_value_find(cross_check, "result", k)
 
     # Print a one-line summary
-    s = map(
-        lambda k: '{} {}(s)'.format(len(bins[k]), k.lower()),
-        sorted(res_keys))
-
-    logging.info(', '.join(s))
+    print_summary(bins, res_keys)
 
     # generate MD summary
     # As a special case, we skip generation when we are reading from a markdown

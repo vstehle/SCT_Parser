@@ -36,8 +36,8 @@ command. The parsed report can be found in `result.md`.
 $ ./parser.py \
                 </path/to/sct_results/Overall/Summary.ekl> \
 		contrib/v21.07_0.9_BETA/EBBR.seq
-INFO apply_rules: Updated 200 test(s) out of 12206 after applying 124 rule(s)
-INFO main: 0 dropped(s), 1 failure(s), 93 ignored(s), 106 known u-boot limitation(s), 12006 pass(s), 0 warning(s)
+INFO apply_rules: Updated 200 tests out of 12206 after applying 124 rules
+INFO main: 0 dropped, 1 failure, 93 ignored, 106 known u-boot limitations, 12006 pass, 0 warning
 ```
 
 (The `EBBR.yaml' configuration file is used to process results by default.)
