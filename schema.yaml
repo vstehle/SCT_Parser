@@ -1,0 +1,86 @@
+---
+$schema: http://json-schema.org/draft-07/schema#
+title: SCT Parser configuration schema
+description: |
+    The SCT Parser uses configurations files in YAML format to perform a number
+    of transformations on the tests results.
+
+    This schema describes requirements on the configuration file, which can be
+    verified by the parser with the --validate-config option. See the README for
+    details.
+definitions:
+    guid:
+        type: string
+        format: uuid
+        pattern: '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}'
+type: array
+minItems: 1
+uniqueItems: true
+items:
+    type: object
+    properties:
+        rule:
+            type: string
+        criteria:
+            type: object
+            properties:
+                descr:
+                    type: string
+                group:
+                    type: string
+                guid:
+                    '$ref': '#/definitions/guid'
+                name:
+                    type: string
+                log:
+                    type: string
+                result:
+                    enum:
+                        - DROPPED
+                        - FAILURE
+                        - SKIPPED
+                        - WARNING
+                revision:
+                    type: string
+                set guid:
+                    '$ref': '#/definitions/guid'
+                sub set:
+                    type: string
+                test set:
+                    type: string
+        update:
+            type: object
+            properties:
+                comments:
+                    type: string
+                descr:
+                    type: string
+                group:
+                    type: string
+                guid:
+                    '$ref': '#/definitions/guid'
+                name:
+                    type: string
+                log:
+                    type: string
+                result:
+                    enum:
+                        - DROPPED
+                        - FAILURE
+                        - IGNORED
+                        - KNOWN ACS LIMITATION
+                        - KNOWN U-BOOT LIMITATION
+                        - SKIPPED
+                        - WARNING
+                revision:
+                    type: string
+                set guid:
+                    '$ref': '#/definitions/guid'
+                sub set:
+                    type: string
+                test set:
+                    type: string
+    required:
+        - rule
+        - criteria
+        - update
