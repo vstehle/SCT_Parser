@@ -439,16 +439,20 @@ We create artificial tests entries for those dropped tests sets, with the
 A few contributed files are stored in sub-folders under `contrib` for
 convenience:
 
--------------------------------------------------------------------------------
-           Sub-folder  Contents
----------------------  --------------------------------------------------------
- `v21.05_0.8_BETA-0/`  EBBR sequence file from [ACS-IR v21.05_0.8_BETA-0].
+--------------------  ---------------------------------------------------------
+          Sub-folder  Contents
+--------------------  ---------------------------------------------------------
+`v21.05_0.8_BETA-0/`  EBBR sequence file from [ACS-IR v21.05_0.8_BETA-0].
 
-   `v21.07_0.9_BETA/`  EBBR sequence files from [ACS-IR v21.07_0.9_BETA].
+  `v21.07_0.9_BETA/`  EBBR sequence files from [ACS-IR v21.07_0.9_BETA].
 
-         `v21.09_1.0`  EBBR sequence files from [ACS-IR v21.09_1.0].
--------------------------------------------------------------------------------
+       `v21.09_1.0/`  EBBR sequence files from [ACS-IR v21.09_1.0].
+
+`v21.10_SIE_REL1.0/`  BBSR sequence file from
+                      [Security interface extension ACS v21.10_SIE_REL1.0].
+--------------------  ---------------------------------------------------------
 
 [ACS-IR v21.05_0.8_BETA-0]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.05_0.8_BETA-0
 [ACS-IR v21.07_0.9_BETA]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.07_0.9_BETA
 [ACS-IR v21.09_1.0]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.09_1.0
+[Security interface extension ACS v21.10_SIE_REL1.0]: https://github.com/ARM-software/arm-systemready/tree/security-interface-extension-acs/security-interface-extension/prebuilt_images/v21.10_SIE_REL1.0
