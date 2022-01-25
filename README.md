@@ -17,6 +17,7 @@ correctly. Depending on your Linux distribution, this might be available as the
 It is also recommended to install the [packaging] library for smooth version
 detection. Depending on your Linux distribution, this might be available as the
 `python3-packaging` package.
+The [python-jsonschema] module is required for configuration validation.
 See [Configuration file].
 
 If you want to generate the pdf version of this documentation or convert
@@ -26,6 +27,7 @@ markdown results to HTML, you need to install [pandoc]. See [Usage] and
 [PyYAML]: https://github.com/yaml/pyyaml
 [packaging]: https://github.com/pypa/packaging
 [pandoc]: https://pandoc.org
+[python-jsonschema]: https://python-jsonschema.readthedocs.io
 
 ## Quick Start
 
@@ -217,6 +219,8 @@ The configuration file is in [YAML] format. It contains a list of rules:
 - rule...
 ```
 
+See also [Validating configurations].
+
 [YAML]: https://yaml.org
 
 ### Rule processing
@@ -300,7 +304,19 @@ $ ./parser.py \
       --fields 'count,result,name,comments' --uniq --print ...
 ```
 
-### Database of sequence files
+### Validating configurations
+
+It is possible to validate the configuration using a schema with:
+
+``` {.sh}
+$ ./parser.py --validate-config --schema <schema.yaml> ...
+```
+
+If no schema is specified, the default `schema.yaml` is be used.
+
+See also [Configuration file format].
+
+## Database of sequence files
 
 The `seq.db` file contains a list of known sequence files, which allows to
 identify the input sequence file.
@@ -341,6 +357,7 @@ reports errors:
  `shellcheck`  Shell scripts.
 -------------------------------
 
+This will also perform validation of the `EBBR.yaml' configuration.
 See `make help`.
 
 ### db structure:

@@ -7,7 +7,8 @@ help:
 	@echo 'Targets:'
 	@echo '  all'
 	@echo '  check   Perform sanity checks'
-	@echo '          (currently yamllint, shellcheck and flake8)'
+	@echo '          (currently yamllint, shellcheck and flake8,'
+	@echo '           as well as configuration validation)'
 	@echo '  clean'
 	@echo '  doc     Generate README.pdf'
 	@echo '  help    Print this help.'
@@ -21,6 +22,7 @@ check:
 	yamllint .
 	shellcheck $$(find -name '*.sh')
 	flake8
+	./parser.py --validate-config
 
 clean:
 	-rm -f README.pdf

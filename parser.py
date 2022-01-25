@@ -30,6 +30,13 @@ if 'yaml' in sys.modules:
     except ImportError:
         from yaml import Dumper
 
+    try:
+        import jsonschema
+    except ImportError:
+        print(
+            'No jsonschema. You should install python3-jsonschema for'
+            ' configuration validation support...')
+
 # Not all yaml versions have a Loader argument.
 if 'packaging.version' in sys.modules and \
    version.parse(yaml.__version__) >= version.parse('5.1'):
@@ -44,13 +51,16 @@ yellow = ''
 green = ''
 
 if os.isatty(sys.stdout.fileno()):
-    curses.setupterm()
-    setafb = curses.tigetstr('setaf') or ''
-    setaf = setafb.decode()
-    normal = curses.tigetstr('sgr0').decode() or ''
-    red = curses.tparm(setafb, curses.COLOR_RED).decode() or ''
-    yellow = curses.tparm(setafb, curses.COLOR_YELLOW).decode() or ''
-    green = curses.tparm(setafb, curses.COLOR_GREEN).decode() or ''
+    try:
+        curses.setupterm()
+        setafb = curses.tigetstr('setaf') or bytes()
+        setaf = setafb.decode()
+        normal = curses.tigetstr('sgr0').decode() or ''
+        red = curses.tparm(setafb, curses.COLOR_RED).decode() or ''
+        yellow = curses.tparm(setafb, curses.COLOR_YELLOW).decode() or ''
+        green = curses.tparm(setafb, curses.COLOR_GREEN).decode() or ''
+    except Exception:
+        pass
 
 
 # Compute the plural of a word.
@@ -358,11 +368,9 @@ def apply_rules(cross_check, conf):
             f" after applying {r} {maybe_plural(r, 'rule')}")
 
 
-# Use YAML configuration file and perform all the transformations described in
-# there.
-# See the README.md for details on the file format.
-# We modify cross_check in-place
-def use_config(cross_check, filename):
+# Load YAML configuration file
+# See the README.md for details on the configuration file format.
+def load_config(filename):
     assert('yaml' in sys.modules)
 
     # Load configuration file
@@ -373,7 +381,24 @@ def use_config(cross_check, filename):
 
     logging.debug('{} rule(s)'.format(len(conf)))
     sanitize_yaml(conf)
-    apply_rules(cross_check, conf)
+    return conf
+
+
+# Validate configuration using a YAML schema file
+def validate_config(conf, filename):
+    assert('yaml' in sys.modules and 'jsonschema' in sys.modules)
+
+    # Load schema file
+    logging.debug(f'Read {filename}')
+
+    with open(filename, 'r') as yamlfile:
+        schema = yaml.load(yamlfile, **yaml_load_args)
+
+    fc = jsonschema.FormatChecker()
+    logging.debug(f'Format checkers: {fc.checkers.keys()}')
+    jsonschema.validate(instance=conf, schema=schema, format_checker=fc)
+    # If we arrive here, the configuration is valid.
+    logging.debug('Validated configuration')
 
 
 # Filter tests data
@@ -838,7 +863,9 @@ if __name__ == '__main__':
                ' according to the first sort key, then the second, etc.'
                ' Sorting happens after update by the configuration rules.'
                ' Useful example: --sort'
-               ' "group,descr,set guid,test set,sub set,guid,name,log"',
+               ' "group,descr,set guid,test set,sub set,guid,name,log"'
+               ' When not validating a configuration file, an input .ekl and'
+               ' an input .seq files are required.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
     parser.add_argument('--json', help='Output .json filename')
@@ -859,8 +886,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--seq-db', help='Known sequence files database filename',
         default=f'{here}/seq.db')
-    parser.add_argument('log_file', help='Input .ekl filename')
-    parser.add_argument('seq_file', help='Input .seq filename')
+    parser.add_argument('log_file', nargs='?', help='Input .ekl filename')
+    parser.add_argument('seq_file', nargs='?', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
     parser.add_argument('find_value', nargs='?', help='Search value')
 
@@ -873,6 +900,12 @@ if __name__ == '__main__':
         parser.add_argument('--yaml', help='Output .yaml filename')
         parser.add_argument(
             '--template', help='Output .yaml config template filename')
+        parser.add_argument(
+            '--schema', help='Configuration schema',
+            default=f'{here}/schema.yaml')
+        parser.add_argument(
+            '--validate-config', action='store_true',
+            help='Validate config and exit')
 
     args = parser.parse_args()
 
@@ -884,6 +917,22 @@ if __name__ == '__main__':
     logging.addLevelName(logging.WARNING, f"{yellow}{ln}{normal}")
     ln = logging.getLevelName(logging.ERROR)
     logging.addLevelName(logging.ERROR, f"{red}{ln}{normal}")
+
+    # We must have a log file and a seq file, except when validating the config
+    if not args.validate_config:
+        if args.log_file is None:
+            logging.error("No input .ekl!")
+            sys.exit(1)
+        if args.seq_file is None:
+            logging.error("No input .seq!")
+            sys.exit(1)
+
+    # Validate config and exit, if requested.
+    if args.validate_config:
+        assert('config' in args and args.config is not None)
+        conf = load_config(args.config)
+        validate_config(conf, args.schema)
+        sys.exit()
 
     if args.input_md is not None:
         cross_check = read_md(args.input_md)
@@ -902,7 +951,8 @@ if __name__ == '__main__':
     # Take configuration file into account. This can perform transformations on
     # the tests results.
     if 'config' in args and args.config is not None:
-        use_config(cross_check, args.config)
+        conf = load_config(args.config)
+        apply_rules(cross_check, conf)
 
     # Filter tests data, if requested
     if args.filter is not None:
