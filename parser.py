@@ -379,6 +379,9 @@ def load_config(filename):
     with open(filename, 'r') as yamlfile:
         conf = yaml.load(yamlfile, **yaml_load_args)
 
+    if conf is None:
+        conf = []
+
     logging.debug('{} rule(s)'.format(len(conf)))
     sanitize_yaml(conf)
     return conf
