@@ -9,6 +9,10 @@ It will proceed to generate a Markdown file listing number of failures, passes, 
 
 [UEFI SCT]: https://uefi.org/testtools
 
+## Branches
+
+For IR 1.1 certification, git branch `ir1` of this repository should be used.
+
 ## Dependencies
 
 You need to install the [PyYAML] module for the configuration file to be loaded
