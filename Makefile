@@ -24,6 +24,7 @@ check:
 	shellcheck $$(find -name '*.sh')
 	flake8
 	./parser.py --validate-config --schema schemas/config-schema.yaml
+	./parser.py --validate-config --config sample/sample.yaml --schema schemas/config-schema.yaml
 	./parser.py --validate-seq-db --schema schemas/seq_db-schema.yaml
 
 clean:

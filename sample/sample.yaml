@@ -8,8 +8,7 @@
 # See README.md for details.
 ---
 
-- rule: A sample rule to force the result as `SAMPLE' and create a `System' key
-    with value `Ready'.
+- rule: A sample rule to force the result as `IGNORED'.
   criteria:
     descr: UEFI Compliant Test
     device path: No device path
@@ -23,5 +22,4 @@
     sub set: PlatformSpecificElements
     test set: EFICompliantTest
   update:
-    result: SAMPLE
-    System: Ready
+    result: IGNORED
