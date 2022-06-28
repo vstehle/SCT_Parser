@@ -1,0 +1,109 @@
+###############################################################################
+#                         SIE configuration file                              #
+###############################################################################
+
+# Rules defined in this configuration are applied in order to the tests.
+# Only the first matching rule does actually update the test.
+# Criteria fields are matched in a "relaxed" manner (substrings can match).
+# See README.md for details.
+---
+
+###############################################################################
+#                                Ignored                                      #
+###############################################################################
+
+# We force the following dropped or skipped tests result as `IGNORED' because
+# they are run only when some platform features are present, which are not
+# mandated by BBSR.
+
+- rule: Force dropped TPM as ignored
+    BBSR v1.1 does not mandate use of a TPM; the requirements of section 2.4
+    "TPMs and measured boot" must be followed only if a TPM is implemented.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: 39FF9C71-4B41-4E5B-AED7-87C794187D67
+    sub set: GetCapability_Conf
+  update:
+    result: IGNORED
+
+- rule: Force dropped TPM (2) as ignored
+    BBSR v1.1 does not mandate use of a TPM; the requirements of section 2.4
+    "TPMs and measured boot" must be followed only if a TPM is implemented.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: 847F1AE0-B429-49F1-9E0C-8F43FB553454
+    sub set: GetActivePcrBanks_Conf
+  update:
+    result: IGNORED
+
+- rule: Force dropped TPM (3) as ignored
+    BBSR v1.1 does not mandate use of a TPM; the requirements of section 2.4
+    "TPMs and measured boot" must be followed only if a TPM is implemented.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: 907A7878-B294-F147-E90A-6543AB557646
+    sub set: HashLogExtendEvent_Conf
+  update:
+    result: IGNORED
+
+- rule: Force dropped TPM (4) as ignored
+    BBSR v1.1 does not mandate use of a TPM; the requirements of section 2.4
+    "TPMs and measured boot" must be followed only if a TPM is implemented.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: 9087AD78-9AD2-4172-9ABC-982308F56D26
+    sub set: SubmitCommand_Conf
+  update:
+    result: IGNORED
+
+###############################################################################
+#                          Known RPMB limitations                             #
+###############################################################################
+
+# We force the following tests result as `KNOWN RPMB LIMITATION'. They are
+# genuine limitations, we know about them; they are due to eMMC RPMB limitations
+# and they do not prevent Secure Boot.
+
+- rule: Force BBSR variable size test failure as known RPMB limitation.
+    The SIE ACS checks that MaxVariableStorageSize is larger than 128kb as per
+    rule R040_BBSR of BBSR v1.1.
+    That is typically not the case when using OP-TEE's secure storage on eMMC
+    RPMB.
+  criteria:
+    descr: BBSR Variable Size Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: B6DC17CA-71E1-4BD5-9E76-F9A0847D9AE4
+    log: BBSRVariableSizeBBTestFunction.c
+    name: RT.SecurityVariableSizeTest - BBSR Variable Size test
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 19A9EDCF-EEB9-43E4-86A0-F28734FED429
+    sub set: BBSRVariableSizeTest_func
+    test set: BBSRVariableSizeTest
+  update:
+    result: KNOWN RPMB LIMITATION
+
+- rule: Force BBSR variable size test failure (2) as known RPMB limitation.
+    The SIE ACS checks that MaxVariableSize is larger than 64kb as per rule
+    R050_BBSR of BBSR v1.1.
+    That is typically not the case when using OP-TEE's secure storage on eMMC
+    RPMB.
+  criteria:
+    descr: BBSR Variable Size Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 9B37033F-53AF-4097-AAE3-73FD28D267D5
+    log: BBSRVariableSizeBBTestFunction.c
+    name: RT.SecurityVariableSizeTest - BBSR Variable Size test
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 19A9EDCF-EEB9-43E4-86A0-F28734FED429
+    sub set: BBSRVariableSizeTest_func
+    test set: BBSRVariableSizeTest
+  update:
+    result: KNOWN RPMB LIMITATION

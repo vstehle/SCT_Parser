@@ -26,4 +26,4 @@ seq_files:
       config: EBBR.yaml
     - sha256: 7cb231d17fa9f580e75fee01c0295c9bd800fa6ba27501c7a1b941cbbdeaebfb
       name: Security interface extension ACS v21.10_SIE_REL1.0 BBSR.seq
-      config: EBBR.yaml
+      config: SIE.yaml
