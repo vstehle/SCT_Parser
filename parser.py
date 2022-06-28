@@ -280,7 +280,6 @@ def dict_2_md(input_list, file):
 
 # Sanitize our YAML configuration
 # We modify conf in-place
-# TODO: use a proper validator instead
 def sanitize_yaml(conf):
     rules = set()
 
@@ -670,32 +669,33 @@ def combine_dbs(db1, db2):
     return cross_check
 
 
+# Verify Sanity of our YAML seq db
+def sanity_check_seq_db(seq_db):
+    assert('seq_db' in seq_db)
+    s = set()
+
+    for x in seq_db['seq_files']:
+        sha = x['sha256']
+        assert(sha not in s)
+        s.add(sha)
+
+
 # Load the database of known sequence files.
-def load_known_seq(seq_db):
-    known_seqs = {}
+def load_seq_db(filename):
+    assert('yaml' in sys.modules)
+    logging.debug(f'Read {filename}')
 
-    with open(seq_db, 'r') as f:
-        for line in f:
-            line = line.rstrip()
-            line = re.sub(r'#.*', '', line)
-            m = re.match(r'\s*([0-9a-fA-F]+)\s+(.*)', line)
+    with open(filename, 'r') as yamlfile:
+        seq_db = yaml.load(yamlfile, **yaml_load_args)
 
-            if not m:
-                continue
-
-            kh = m.group(1)
-            d = m.group(2)
-            assert(kh not in known_seqs)
-            logging.debug(f'{kh} {d}')
-            known_seqs[kh] = d
-
-    logging.debug(f'{len(known_seqs)} known seq file(s)')
-    return known_seqs
+    sanity_check_seq_db(seq_db)
+    logging.debug(f"{len(seq_db['seq_files'])} known seq file(s)")
+    return seq_db
 
 
 # Try to identify the .seq file in a list of known versions using its sha256.
 def ident_seq(seq_file, seq_db):
-    known_seqs = load_known_seq(seq_db)
+    seq_db = load_seq_db(seq_db)
 
     # Hash seq file
     hm = 'sha256'
@@ -708,12 +708,14 @@ def ident_seq(seq_file, seq_db):
     logging.debug(f'{hm} {h} {seq_file}')
 
     # Try to identify the seq file
-    if h in known_seqs:
-        logging.info(
-            f"""{green}Identified{normal} `{seq_file}'"""
-            f""" as "{known_seqs[h]}".""")
-    else:
-        logging.warning(f"{yellow}Could not identify{normal} `{seq_file}'...")
+    for x in seq_db['seq_files']:
+        if x['sha256'] == h:
+            logging.info(
+                f"""{green}Identified{normal} `{seq_file}'"""
+                f""" as "{x['name']}".""")
+            return
+
+    logging.warning(f"{yellow}Could not identify{normal} `{seq_file}'...")
 
 
 # Read the .ekl log file and the .seq file and combine them into a single
@@ -888,7 +890,7 @@ if __name__ == '__main__':
     parser.add_argument('--input-md', help='Input .md filename')
     parser.add_argument(
         '--seq-db', help='Known sequence files database filename',
-        default=f'{here}/seq.db')
+        default=f'{here}/seq_db.yaml')
     parser.add_argument('log_file', nargs='?', help='Input .ekl filename')
     parser.add_argument('seq_file', nargs='?', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')

@@ -322,7 +322,7 @@ See also [Configuration file format].
 
 ## Database of sequence files
 
-The `seq.db` file contains a list of known sequence files, which allows to
+The `seq_db.yaml` file contains a list of known sequence files, which allows to
 identify the input sequence file.
 
 This database file contains lines describing each known sequence file in turn,
