@@ -316,7 +316,7 @@ It is possible to validate the configuration using a schema with:
 $ ./parser.py --validate-config --schema <schema.yaml> ...
 ```
 
-If no schema is specified, the default `schema.yaml` is be used.
+If no schema is specified, the default `schemas/config-schema.yaml` is used.
 
 See also [Configuration file format].
 

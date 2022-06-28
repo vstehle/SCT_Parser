@@ -904,8 +904,8 @@ if __name__ == '__main__':
         parser.add_argument(
             '--template', help='Output .yaml config template filename')
         parser.add_argument(
-            '--schema', help='Configuration schema',
-            default=f'{here}/schema.yaml')
+            '--schema', help='Validation schema',
+            default=f'{here}/schemas/config-schema.yaml')
         parser.add_argument(
             '--validate-config', action='store_true',
             help='Validate config and exit')
