@@ -694,6 +694,7 @@ def load_seq_db(filename):
 
 
 # Try to identify the .seq file in a list of known versions using its sha256.
+# We return the identified seq_db entry or None.
 def ident_seq(seq_file, seq_db):
     seq_db = load_seq_db(seq_db)
 
@@ -713,9 +714,10 @@ def ident_seq(seq_file, seq_db):
             logging.info(
                 f"""{green}Identified{normal} `{seq_file}'"""
                 f""" as "{x['name']}".""")
-            return
+            return x
 
     logging.warning(f"{yellow}Could not identify{normal} `{seq_file}'...")
+    return None
 
 
 # Read the .ekl log file and the .seq file and combine them into a single
@@ -900,8 +902,7 @@ if __name__ == '__main__':
     # could actually import yaml.
     if 'yaml' in sys.modules:
         parser.add_argument(
-            '--config', help='Input .yaml configuration filename',
-            default=f'{here}/EBBR.yaml')
+            '--config', help='Input .yaml configuration filename')
         parser.add_argument('--yaml', help='Output .yaml filename')
         parser.add_argument(
             '--template', help='Output .yaml config template filename')
@@ -936,10 +937,16 @@ if __name__ == '__main__':
             logging.error("No input .seq!")
             sys.exit(1)
 
+    # First part of configuration selection: command line, or default.
+    # We need to do this early for the case of config validation.
+    if 'config' in args and args.config is not None:
+        config = args.config
+    else:
+        config = f'{here}/EBBR.yaml'
+
     # Validate config and exit, if requested.
     if args.validate_config:
-        assert('config' in args and args.config is not None)
-        conf = load_config(args.config)
+        conf = load_config(config)
         validate(conf, args.schema)
         sys.exit()
 
@@ -952,23 +959,29 @@ if __name__ == '__main__':
 
     if args.input_md is not None:
         cross_check = read_md(args.input_md)
+        ident = None
     else:
         # Command line argument 1 is the ekl file to open.
         # Command line argument 2 is the seq file to open.
 
         # Try to identify the sequence file
-        ident_seq(args.seq_file, args.seq_db)
+        ident = ident_seq(args.seq_file, args.seq_db)
 
         # Read both and combine them into a single cross_check database.
         cross_check = read_log_and_seq(args.log_file, args.seq_file)
 
     logging.debug('{} combined test(s)'.format(len(cross_check)))
 
+    # Second part of configuration file selection: take autodetect into account
+    # but with less priority than command line.
+    if ('config' not in args or args.config is None) and ident is not None:
+        config = f"{here}/{ident['config']}"
+
     # Take configuration file into account. This can perform transformations on
     # the tests results.
-    if 'config' in args and args.config is not None:
-        conf = load_config(args.config)
-        apply_rules(cross_check, conf)
+    logging.debug(f"Read config `{config}'")
+    conf = load_config(config)
+    apply_rules(cross_check, conf)
 
     # Filter tests data, if requested
     if args.filter is not None:

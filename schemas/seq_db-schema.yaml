@@ -21,7 +21,11 @@ properties:
                     pattern: '[0-9a-f]{64}'
                 name:
                     type: string
+                config:
+                    enum:
+                        - EBBR.yaml
             required:
                 - sha256
                 - name
+                - config
             additionalProperties: false

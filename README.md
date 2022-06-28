@@ -46,7 +46,8 @@ INFO apply_rules: Updated 200 tests out of 12206 after applying 124 rules
 INFO main: 0 dropped, 1 failure, 93 ignored, 106 known u-boot limitations, 12006 pass, 0 warning
 ```
 
-(The `EBBR.yaml' configuration file is used to process results by default.)
+(The `EBBR.yaml' configuration file is used to process results by default. See
+[Configuration file selection].)
 
 ## Usage
 
@@ -205,6 +206,16 @@ correctly, and installing the [packaging] library is recommended. See
 [Dependencies].
 
 [EBBR]: https://github.com/ARM-software/ebbr
+
+### Configuration file selection
+
+The selection of the configuration file is done in the following order:
+
+1. If a command line configuration is specified with the `--config' argument,
+   use it.
+2. If a sequence file has been identified, use the corresponding configuration
+   file specified in the sequence files database.
+3. By default, use the `EBBR.yaml` configuration file.
 
 ### Configuration file format
 
