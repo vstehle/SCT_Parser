@@ -8,7 +8,8 @@ help:
 	@echo '  all'
 	@echo '  check   Perform sanity checks'
 	@echo '          (currently yamllint, shellcheck and flake8,'
-	@echo '           as well as configuration validation)'
+	@echo '           as well as configuration and sequence files database'
+	@echo '           validation)'
 	@echo '  clean'
 	@echo '  doc     Generate README.pdf'
 	@echo '  help    Print this help.'
@@ -22,7 +23,8 @@ check:
 	yamllint .
 	shellcheck $$(find -name '*.sh')
 	flake8
-	./parser.py --validate-config
+	./parser.py --validate-config --schema schemas/config-schema.yaml
+	./parser.py --validate-seq-db --schema schemas/seq_db-schema.yaml
 
 clean:
 	-rm -f README.pdf

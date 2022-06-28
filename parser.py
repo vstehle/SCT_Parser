@@ -386,8 +386,8 @@ def load_config(filename):
     return conf
 
 
-# Validate configuration using a YAML schema file
-def validate_config(conf, filename):
+# Validate configuration or sequence files database using a YAML schema file
+def validate(conf, filename):
     assert('yaml' in sys.modules and 'jsonschema' in sys.modules)
 
     # Load schema file
@@ -400,7 +400,7 @@ def validate_config(conf, filename):
     logging.debug(f'Format checkers: {fc.checkers.keys()}')
     jsonschema.validate(instance=conf, schema=schema, format_checker=fc)
     # If we arrive here, the configuration is valid.
-    logging.debug('Validated configuration')
+    logging.debug(f'Validated {filename}')
 
 
 # Filter tests data
@@ -911,6 +911,9 @@ if __name__ == '__main__':
         parser.add_argument(
             '--validate-config', action='store_true',
             help='Validate config and exit')
+        parser.add_argument(
+            '--validate-seq-db', action='store_true',
+            help='Validate sequence files database and exit')
 
     args = parser.parse_args()
 
@@ -924,7 +927,8 @@ if __name__ == '__main__':
     logging.addLevelName(logging.ERROR, f"{red}{ln}{normal}")
 
     # We must have a log file and a seq file, except when validating the config
-    if not args.validate_config:
+    # or the sequence files database
+    if not args.validate_config and not args.validate_seq_db:
         if args.log_file is None:
             logging.error("No input .ekl!")
             sys.exit(1)
@@ -936,7 +940,14 @@ if __name__ == '__main__':
     if args.validate_config:
         assert('config' in args and args.config is not None)
         conf = load_config(args.config)
-        validate_config(conf, args.schema)
+        validate(conf, args.schema)
+        sys.exit()
+
+    # Validate sequence files databases and exit, if requested.
+    if args.validate_seq_db:
+        assert('seq_db' in args and args.seq_db is not None)
+        seq_db = load_seq_db(args.seq_db)
+        validate(seq_db, args.schema)
         sys.exit()
 
     if args.input_md is not None:

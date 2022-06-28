@@ -336,6 +336,16 @@ Everything appearing after a '#' sign is treated as a comment and ignored.
 
 The database filename can be specified with the `--seq-db` option.
 
+### Validating database of sequence files
+
+It is possible to validate the database of sequence files using a schema with:
+
+``` {.sh}
+$ ./parser.py --validate-seq-db --schema <schema.yaml> ...
+```
+
+If no schema is specified, the default `schemas/seq_db-schema.yaml` is used.
+
 ## Notes
 ### Known Issues:
 * "comment" is currently not implemented, as formatting is not currently consistent, should reflect the comments from the test.
