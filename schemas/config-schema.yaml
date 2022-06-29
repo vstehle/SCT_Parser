@@ -86,10 +86,10 @@ items:
                         - AllocatePool_Func
                         - AppendDeviceNode_Conformance
                         - AppendDeviceNode_Functionality
-                        - AppendDevicePath_Conformance
-                        - AppendDevicePath_Functionality
                         - AppendDevicePathInstance_Conformance
                         - AppendDevicePathInstance_Functionality
+                        - AppendDevicePath_Conformance
+                        - AppendDevicePath_Functionality
                         - AuthVar_Conf
                         - AuthVar_Func
                         - BootExcLevel
@@ -99,17 +99,17 @@ items:
                         - CheckEvent_Func
                         - ClearScreen_Func
                         - CloseEvent_Func
-                        - Close_Func
                         - CloseProtocol_Conf
                         - CloseProtocol_Func
+                        - Close_Func
                         - ConnectController_Conf
                         - ConnectController_Func
                         - CopyMem_Func
                         - CreatDeviceNode_Functionality
                         - CreateDeviceNode_Conformance
-                        - CreateEvent_Conf
                         - CreateEventEx_Conf
                         - CreateEventEx_Func
+                        - CreateEvent_Conf
                         - CreateEvent_Func
                         - Delete_Conf
                         - Delete_Func
@@ -121,9 +121,9 @@ items:
                         - ExitBootServices_Conf
                         - Exit_Conf
                         - Exit_Func
-                        - Flush_Conf
                         - FlushEx_Conf
                         - FlushEx_Func
+                        - Flush_Conf
                         - Flush_Func
                         - FreePages_Conf
                         - FreePages_Func
@@ -164,10 +164,10 @@ items:
                         - InstallProtocolInterface_Conf
                         - InstallProtocolInterface_Func
                         - IsDevicePathMultiInstance_Functionality
-                        - LoadedImageProtocolTest1
-                        - LoadedImageProtocolTest2
                         - LoadImage_Conf
                         - LoadImage_Func
+                        - LoadedImageProtocolTest1
+                        - LoadedImageProtocolTest2
                         - LocateDevicePath_Conf
                         - LocateDevicePath_Func
                         - LocateHandleBuffer_Conf
@@ -179,20 +179,20 @@ items:
                         - MCastIpToMac_Conf
                         - MCastIpToMac_Func
                         - MemoryMap
-                        - Non-volatile Variable Reset Test
                         - NVData_Conf
                         - NVData_Func
-                        - Open_Conf
+                        - Non-volatile Variable Reset Test
                         - OpenEx_Conf
                         - OpenEx_Func
-                        - Open_Func
+                        - OpenProtocolInformation_Conf
+                        - OpenProtocolInformation_Func
                         - OpenProtocol_Conf
                         - OpenProtocol_Func_1
                         - OpenProtocol_Func_2
                         - OpenProtocol_Func_3
-                        - OpenProtocolInformation_Conf
-                        - OpenProtocolInformation_Func
                         - OpenVolume_Func
+                        - Open_Conf
+                        - Open_Func
                         - OutputString_Func
                         - PathNode_Conf
                         - PlatformSpecificElements
@@ -207,23 +207,23 @@ items:
                         - RaiseTPL_Func
                         - ReadEx_Conf
                         - ReadEx_Func
-                        - Read_Func
                         - ReadKeyStrokeExConformance
                         - ReadKeyStrokeExFunctionAuto
-                        - Receive_Conf
+                        - Read_Func
                         - ReceiveFilter_Conf
                         - ReceiveFilter_Func
+                        - Receive_Conf
                         - RegisterKeyNotifyConformance
                         - RegisterProtocolNotify_Conf
                         - RegisterProtocolNotify_Func
                         - ReinstallProtocolInterface_Conf
                         - ReinstallProtocolInterface_Func
                         - RequiredElements
+                        - ResetFunctionAuto
+                        - ResetSystem Shutdown Test
+                        - ResetSystem_Func
                         - Reset_Conf
                         - Reset_Func
-                        - ResetFunctionAuto
-                        - ResetSystem_Func
-                        - ResetSystem Shutdown Test
                         - RestoreTPL_Func
                         - Runtime Services Test
                         - SetAttribute_Func
@@ -251,10 +251,10 @@ items:
                         - Shutdown_Func
                         - SignalEvent_Func
                         - Stall_Func
-                        - Start_Conf
-                        - Start_Func
                         - StartImage_Conf
                         - StartImage_Func
+                        - Start_Conf
+                        - Start_Func
                         - StationAddress_Conf
                         - StationAddress_Func
                         - Statistics_Conf
@@ -274,9 +274,9 @@ items:
                         - UpdateCapsule_Conf
                         - WaitForEvent_Conf
                         - WaitForEvent_Func
-                        - Write_Conf
                         - WriteEx_Conf
                         - WriteEx_Func
+                        - Write_Conf
                         - Write_Func
                 test set:
                     enum:
@@ -291,9 +291,9 @@ items:
                         - MiscRuntimeServicesTest
                         - ProtocolHandlerServicesTest
                         - RNGProtocolTest
+                        - SBBRRuntimeServicesTest
                         - SbbrBootServices
                         - SbbrEfiSpecVerLvl
-                        - SBBRRuntimeServicesTest
                         - SbbrSysEnvConfig
                         - SimpleFileSystemProtocolTest
                         - SimpleInputProtocolTest
