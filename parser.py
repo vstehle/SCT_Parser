@@ -529,6 +529,7 @@ def gen_json(cross_check, filename):
 
 # Generate junit
 def gen_junit(cross_check, filename):
+    assert('junit-xml' in sys.modules)
     logging.debug(f'Generate {filename}')
 
     testsuites = {}
@@ -922,7 +923,11 @@ if __name__ == '__main__':
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--csv', help='Output .csv filename')
     parser.add_argument('--json', help='Output .json filename')
-    parser.add_argument('--junit', help='Output .junit filename')
+
+    # junit-xml modules must of been loaded to enable the --junit option
+    if 'junit_xml' in sys.modules:
+        parser.add_argument('--junit', help='Output .junit filename')
+
     parser.add_argument(
         '--md', help='Output .md filename', default='result.md')
     parser.add_argument(
