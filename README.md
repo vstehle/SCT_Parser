@@ -23,6 +23,7 @@ detection. Depending on your Linux distribution, this might be available as the
 `python3-packaging` package.
 The [python-jsonschema] module is required for configuration validation.
 See [Configuration file].
+The [junit-xml] module to allow junit format report generation.
 
 If you want to generate the pdf version of this documentation or convert
 markdown results to HTML, you need to install [pandoc]. See [Usage] and
@@ -30,6 +31,7 @@ markdown results to HTML, you need to install [pandoc]. See [Usage] and
 
 [PyYAML]: https://github.com/yaml/pyyaml
 [packaging]: https://github.com/pypa/packaging
+[junit-xml]: https://pypi.org/project/junit-xml
 [pandoc]: https://pandoc.org
 [python-jsonschema]: https://python-jsonschema.readthedocs.io
 
@@ -61,6 +63,12 @@ The output filename can be specified with the `--md` option:
 
 ``` {.sh}
 $ ./parser.py --md out.md ...
+```
+
+To generate a JUnit format report you can specify the output file with the `--junit` option:
+
+``` {.sh}
+$ ./parser.py --junit report.xml ...
 ```
 
 An online help is available with the `-h` option.
