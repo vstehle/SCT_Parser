@@ -327,6 +327,26 @@ $ ./parser.py \
       --fields 'count,result,name,comments' --uniq --print ...
 ```
 
+### SIE configuration
+
+The `SIE.yaml` file is the configuration file to use when certifiying for the
+Security Interface Extension. It is meant for [BBSR] testing and can override
+the result of some tests with the following ones:
+
+-------------------------------------------------------------------------------
+                 Result  Description
+-----------------------  ------------------------------------------------------
+              `IGNORED`  False-positive test failure, not mandated by [BBSR]
+                         and too fine-grained to be removed from the `BBSR.seq`
+                         sequence file.
+
+`KNOWN RPMB LIMITATION`  Genuine limitations, we know about them; they are due
+                         to eMMC RPMB limitations and they do not prevent
+                         Secure Boot.
+-------------------------------------------------------------------------------
+
+[BBSR]: https://developer.arm.com/documentation/den0107/b/?lang=en
+
 ### Validating configurations
 
 It is possible to validate the configuration using a schema with:

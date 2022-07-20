@@ -26,6 +26,7 @@ items:
             properties:
                 descr:
                     enum:
+                        - BBSR Variable Size Test
                         - Device Path Protocol Test
                         - Device Path Utilities Protocol Test
                         - Event, Timer, and Task Priority Services Test
@@ -92,6 +93,7 @@ items:
                         - AppendDevicePath_Functionality
                         - AuthVar_Conf
                         - AuthVar_Func
+                        - BBSRVariableSizeTest_func
                         - BootExcLevel
                         - CalculateCrc32_Conf
                         - CalculateCrc32_Func
@@ -127,6 +129,8 @@ items:
                         - Flush_Func
                         - FreePages_Conf
                         - FreePages_Func
+                        - GetActivePcrBanks_Conf
+                        - GetCapability_Conf
                         - GetDevicePathSize_Conformance
                         - GetDevicePathSize_Functionality
                         - GetInfo_Conf
@@ -155,6 +159,7 @@ items:
                         - HandleProtocol_Func
                         - HardwareErrorRecord_Conf
                         - HardwareErrorRecord_Func
+                        - HashLogExtendEvent_Conf
                         - Initialize_Conf
                         - Initialize_Func
                         - InstallConfigurationTable_Conf
@@ -261,6 +266,7 @@ items:
                         - Statistics_Func
                         - Stop_Conf
                         - Stop_Func
+                        - SubmitCommand_Conf
                         - TestEfiSpecVerLvl
                         - TestString_Func
                         - Transmit_Conf
@@ -280,6 +286,7 @@ items:
                         - Write_Func
                 test set:
                     enum:
+                        - BBSRVariableSizeTest
                         - DevicePathProcotolTest
                         - DevicePathUtilitiesProcotolTest
                         - EFICompliantTest
@@ -324,6 +331,7 @@ items:
                         - FAILURE
                         - IGNORED
                         - KNOWN ACS LIMITATION
+                        - KNOWN RPMB LIMITATION
                         - KNOWN U-BOOT LIMITATION
                         - SKIPPED
                         - WARNING

@@ -24,6 +24,7 @@ properties:
                 config:
                     enum:
                         - EBBR.yaml
+                        - SIE.yaml
             required:
                 - sha256
                 - name
