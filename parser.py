@@ -529,7 +529,7 @@ def gen_json(cross_check, filename):
 
 # Generate junit
 def gen_junit(cross_check, filename):
-    assert('junit-xml' in sys.modules)
+    assert('junit_xml' in sys.modules)
     logging.debug(f'Generate {filename}')
 
     testsuites = {}
