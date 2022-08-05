@@ -25,8 +25,11 @@ properties:
                     enum:
                         - EBBR.yaml
                         - SIE.yaml
+                deprecated:
+                    const: null
             required:
                 - sha256
                 - name
                 - config
+                # deprecated is optional
             additionalProperties: false

@@ -761,6 +761,11 @@ def ident_seq(seq_file, seq_db):
             logging.info(
                 f"""{green}Identified{normal} `{seq_file}'"""
                 f""" as "{x['name']}".""")
+
+            if 'deprecated' in x:
+                logging.warning(
+                    f"{yellow}This sequence file is deprecated!{normal}")
+
             return x
 
     logging.warning(f"{yellow}Could not identify{normal} `{seq_file}'...")
