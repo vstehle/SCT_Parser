@@ -13,6 +13,7 @@ properties:
         const: null
     seq_files:
         type: array
+        uniqueItems: true
         items:
             type: object
             properties:
@@ -25,8 +26,12 @@ properties:
                     enum:
                         - EBBR.yaml
                         - SIE.yaml
+                deprecated:
+                    const: null
             required:
                 - sha256
                 - name
                 - config
+                # deprecated is optional
             additionalProperties: false
+            minProperties: 3

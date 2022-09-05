@@ -310,6 +310,7 @@ items:
                         - TimeServicesTest
                         - VariableServicesTest
             additionalProperties: false
+            minProperties: 1
         update:
             type: object
             properties:
@@ -343,6 +344,8 @@ items:
                     type: string
                 test set:
                     type: string
+            additionalProperties: false
+            minProperties: 1
     required:
         - rule
         - criteria
