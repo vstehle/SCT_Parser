@@ -1,5 +1,7 @@
 ---
-$schema: http://json-schema.org/draft-07/schema#
+$id: 'https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
+    schemas/seq_db-schema.yaml'
+$schema: https://json-schema.org/draft/2020-12/schema
 title: SCT Parser seq db schema
 description: |
     The SCT Parser uses a database of known sequence files in YAML format.

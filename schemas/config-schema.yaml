@@ -1,5 +1,7 @@
 ---
-$schema: http://json-schema.org/draft-07/schema#
+$id: 'https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
+    schemas/config-schema.yaml'
+$schema: https://json-schema.org/draft/2020-12/schema
 title: SCT Parser configuration schema
 description: |
     The SCT Parser uses configurations files in YAML format to perform a number
@@ -7,7 +9,7 @@ description: |
 
     This schema describes requirements on the configuration file, which can be
     verified with the validate.py script. See the README for details.
-definitions:
+$defs:
     guid:
         type: string
         format: uuid
@@ -62,7 +64,7 @@ items:
                         - RuntimeServicesTest
                         - SecureTechTest
                 guid:
-                    '$ref': '#/definitions/guid'
+                    '$ref': '#/$defs/guid'
                 name:
                     type: string
                 log:
@@ -77,7 +79,7 @@ items:
                     type: string
                     pattern: '0x0*1000[012]'
                 set guid:
-                    '$ref': '#/definitions/guid'
+                    '$ref': '#/$defs/guid'
                 sub set:
                     enum:
                         - AllocatePages_Conf
@@ -320,7 +322,7 @@ items:
                 group:
                     type: string
                 guid:
-                    '$ref': '#/definitions/guid'
+                    '$ref': '#/$defs/guid'
                 name:
                     type: string
                 log:
@@ -338,7 +340,7 @@ items:
                 revision:
                     type: string
                 set guid:
-                    '$ref': '#/definitions/guid'
+                    '$ref': '#/$defs/guid'
                 sub set:
                     type: string
                 test set:
