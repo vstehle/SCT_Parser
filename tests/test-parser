@@ -49,12 +49,23 @@ parser.py "${args[@]}" --input-md result.md |& tee "$out"
 echo -n 'csv, ' >&3
 csv="$tmp/out.csv"
 parser.py "${args[@]}" --csv "$csv" |& tee "$out"
-test -e "$csv"
+grep -q ';name;' "$csv"
 
 echo -n 'json, ' >&3
 json="$tmp/out.json"
 parser.py "${args[@]}" --json "$json" |& tee "$out"
-test -e "$json"
+grep -qF '{' "$json"
+grep -q '"name":' "$json"
+
+echo -n 'junit, ' >&3
+junit="$tmp/out.junit"
+parser.py "${args[@]}" --junit "$junit" |& tee "$out"
+grep -q 'xml version' "$junit"
+
+echo -n 'md, ' >&3
+md="$tmp/out.md"
+parser.py "${args[@]}" --md "$md" |& tee "$out"
+grep -q '# SCT Summary' "$md"
 
 echo -n 'yaml, ' >&3
 yaml="$tmp/out.yaml"
