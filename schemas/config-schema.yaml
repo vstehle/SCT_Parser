@@ -6,8 +6,7 @@ description: |
     of transformations on the tests results.
 
     This schema describes requirements on the configuration file, which can be
-    verified by the parser with the --validate-config option. See the README for
-    details.
+    verified with the validate.py script. See the README for details.
 definitions:
     guid:
         type: string

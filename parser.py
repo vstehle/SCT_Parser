@@ -37,13 +37,6 @@ if 'yaml' in sys.modules:
     except ImportError:
         from yaml import Dumper
 
-    try:
-        import jsonschema
-    except ImportError:
-        print(
-            'No jsonschema. You should install python3-jsonschema for'
-            ' configuration validation support...')
-
 # Not all yaml versions have a Loader argument.
 if 'packaging.version' in sys.modules and \
    version.parse(yaml.__version__) >= version.parse('5.1'):
@@ -391,23 +384,6 @@ def load_config(filename):
     logging.debug('{} rule(s)'.format(len(conf)))
     sanitize_yaml(conf)
     return conf
-
-
-# Validate configuration or sequence files database using a YAML schema file
-def validate(conf, filename):
-    assert('yaml' in sys.modules and 'jsonschema' in sys.modules)
-
-    # Load schema file
-    logging.debug(f'Read {filename}')
-
-    with open(filename, 'r') as yamlfile:
-        schema = yaml.load(yamlfile, **yaml_load_args)
-
-    fc = jsonschema.FormatChecker()
-    logging.debug(f'Format checkers: {fc.checkers.keys()}')
-    jsonschema.validate(instance=conf, schema=schema, format_checker=fc)
-    # If we arrive here, the configuration is valid.
-    logging.debug(f'Validated {filename}')
 
 
 # Filter tests data
@@ -968,10 +944,10 @@ if __name__ == '__main__':
             default=f'{here}/schemas/config-schema.yaml')
         parser.add_argument(
             '--validate-config', action='store_true',
-            help='Validate config and exit')
+            help='Deprecated')
         parser.add_argument(
             '--validate-seq-db', action='store_true',
-            help='Validate sequence files database and exit')
+            help='Deprecated')
 
     args = parser.parse_args()
 
@@ -1003,16 +979,13 @@ if __name__ == '__main__':
 
     # Validate config and exit, if requested.
     if args.validate_config:
-        conf = load_config(config)
-        validate(conf, args.schema)
-        sys.exit()
+        logging.error('Config validation is deprecated!')
+        sys.exit(1)
 
     # Validate sequence files databases and exit, if requested.
     if args.validate_seq_db:
-        assert('seq_db' in args and args.seq_db is not None)
-        seq_db = load_seq_db(args.seq_db)
-        validate(seq_db, args.schema)
-        sys.exit()
+        logging.error('Sequence validation is deprecated!')
+        sys.exit(1)
 
     if args.input_md is not None:
         cross_check = read_md(args.input_md)

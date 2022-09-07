@@ -21,8 +21,8 @@ correctly. Depending on your Linux distribution, this might be available as the
 It is also recommended to install the [packaging] library for smooth version
 detection. Depending on your Linux distribution, this might be available as the
 `python3-packaging` package.
-The [python-jsonschema] module is required for configuration validation.
-See [Configuration file].
+The [python-jsonschema] module is required for configuration and sequence file
+validation. See [Configuration file] and [Database of sequence files].
 The [junit-xml] module to allow junit format report generation.
 
 If you want to generate the pdf version of this documentation or convert
@@ -349,15 +349,8 @@ the result of some tests with the following ones:
 
 ### Validating configurations
 
-It is possible to validate the configuration using a schema with:
-
-``` {.sh}
-$ ./parser.py --validate-config --schema <schema.yaml> ...
-```
-
-If no schema is specified, the default `schemas/config-schema.yaml` is used.
-
-See also [Configuration file format].
+It is possible to validate the configuration using a schema and the
+`validate.py` script. See [Validating YAML files with a jsonschema].
 
 ## Database of sequence files
 
@@ -377,13 +370,8 @@ The database filename can be specified with the `--seq-db` option.
 
 ### Validating database of sequence files
 
-It is possible to validate the database of sequence files using a schema with:
-
-``` {.sh}
-$ ./parser.py --validate-seq-db --schema <schema.yaml> ...
-```
-
-If no schema is specified, the default `schemas/seq_db-schema.yaml` is used.
+It is possible to validate the database of sequence files using a schema and the
+`validate.py` script. See [Validating YAML files with a jsonschema].
 
 ## Notes
 ### Known Issues:
@@ -510,3 +498,15 @@ convenience:
 [ACS-IR v21.07_0.9_BETA]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.07_0.9_BETA
 [ACS-IR v21.09_1.0]: https://github.com/ARM-software/arm-systemready/tree/main/IR/prebuilt_images/v21.09_1.0
 [Security interface extension ACS v21.10_SIE_REL1.0]: https://github.com/ARM-software/arm-systemready/tree/security-interface-extension-acs/security-interface-extension/prebuilt_images/v21.10_SIE_REL1.0
+
+## Validating YAML files with a jsonschema
+
+It is possible to validate YAML files using a schema and the validate.py
+script with:
+
+``` {.sh}
+$ ./validate.py --schema <schema.yaml> <file.yaml>
+```
+
+This can be used to validate configuration files and the database of sequence
+files. See [Configuration file] and [Database of sequence files].

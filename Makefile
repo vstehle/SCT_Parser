@@ -23,10 +23,10 @@ check:
 	yamllint .
 	shellcheck $$(find -name '*.sh')
 	flake8
-	./parser.py --validate-config --config EBBR.yaml --schema schemas/config-schema.yaml
-	./parser.py --validate-config --config SIE.yaml --schema schemas/config-schema.yaml
-	./parser.py --validate-config --config sample/sample.yaml --schema schemas/config-schema.yaml
-	./parser.py --validate-seq-db --schema schemas/seq_db-schema.yaml
+	./validate.py --schema schemas/config-schema.yaml EBBR.yaml
+	./validate.py --schema schemas/config-schema.yaml SIE.yaml
+	./validate.py --schema schemas/config-schema.yaml sample/sample.yaml
+	./validate.py --schema schemas/seq_db-schema.yaml seq_db.yaml
 	./tests/test-parser
 
 clean:

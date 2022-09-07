@@ -5,8 +5,7 @@ description: |
     The SCT Parser uses a database of known sequence files in YAML format.
 
     This schema describes requirements on the seq db file, which can be verified
-    by the parser with the --validate-seq-db option. See the README for details.
-
+    with the validate.py script. See the README for details.
 type: object
 properties:
     seq_db:
