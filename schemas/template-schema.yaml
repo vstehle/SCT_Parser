@@ -1,0 +1,343 @@
+---
+$id: 'https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
+    schemas/template-schema.yaml'
+$schema: https://json-schema.org/draft/2020-12/schema
+title: SCT Parser configuration schema
+description: |
+    The SCT Parser can generate template configurations files in YAML format.
+
+    This schema describes requirements on the generated template file, which can
+    be verified with the validate.py script. See the README for details.
+$defs:
+    guid:
+        type: string
+        format: uuid
+        pattern: '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}'
+type: array
+minItems: 1
+uniqueItems: true
+items:
+    type: object
+    properties:
+        rule:
+            type: string
+            pattern: 'Generated rule \([0-9]+\)'
+        criteria:
+            type: object
+            properties:
+                descr:
+                    anyOf:
+                        - enum:
+                              - BBSR Variable Size Test
+                              - Device Path Protocol Test
+                              - Device Path Utilities Protocol Test
+                              - Event, Timer, and Task Priority Services Test
+                              - Image Services Test
+                              - Memory Allocation Services Test
+                              - Misc Runtime Services Test
+                              - Misc. Boot Services Test
+                              - PciIo
+                              - Protocol Handler Boot Services Test
+                              - SBBR UEFI Specification Version Level Test
+                              - SBBR UEFI System Environment and Configuration
+                                Tests
+                              - SBBRRuntimeServices Tests
+                              - SbbrBootServices Tests
+                              - Simple Input Protocol Test
+                              - Simple Network Protocol Test
+                              - Simple Text Input Ex Protocol Test
+                              - Simple Text Output Protocol Test
+                              - Testing For EFI Random Number Protocol
+                              - Testing For Loaded Image Protocol
+                              - Testing For Simple File System Protocol and
+                                EFI_FILE Protocol
+                              - Time Services Test
+                              - UEFI Compliant Test
+                              - Variable Services Test
+                        - const: ''
+                device path:
+                    type: string
+                group:
+                    enum:
+                        - BootServicesTest
+                        - ConsoleSupportTest
+                        - DevicePathProcotols
+                        - GenericTest
+                        - MediaAccessTest
+                        - NetworkSupportTest
+                        - PCIBusSupportTest
+                        - RuntimeServicesTest
+                        - SecureTechTest
+                        - Unknown
+                guid:
+                    anyOf:
+                        - '$ref': '#/$defs/guid'
+                        - const: ''
+                name:
+                    type: string
+                log:
+                    type: string
+                result:
+                    type: string
+                revision:
+                    type: string
+                    pattern: '0x0*1000[012]'
+                set guid:
+                    '$ref': '#/$defs/guid'
+                sub set:
+                    enum:
+                        - AllocatePages_Conf
+                        - AllocatePages_Func
+                        - AllocatePool_Conf
+                        - AllocatePool_Func
+                        - AppendDeviceNode_Conformance
+                        - AppendDeviceNode_Functionality
+                        - AppendDevicePathInstance_Conformance
+                        - AppendDevicePathInstance_Functionality
+                        - AppendDevicePath_Conformance
+                        - AppendDevicePath_Functionality
+                        - AuthVar_Conf
+                        - AuthVar_Func
+                        - BBSRVariableSizeTest_func
+                        - BootExcLevel
+                        - CalculateCrc32_Conf
+                        - CalculateCrc32_Func
+                        - CheckEvent_Conf
+                        - CheckEvent_Func
+                        - ClearScreen_Func
+                        - CloseEvent_Func
+                        - CloseProtocol_Conf
+                        - CloseProtocol_Func
+                        - Close_Func
+                        - ConnectController_Conf
+                        - ConnectController_Func
+                        - CopyMem_Func
+                        - CreatDeviceNode_Functionality
+                        - CreateDeviceNode_Conformance
+                        - CreateEventEx_Conf
+                        - CreateEventEx_Func
+                        - CreateEvent_Conf
+                        - CreateEvent_Func
+                        - Delete_Conf
+                        - Delete_Func
+                        - DisconnectController_Conf
+                        - DisconnectController_Func
+                        - DuplicateDevicePath_Conformance
+                        - DuplicateDevicePath_Functionality
+                        - EnableCursor_Func
+                        - ExitBootServices_Conf
+                        - Exit_Conf
+                        - Exit_Func
+                        - FlushEx_Conf
+                        - FlushEx_Func
+                        - Flush_Conf
+                        - Flush_Func
+                        - FreePages_Conf
+                        - FreePages_Func
+                        - GetActivePcrBanks_Conf
+                        - GetCapability_Conf
+                        - GetDevicePathSize_Conformance
+                        - GetDevicePathSize_Functionality
+                        - GetInfo_Conf
+                        - GetInfo_Func
+                        - GetMemoryMap_Conf
+                        - GetMemoryMap_Func
+                        - GetNextDevicePathInstance_Conformance
+                        - GetNextDevicePathInstance_Functionality
+                        - GetNextMonotonicCount_Conf
+                        - GetNextMonotonicCount_Func
+                        - GetNextVariableName_Conf
+                        - GetNextVariableName_Func
+                        - GetPosition_Conf
+                        - GetPosition_Func
+                        - GetRNG_Conf
+                        - GetRNG_Func
+                        - GetStatus_Conf
+                        - GetStatus_Func
+                        - GetTime_Conf
+                        - GetTime_Func
+                        - GetVariable_Conf
+                        - GetVariable_Func
+                        - GetWakeupTime_Conf
+                        - GetWakeupTime_Func
+                        - HandleProtocol_Conf
+                        - HandleProtocol_Func
+                        - HardwareErrorRecord_Conf
+                        - HardwareErrorRecord_Func
+                        - HashLogExtendEvent_Conf
+                        - Initialize_Conf
+                        - Initialize_Func
+                        - InstallConfigurationTable_Conf
+                        - InstallConfigurationTable_Func
+                        - InstallMultipleProtocolInterfaces_Conf
+                        - InstallMultipleProtocolInterfaces_Func
+                        - InstallProtocolInterface_Conf
+                        - InstallProtocolInterface_Func
+                        - IsDevicePathMultiInstance_Functionality
+                        - LoadImage_Conf
+                        - LoadImage_Func
+                        - LoadedImageProtocolTest1
+                        - LoadedImageProtocolTest2
+                        - LocateDevicePath_Conf
+                        - LocateDevicePath_Func
+                        - LocateHandleBuffer_Conf
+                        - LocateHandleBuffer_Func
+                        - LocateHandle_Conf
+                        - LocateHandle_Func
+                        - LocateProtocol_Conf
+                        - LocateProtocol_Func
+                        - MCastIpToMac_Conf
+                        - MCastIpToMac_Func
+                        - MemoryMap
+                        - NVData_Conf
+                        - NVData_Func
+                        - Non-volatile Variable Reset Test
+                        - OpenEx_Conf
+                        - OpenEx_Func
+                        - OpenProtocolInformation_Conf
+                        - OpenProtocolInformation_Func
+                        - OpenProtocol_Conf
+                        - OpenProtocol_Func_1
+                        - OpenProtocol_Func_2
+                        - OpenProtocol_Func_3
+                        - OpenVolume_Func
+                        - Open_Conf
+                        - Open_Func
+                        - OutputString_Func
+                        - PathNode_Conf
+                        - PciWrite_Func
+                        - PlatformSpecificElements
+                        - PollIo_Conf
+                        - PollIo_Func
+                        - PollMem_Conf
+                        - PollMem_Func
+                        - ProtocolsPerHandle_Conf
+                        - ProtocolsPerHandle_Func
+                        - QueryCapsuleCapabilities_Conf
+                        - QueryCapsuleCapabilities_Func
+                        - QueryMode_Conf
+                        - QueryMode_Func
+                        - QueryVariableInfo_Conf
+                        - QueryVariableInfo_Func
+                        - RaiseTPL_Func
+                        - ReadEx_Conf
+                        - ReadEx_Func
+                        - ReadKeyStrokeExConformance
+                        - ReadKeyStrokeExFunctionAuto
+                        - Read_Func
+                        - ReceiveFilter_Conf
+                        - ReceiveFilter_Func
+                        - Receive_Conf
+                        - RegisterKeyNotifyConformance
+                        - RegisterProtocolNotify_Conf
+                        - RegisterProtocolNotify_Func
+                        - ReinstallProtocolInterface_Conf
+                        - ReinstallProtocolInterface_Func
+                        - RequiredElements
+                        - ResetFunctionAuto
+                        - ResetSystem Shutdown Test
+                        - ResetSystem_Func
+                        - Reset_Conf
+                        - Reset_Func
+                        - RestoreTPL_Func
+                        - Runtime Services Test
+                        - SetAttribute_Func
+                        - SetBarAttributes_Conf
+                        - SetBarAttributes_Func
+                        - SetCursorPosition_Conf
+                        - SetCursorPosition_Func
+                        - SetInfo_Conf
+                        - SetInfo_Func
+                        - SetMem_Func
+                        - SetMode_Conf
+                        - SetMode_Func
+                        - SetPosition_Conf
+                        - SetPosition_Func
+                        - SetStateConformance
+                        - SetTime_Conf
+                        - SetTime_Func
+                        - SetTimer_Conf
+                        - SetTimer_Func
+                        - SetVariable_Conf
+                        - SetVariable_Func
+                        - SetWakeupTime_Conf
+                        - SetWakeupTime_Func
+                        - SetWatchdogTimer_Conf
+                        - SetWatchdogTimer_Func
+                        - Shutdown_Conf
+                        - Shutdown_Func
+                        - SignalEvent_Func
+                        - Stall_Func
+                        - StartImage_Conf
+                        - StartImage_Func
+                        - Start_Conf
+                        - Start_Func
+                        - StationAddress_Conf
+                        - StationAddress_Func
+                        - Statistics_Conf
+                        - Statistics_Func
+                        - Stop_Conf
+                        - Stop_Func
+                        - SubmitCommand_Conf
+                        - TestEfiSpecVerLvl
+                        - TestString_Func
+                        - Transmit_Conf
+                        - UninstallMultipleProtocolInterfaces_Conf
+                        - UninstallMultipleProtocolInterfaces_Func
+                        - UninstallProtocolInterface_Conf
+                        - UninstallProtocolInterface_Func
+                        - UnloadImage_Conf
+                        - UnloadImage_Func
+                        - UnregisterKeyNotifyConformance
+                        - UpdateCapsule_Conf
+                        - WaitForEvent_Conf
+                        - WaitForEvent_Func
+                        - WriteEx_Conf
+                        - WriteEx_Func
+                        - Write_Conf
+                        - Write_Func
+                test set:
+                    anyOf:
+                        - enum:
+                              - BBSRVariableSizeTest
+                              - DevicePathProcotolTest
+                              - DevicePathUtilitiesProcotolTest
+                              - EFICompliantTest
+                              - EventTimerandPriorityServicesTest
+                              - ImageServicesTest
+                              - LoadedImageProtocolTest
+                              - MemoryAllocationServicesTest
+                              - MiscBootServicesTest
+                              - MiscRuntimeServicesTest
+                              - PCIIOProtocolTest
+                              - ProtocolHandlerServicesTest
+                              - RNGProtocolTest
+                              - SBBRRuntimeServicesTest
+                              - SbbrBootServices
+                              - SbbrEfiSpecVerLvl
+                              - SbbrSysEnvConfig
+                              - SimpleFileSystemProtocolTest
+                              - SimpleInputProtocolTest
+                              - SimpleNetworkProtocolTest
+                              - SimpleOutputProtocolTest
+                              - SimpleTextInputExProtocolTest
+                              - TimeServicesTest
+                              - VariableServicesTest
+                        - const: ''
+                Updated by:
+                    type: string
+            additionalProperties: false
+            minProperties: 1
+        update:
+            type: object
+            properties:
+                result:
+                    const: TEMPLATE
+            required:
+                - result
+            additionalProperties: false
+    required:
+        - rule
+        - criteria
+        - update
+    additionalProperties: false

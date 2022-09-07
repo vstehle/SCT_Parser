@@ -60,11 +60,13 @@ echo -n 'yaml, ' >&3
 yaml="$tmp/out.yaml"
 parser.py "${args[@]}" --yaml "$yaml" |& tee "$out"
 yamllint -c "$here/yamllint.yaml" "$yaml"
+validate.py --schema "$here/../schemas/yaml-schema.yaml" "$yaml"
 
 echo -n 'template, ' >&3
 tpl="$tmp/template.yaml"
 parser.py "${args[@]}" --template "$tpl" |& tee "$out"
 yamllint -c "$here/yamllint.yaml" "$tpl"
+validate.py --schema "$here/../schemas/template-schema.yaml" "$tpl"
 
 echo -n 'print, ' >&3
 parser.py "${args[@]}" --fields 'result,name' --print |& tee "$out"

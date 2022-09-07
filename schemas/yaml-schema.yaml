@@ -1,0 +1,84 @@
+---
+$id: 'https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
+    schemas/yaml-schema.yaml'
+$schema: https://json-schema.org/draft/2020-12/schema
+title: SCT Parser output YAML schema
+description: |
+    The SCT Parser can output results in YAML format.
+
+    This schema describes requirements on the output YAML file, which can be
+    This schema describes requirements on the configuration file, which can be
+    verified with the validate.py script. See the README for details.
+$defs:
+    guid:
+        type: string
+        format: uuid
+        pattern: '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}'
+type: array
+uniqueItems: true
+items:
+    type: object
+    properties:
+        comments:
+            type: string
+        descr:
+            type: string
+        device path:
+            type: string
+        group:
+            type: string
+        guid:
+            anyOf:
+                - '$ref': '#/$defs/guid'
+                - const: ''
+        iteration:
+            type: string
+        log:
+            type: string
+        name:
+            type: string
+        result:
+            enum:
+                - DROPPED
+                - FAILURE
+                - IGNORED
+                - KNOWN ACS LIMITATION
+                - KNOWN RPMB LIMITATION
+                - KNOWN U-BOOT LIMITATION
+                - PASS
+                - SKIPPED
+                - SPURIOUS
+                - WARNING
+        revision:
+            type: string
+        set guid:
+            '$ref': '#/$defs/guid'
+        start date:
+            type: string
+        start time:
+            type: string
+        sub set:
+            type: string
+        test set:
+            type: string
+        Updated by:
+            type: string
+    required:
+        # comments is optional
+        - descr
+        - device path
+        - group
+        - guid
+        - iteration
+        - log
+        - name
+        - result
+        - revision
+        - set guid
+        - start date
+        - start time
+        - sub set
+        - test set
+        # Updated by is optional
+    minProperties: 14
+    additionalProperties: false
