@@ -410,7 +410,8 @@ reports errors:
  `shellcheck`  Shell scripts.
 -------------------------------
 
-This will also perform validation of the `EBBR.yaml' configuration.
+This will also perform validation of the `EBBR.yaml' configuration and run the
+`test-parser` unit test.
 See `make help`.
 
 ### db structure:

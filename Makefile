@@ -9,7 +9,7 @@ help:
 	@echo '  check   Perform sanity checks'
 	@echo '          (currently yamllint, shellcheck and flake8,'
 	@echo '           as well as configuration and sequence files database'
-	@echo '           validation)'
+	@echo '           validation and unit test)'
 	@echo '  clean'
 	@echo '  doc     Generate README.pdf'
 	@echo '  help    Print this help.'
@@ -27,6 +27,7 @@ check:
 	./parser.py --validate-config --config SIE.yaml --schema schemas/config-schema.yaml
 	./parser.py --validate-config --config sample/sample.yaml --schema schemas/config-schema.yaml
 	./parser.py --validate-seq-db --schema schemas/seq_db-schema.yaml
+	./tests/test-parser
 
 clean:
-	-rm -f README.pdf
+	-rm -f README.pdf test-parser.log

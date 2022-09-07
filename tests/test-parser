@@ -1,0 +1,91 @@
+#!/bin/bash
+set -eu -o pipefail
+
+# Unit test for parser.py.
+# Usage: test-parser [keep]
+# We keep our temporary folder when `keep' is specified.
+
+# Redirect all output to a log in current folder.
+# Keep stdout on fd 3.
+bn=$(basename "$0")
+log="$bn.log"
+exec 3>&1 >"$log" 2>&1
+set -x
+
+echo -n 'Testing parser... ' >&3
+trap 'echo "ERROR! (see $log)" >&3' ERR
+
+# Make sure parser.py is in the path.
+me=$(realpath "$0")
+here="${me%/*}"
+export PATH="$here/..:$PATH"
+
+# Temporary folder.
+if [ "${1:-unset}" == keep ]; then
+	tmp=$(mktemp -d "$(basename "$0").XXX")
+else
+	tmp=$(mktemp -d)
+	trap 'rm -fr "$tmp"' EXIT
+fi
+
+echo -n 'sample, ' >&3
+out="$tmp/out"
+args=(--config sample/sample.yaml sample/sample.ekl sample/sample.seq)
+parser.py "${args[@]}" |& tee "$out"
+grep -q 'Identified.* as "Test sample' "$out"
+grep -q 'Updated 1 test.* after applying 1 rule' "$out"
+test -e result.md
+
+echo -n 'null config, ' >&3
+parser.py "${args[@]}" --config /dev/null |& tee "$out"
+
+if grep -q 'Updated .* tests.* after applying .* rules' "$out"; then
+	false
+fi
+
+echo -n 'input md, ' >&3
+parser.py "${args[@]}" --input-md result.md |& tee "$out"
+
+echo -n 'csv, ' >&3
+csv="$tmp/out.csv"
+parser.py "${args[@]}" --csv "$csv" |& tee "$out"
+test -e "$csv"
+
+echo -n 'json, ' >&3
+json="$tmp/out.json"
+parser.py "${args[@]}" --json "$json" |& tee "$out"
+test -e "$json"
+
+echo -n 'yaml, ' >&3
+yaml="$tmp/out.yaml"
+parser.py "${args[@]}" --yaml "$yaml" |& tee "$out"
+yamllint -c "$here/yamllint.yaml" "$yaml"
+
+echo -n 'template, ' >&3
+tpl="$tmp/template.yaml"
+parser.py "${args[@]}" --template "$tpl" |& tee "$out"
+yamllint -c "$here/yamllint.yaml" "$tpl"
+
+echo -n 'print, ' >&3
+parser.py "${args[@]}" --fields 'result,name' --print |& tee "$out"
+grep -q 'UEFI Compliant' "$out"
+grep -q 'PASS' "$out"
+grep -q 'IGNORED' "$out"
+grep -q 'FAILURE' "$out"
+grep -q 'WARNING' "$out"
+grep -q 'SPURIOUS' "$out"
+grep -q 'DROPPED' "$out"
+
+echo -n 'uniq, ' >&3
+parser.py "${args[@]}" --uniq --fields 'count,result,name' --print |& tee "$out"
+grep -q '^2 \+PASS' "$out"
+
+echo -n 'filter, ' >&3
+parser.py "${args[@]}" --filter 'x["result"] == "FAILURE"' --fields 'result,name' --print |& tee "$out"
+grep -q 'FAILURE  UEFI Compliant' "$out"
+
+if grep -q -e 'PASS' -e 'IGNORED' -e 'WARNING' -e 'SPURIOUS' -e 'DROPPED' "$out"; then
+	false
+fi
+
+echo 'ok.' >&3
