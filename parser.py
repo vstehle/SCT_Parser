@@ -11,6 +11,8 @@ import re
 import hashlib
 import os
 import curses
+import time
+import subprocess
 
 try:
     from packaging import version
@@ -543,12 +545,24 @@ def gen_junit(cross_check, filename):
         TestSuite.to_file(file, testsuites.values())
 
 
+# Write meta-data to YAML file as comments.
+def yaml_meta(f, meta):
+    print('# Meta-data:', file=f)
+
+    for k in sorted(meta.keys()):
+        print(f"# {k}: {meta[k]}", file=f)
+
+    print('', file=f)
+
+
 # Generate yaml
-def gen_yaml(cross_check, filename):
+# We output meta-data as comments.
+def gen_yaml(cross_check, filename, meta):
     assert('yaml' in sys.modules)
     logging.debug(f'Generate {filename}')
 
     with open(filename, 'w') as yamlfile:
+        yaml_meta(yamlfile, meta)
         yaml.dump(cross_check, yamlfile, Dumper=Dumper)
 
 
@@ -557,7 +571,8 @@ def gen_yaml(cross_check, filename):
 # We omit tests with result PASS.
 # We omit some tests keys: iteration and dates.
 # We remove the leading directory from C filename in log.
-def gen_template(cross_check, filename):
+# We output meta-data as comments.
+def gen_template(cross_check, filename, meta):
     assert('yaml' in sys.modules)
     logging.debug(f'Generate {filename}')
     omitted_keys = set(['iteration', 'start date', 'start time'])
@@ -587,6 +602,7 @@ def gen_template(cross_check, filename):
         i += 1
 
     with open(filename, 'w') as yamlfile:
+        yaml_meta(yamlfile, meta)
         yaml.dump(t, yamlfile, Dumper=Dumper)
 
 
@@ -778,7 +794,8 @@ def read_log_and_seq(log_file, seq_file):
 
 
 # generate MD summary
-def gen_md(md, res_keys, bins):
+# We output meta-data
+def gen_md(md, res_keys, bins, meta):
     logging.debug(f'Generate {md}')
 
     with open(md, 'w') as resultfile:
@@ -803,6 +820,14 @@ def gen_md(md, res_keys, bins):
             resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
             key_tree_2_md(bins[k], resultfile)
             n += 1
+
+        # Meta-data
+        resultfile.write('## Meta-data\n\n')
+        resultfile.write("|  |  |\n")
+        resultfile.write("|--|--|\n")
+
+        for k in sorted(meta.keys()):
+            resultfile.write(f"|{k}:|{meta[k]}|\n")
 
 
 # Read back results from a previously generated summary markdown file.
@@ -835,11 +860,11 @@ def read_md(input_md):
                 tables.append(t)
                 t = None
 
-        assert(t is None)
+        if t is not None:
+            tables.append(t)
 
-    # Remove summary table
-    assert(len(tables[0][0]) == 2)
-    del tables[0]
+    # Remove all small tables, such as the summary and meta-data tables
+    tables = filter(lambda x: len(x[0]) > 2, tables)
 
     # Transform tables lines to dicts and merge everything
     cross_check = []
@@ -887,6 +912,27 @@ def print_summary(bins, res_keys):
     logging.info(', '.join(map(lambda k: d[k], sorted(res_keys))))
 
 
+# Return a dict with the initial meta-data.
+def meta_data(argv, here):
+    r = {
+        'command-line': ' '.join(argv),
+        'date': f"{time.asctime(time.gmtime())} UTC",
+    }
+
+    cp = subprocess.run(
+        f"git -C {here} describe --always --abbrev=12 --dirty", shell=True,
+        capture_output=True)
+    logging.debug(cp)
+
+    if cp.returncode:
+        logging.debug('No git')
+    else:
+        r['git-commit'] = cp.stdout.decode().rstrip()
+
+    logging.debug(f"meta-data: {r}")
+    return r
+
+
 if __name__ == '__main__':
     me = os.path.realpath(__file__)
     here = os.path.dirname(me)
@@ -922,6 +968,8 @@ if __name__ == '__main__':
         '--uniq', action='store_true', help='Collapse duplicates')
     parser.add_argument(
         '--print', action='store_true', help='Print results to stdout')
+    parser.add_argument(
+        '--print-meta', action='store_true', help='Print meta-data to stdout')
     parser.add_argument('--input-md', help='Input .md filename')
     parser.add_argument(
         '--seq-db', help='Known sequence files database filename',
@@ -987,6 +1035,9 @@ if __name__ == '__main__':
         logging.error('Sequence validation is deprecated!')
         sys.exit(1)
 
+    # Prepare initial meta-data.
+    meta = meta_data(sys.argv, here)
+
     if args.input_md is not None:
         cross_check = read_md(args.input_md)
         ident = None
@@ -996,6 +1047,9 @@ if __name__ == '__main__':
 
         # Try to identify the sequence file
         ident = ident_seq(args.seq_file, args.seq_db)
+
+        if ident is not None:
+            meta['seq-file-ident'] = ident['name']
 
         # Read both and combine them into a single cross_check database.
         cross_check = read_log_and_seq(args.log_file, args.seq_file)
@@ -1039,15 +1093,23 @@ if __name__ == '__main__':
     # Print a one-line summary
     print_summary(bins, res_keys)
 
+    # Print meta-data
+    if args.print_meta:
+        print()
+        print('meta-data')
+        print('---------')
+        for k in sorted(meta.keys()):
+            print(f"{k}: {meta[k]}")
+
     # generate MD summary
     # As a special case, we skip generation when we are reading from a markdown
     # summary, which has the same name as the output.
     if args.input_md is None or args.input_md != args.md:
-        gen_md(args.md, res_keys, bins)
+        gen_md(args.md, res_keys, bins, meta)
 
     # Generate yaml config template if requested
     if 'template' in args and args.template is not None:
-        gen_template(cross_check, args.template)
+        gen_template(cross_check, args.template, meta)
 
     # Filter fields before writing any other type of output
     # Do not rely on specific fields being present after this step
@@ -1075,7 +1137,7 @@ if __name__ == '__main__':
 
     # Generate yaml if requested
     if 'yaml' in args and args.yaml is not None:
-        gen_yaml(cross_check, args.yaml)
+        gen_yaml(cross_check, args.yaml, meta)
 
     # Print if requested
     if args.print:

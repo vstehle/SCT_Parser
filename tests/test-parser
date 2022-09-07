@@ -34,7 +34,7 @@ args=(--config sample/sample.yaml sample/sample.ekl sample/sample.seq)
 parser.py "${args[@]}" |& tee "$out"
 grep -q 'Identified.* as "Test sample' "$out"
 grep -q 'Updated 1 test.* after applying 1 rule' "$out"
-test -e result.md
+grep -q 'Meta-data' result.md
 
 echo -n 'null config, ' >&3
 parser.py "${args[@]}" --config /dev/null |& tee "$out"
@@ -89,5 +89,13 @@ grep -q 'FAILURE  UEFI Compliant' "$out"
 if grep -q -e 'PASS' -e 'IGNORED' -e 'WARNING' -e 'SPURIOUS' -e 'DROPPED' "$out"; then
 	false
 fi
+
+echo -n 'meta, ' >&3
+parser.py "${args[@]}" --print-meta |& tee "$out"
+grep -q 'meta-data' "$out"
+grep -q 'command-line:' "$out"
+grep -q 'date:' "$out"
+grep -q 'git-commit:' "$out"
+grep -q 'seq-file-ident: Test sample.seq' "$out"
 
 echo 'ok.' >&3
