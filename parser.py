@@ -1132,7 +1132,7 @@ if __name__ == '__main__':
         gen_json(cross_check, args.json)
 
     # Generate junit if requested
-    if args.junit is not None:
+    if 'junit' in args and args.junit is not None:
         gen_junit(cross_check, args.junit)
 
     # Generate yaml if requested
