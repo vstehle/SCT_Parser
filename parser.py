@@ -372,7 +372,7 @@ def apply_rules(cross_check, conf):
 # Load YAML configuration file
 # See the README.md for details on the configuration file format.
 def load_config(filename):
-    assert('yaml' in sys.modules)
+    assert 'yaml' in sys.modules
 
     # Load configuration file
     logging.debug(f'Read {filename}')
@@ -507,7 +507,7 @@ def gen_json(cross_check, filename):
 
 # Generate junit
 def gen_junit(cross_check, filename):
-    assert('junit_xml' in sys.modules)
+    assert 'junit_xml' in sys.modules
     logging.debug(f'Generate {filename}')
 
     testsuites = {}
@@ -558,7 +558,7 @@ def yaml_meta(f, meta):
 # Generate yaml
 # We output meta-data as comments.
 def gen_yaml(cross_check, filename, meta):
-    assert('yaml' in sys.modules)
+    assert 'yaml' in sys.modules
     logging.debug(f'Generate {filename}')
 
     with open(filename, 'w') as yamlfile:
@@ -573,7 +573,7 @@ def gen_yaml(cross_check, filename, meta):
 # We remove the leading directory from C filename in log.
 # We output meta-data as comments.
 def gen_template(cross_check, filename, meta):
-    assert('yaml' in sys.modules)
+    assert 'yaml' in sys.modules
     logging.debug(f'Generate {filename}')
     omitted_keys = set(['iteration', 'start date', 'start time'])
     t = []
@@ -710,18 +710,18 @@ def combine_dbs(db1, db2):
 
 # Verify Sanity of our YAML seq db
 def sanity_check_seq_db(seq_db):
-    assert('seq_db' in seq_db)
+    assert 'seq_db' in seq_db
     s = set()
 
     for x in seq_db['seq_files']:
         sha = x['sha256']
-        assert(sha not in s)
+        assert sha not in s
         s.add(sha)
 
 
 # Load the database of known sequence files.
 def load_seq_db(filename):
-    assert('yaml' in sys.modules)
+    assert 'yaml' in sys.modules
     logging.debug(f'Read {filename}')
 
     with open(filename, 'r') as yamlfile:
@@ -878,7 +878,7 @@ def read_md(input_md):
 
         # Convert lines
         for i, x in enumerate(t):
-            assert(len(x) == n)
+            assert len(x) == n
             y = {}
 
             for j, k in enumerate(keys):
