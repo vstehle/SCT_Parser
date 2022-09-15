@@ -1,6 +1,6 @@
 ---
-$id: 'https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
-    schemas/config-schema.yaml'
+$id: "https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
+    schemas/config-schema.yaml"
 $schema: https://json-schema.org/draft/2020-12/schema
 title: SCT Parser configuration schema
 description: |
