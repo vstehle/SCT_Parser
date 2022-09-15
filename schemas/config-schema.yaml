@@ -9,11 +9,6 @@ description: |
 
     This schema describes requirements on the configuration file, which can be
     verified with the validate.py script. See the README for details.
-$defs:
-    guid:
-        type: string
-        format: uuid
-        pattern: '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}'
 type: array
 minItems: 1
 uniqueItems: true
@@ -64,7 +59,7 @@ items:
                         - RuntimeServicesTest
                         - SecureTechTest
                 guid:
-                    '$ref': '#/$defs/guid'
+                    '$ref': './common-schema.yaml#/$defs/guid'
                 name:
                     type: string
                 log:
@@ -79,7 +74,7 @@ items:
                     type: string
                     pattern: '0x0*1000[012]'
                 set guid:
-                    '$ref': '#/$defs/guid'
+                    '$ref': './common-schema.yaml#/$defs/guid'
                 sub set:
                     enum:
                         - AllocatePages_Conf
@@ -322,7 +317,7 @@ items:
                 group:
                     type: string
                 guid:
-                    '$ref': '#/$defs/guid'
+                    '$ref': './common-schema.yaml#/$defs/guid'
                 name:
                     type: string
                 log:
@@ -340,7 +335,7 @@ items:
                 revision:
                     type: string
                 set guid:
-                    '$ref': '#/$defs/guid'
+                    '$ref': './common-schema.yaml#/$defs/guid'
                 sub set:
                     type: string
                 test set:

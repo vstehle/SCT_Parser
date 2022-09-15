@@ -1,0 +1,13 @@
+---
+$id: "https://gitlab.arm.com/systemready/edk2-test-parser/-/raw/main/\
+    schemas/common-schema.yaml"
+$schema: https://json-schema.org/draft/2020-12/schema
+title: SCT Parser common schema
+description: |
+    This schema contains common definitions used by the other schemas in the
+    same folder.
+$defs:
+    guid:
+        type: string
+        format: uuid
+        pattern: '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}'
