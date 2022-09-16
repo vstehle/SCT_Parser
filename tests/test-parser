@@ -57,10 +57,14 @@ parser.py "${args[@]}" --json "$json" |& tee "$out"
 grep -qF '{' "$json"
 grep -q '"name":' "$json"
 
-echo -n 'junit, ' >&3
-junit="$tmp/out.junit"
-parser.py "${args[@]}" --junit "$junit" |& tee "$out"
-grep -q 'xml version' "$junit"
+if python3 -c 'import junit_xml' 2>/dev/null; then
+	echo -n 'junit, ' >&3
+	junit="$tmp/out.junit"
+	parser.py "${args[@]}" --junit "$junit" |& tee "$out"
+	grep -q 'xml version' "$junit"
+else
+	echo -n '(no junit), ' >&3
+fi
 
 echo -n 'md, ' >&3
 md="$tmp/out.md"
