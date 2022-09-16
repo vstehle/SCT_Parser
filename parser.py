@@ -920,7 +920,7 @@ def meta_data(argv, here):
     }
 
     cp = subprocess.run(
-        f"git -C {here} describe --always --abbrev=12 --dirty", shell=True,
+        f"git -C '{here}' describe --always --abbrev=12 --dirty", shell=True,
         capture_output=True)
     logging.debug(cp)
 
