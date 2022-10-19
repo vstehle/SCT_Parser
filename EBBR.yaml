@@ -1687,9 +1687,8 @@
 ###############################################################################
 
 # We force the following tests result as `KNOWN U-BOOT LIMITATION'. They are
-# genuine bugs, which must ultimately be fixed. We know about them; they are due
-# to U-Boot FAT filesystem implementation limitations and they do not prevent an
-# OS to boot.
+# genuine bugs, which must ultimately be fixed. We know about them and they do
+# not prevent an OS to boot.
 
 - rule: Force simple file protocol failures as known U-Boot limitation
   criteria:
@@ -2106,6 +2105,199 @@
     set guid: 61758774-91A3-47DD-BDBD-B81094A5F62D
     sub set: QueryVariableInfo_Conf
     test set: VariableServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test failure as known U-Boot limitation
+    ExportPackageLists is only barely implemented in U-Boot up to (at least)
+    v2022.10
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    guid: 0462BF1F-CE31-4314-BD34-404A0504D30C
+    log: Status - Not Found
+    name: HII_DATABASE_PROTOCOL.ExportPackageLists - ExportPackageLists()
+      returns EFI_BUFFER_TOO_SMALL with BufferSize indicates the buffer is too
+      small.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: B6DCE569-0A0E-4FCE-9EE0-868730F50C4D
+    sub set: ExportPackageListsConformance
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test failure (2) as known U-Boot limitation
+    GetPackageListHandle implementation in U-Boot up to (at least) v2022.10
+    does not check properly for all invalid inputs conditions
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    guid: 2BC2DAE8-2692-487A-949D-A74508826511
+    log: Status - Not Found
+    name: HII_DATABASE_PROTOCOL.GetPackageListHandle - GetPackageListHandle()
+      returns EFI_INVALID_PARAMETER with PackageListHandle set to be NULL.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: D51EBDA6-391B-49BC-A4CB-0EAF1A0E3A05
+    sub set: GetPackageListHandleConformance
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test failure (3) as known U-Boot limitation
+    SetKeyboardLayout is only barely implemented in U-Boot up to (at least)
+    v2022.10
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    guid: AD8C6CDC-C749-42E6-88F7-73447C389E4D
+    log: Status - Not Found
+    name: HII_DATABASE_PROTOCOL.SetKeyboardLayout - SetKeyboardLayout() returns
+      EFI_INVALID_PARAMETER with KeyGuid set to be NULL.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: BA3F895D-E76E-4C43-8A38-D94E95D69F42
+    sub set: SetKeyboardLayoutConformance
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test failure (4) as known U-Boot limitation
+    The NewPackageList implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    guid: 3EE6503D-5FAB-4F51-9AEE-C90F9D73E5D7
+    log: Status - Invalid Parameter
+    name: HII_DATABASE_PROTOCOL.NewPackageList - NewPackageList() returns
+      EFI_SUCCESS with valid inputs.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: A631C5F5-0991-4265-9757-1050AA9668D0
+    sub set: NewPackageListFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped as known U-Boot limitation
+    The ExportPackageLists functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 0F8BA647-1F74-4D62-AB91-F1526B507DA6
+    sub set: ExportPackageListsFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (2) as known U-Boot limitation
+    The GetPackageListHandle functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: B54B29F4-B2A5-49E8-BCA6-F6929733DD11
+    sub set: GetPackageListHandleFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (3) as known U-Boot limitation
+    The SetKeyboardLayout functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: D0126067-99CD-46C5-839F-43B0A90B79C5
+    sub set: SetKeyboardLayoutFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (4) as known U-Boot limitation
+    The FindKeyboardLayouts functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 11D5958C-BBE7-4851-A05C-E0059A0A8D3A
+    sub set: FindKeyboardLayoutsFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (5) as known U-Boot limitation
+    The GetKeyboardLayout functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 73332B8C-AF68-4E12-913D-5D89E8FB8925
+    sub set: GetKeyboardLayoutFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (6) as known U-Boot limitation
+    The ListPackageLists functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 31338003-325E-45DA-9CA9-427303EEFC67
+    sub set: ListPackageListsFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (7) as known U-Boot limitation
+    The RemovePackageList functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: C35DFC8E-B7C9-413D-A316-C43CAF654C26
+    sub set: RemovePackageListFunction
+    test set: HIIDatabaseProtocolTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+- rule: Force hii database protocol test skipped (8) as known U-Boot limitation
+    The UpdatePackageList functional test depends on the NewPackageList
+    function, whose implementation in U-Boot does not handle many packages
+    types, such as simple fonts, causing an error resulting in a skipped test
+  criteria:
+    descr: HII Database Protocol Test
+    group: HIITest
+    result: SKIPPED
+    revision: '0x00010000'
+    set guid: 00C3A3A0-1A1E-4609-9B0F-F2835301432E
+    sub set: UpdatePackageListFunction
+    test set: HIIDatabaseProtocolTest
   update:
     result: KNOWN U-BOOT LIMITATION
 

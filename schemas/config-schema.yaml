@@ -26,6 +26,7 @@ items:
                         - Device Path Protocol Test
                         - Device Path Utilities Protocol Test
                         - Event, Timer, and Task Priority Services Test
+                        - HII Database Protocol Test
                         - Image Services Test
                         - Memory Allocation Services Test
                         - Misc Runtime Services Test
@@ -54,6 +55,7 @@ items:
                         - ConsoleSupportTest
                         - DevicePathProcotols
                         - GenericTest
+                        - HIITest
                         - MediaAccessTest
                         - NetworkSupportTest
                         - RuntimeServicesTest
@@ -119,6 +121,9 @@ items:
                         - ExitBootServices_Conf
                         - Exit_Conf
                         - Exit_Func
+                        - ExportPackageListsConformance
+                        - ExportPackageListsFunction
+                        - FindKeyboardLayoutsFunction
                         - FlushEx_Conf
                         - FlushEx_Func
                         - Flush_Conf
@@ -131,6 +136,7 @@ items:
                         - GetDevicePathSize_Functionality
                         - GetInfo_Conf
                         - GetInfo_Func
+                        - GetKeyboardLayoutFunction
                         - GetMemoryMap_Conf
                         - GetMemoryMap_Func
                         - GetNextDevicePathInstance_Conformance
@@ -139,6 +145,8 @@ items:
                         - GetNextMonotonicCount_Func
                         - GetNextVariableName_Conf
                         - GetNextVariableName_Func
+                        - GetPackageListHandleConformance
+                        - GetPackageListHandleFunction
                         - GetPosition_Conf
                         - GetPosition_Func
                         - GetRNG_Conf
@@ -165,6 +173,7 @@ items:
                         - InstallProtocolInterface_Conf
                         - InstallProtocolInterface_Func
                         - IsDevicePathMultiInstance_Functionality
+                        - ListPackageListsFunction
                         - LoadImage_Conf
                         - LoadImage_Func
                         - LoadedImageProtocolTest1
@@ -182,6 +191,7 @@ items:
                         - MemoryMap
                         - NVData_Conf
                         - NVData_Func
+                        - NewPackageListFunction
                         - Non-volatile Variable Reset Test
                         - OpenEx_Conf
                         - OpenEx_Func
@@ -219,6 +229,7 @@ items:
                         - RegisterProtocolNotify_Func
                         - ReinstallProtocolInterface_Conf
                         - ReinstallProtocolInterface_Func
+                        - RemovePackageListFunction
                         - RequiredElements
                         - ResetFunctionAuto
                         - ResetSystem Shutdown Test
@@ -232,6 +243,8 @@ items:
                         - SetCursorPosition_Func
                         - SetInfo_Conf
                         - SetInfo_Func
+                        - SetKeyboardLayoutConformance
+                        - SetKeyboardLayoutFunction
                         - SetMem_Func
                         - SetMode_Conf
                         - SetMode_Func
@@ -274,6 +287,7 @@ items:
                         - UnloadImage_Func
                         - UnregisterKeyNotifyConformance
                         - UpdateCapsule_Conf
+                        - UpdatePackageListFunction
                         - WaitForEvent_Conf
                         - WaitForEvent_Func
                         - WriteEx_Conf
@@ -287,6 +301,7 @@ items:
                         - DevicePathUtilitiesProcotolTest
                         - EFICompliantTest
                         - EventTimerandPriorityServicesTest
+                        - HIIDatabaseProtocolTest
                         - ImageServicesTest
                         - LoadedImageProtocolTest
                         - MemoryAllocationServicesTest
