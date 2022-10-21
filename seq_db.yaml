@@ -17,9 +17,14 @@ seq_files:
       name: ACS-IR v21.09_1.0/v22.06_2.0.0_BETA-0 EBBR.seq
       config: EBBR.yaml
     - sha256: f7793d53c10106c1c275a4992e1710ce9863e210dd07581a3d783c4f4cf2312b
-      name: ACS-IR v21.07_0.9_BETA or v21.09_1.0 EBBR_manual.seq
+      name: ACS-IR v21.07_0.9_BETA or v21.09_1.0 or v22.10_IR_32b_0.7_BETA-0
+        EBBR_manual.seq
       config: EBBR.yaml
       deprecated:
     - sha256: 7cb231d17fa9f580e75fee01c0295c9bd800fa6ba27501c7a1b941cbbdeaebfb
       name: Security interface extension ACS v21.10_SIE_REL1.0 BBSR.seq
       config: SIE.yaml
+    - sha256: 261d63381bf8a8849a895e277b7d7b566950ba72a4eb9dbab725718ae2d8c18c
+      name: ACS-IR v22.10_IR_32b_0.7_BETA-0 EBBR.seq
+      config: EBBR.yaml
+      deprecated:
