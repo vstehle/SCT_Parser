@@ -327,16 +327,6 @@ items:
             properties:
                 comments:
                     type: string
-                descr:
-                    type: string
-                group:
-                    type: string
-                guid:
-                    '$ref': './common-schema.yaml#/$defs/guid'
-                name:
-                    type: string
-                log:
-                    type: string
                 result:
                     enum:
                         - DROPPED
@@ -347,14 +337,6 @@ items:
                         - KNOWN U-BOOT LIMITATION
                         - SKIPPED
                         - WARNING
-                revision:
-                    type: string
-                set guid:
-                    '$ref': './common-schema.yaml#/$defs/guid'
-                sub set:
-                    type: string
-                test set:
-                    type: string
             additionalProperties: false
             minProperties: 1
     required:
