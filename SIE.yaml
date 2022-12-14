@@ -107,3 +107,55 @@
     test set: BBSRVariableSizeTest
   update:
     result: KNOWN RPMB LIMITATION
+
+###############################################################################
+#                           Known ACS limitations                             #
+###############################################################################
+
+# We force the following tests result as `KNOWN ACS LIMITATION'. They are
+# genuine bugs, which are fixed in a more recent version of the ACS or which
+# must ultimately be fixed and which we know about.
+
+- rule: Force some SIE dropped as known acs limitation
+    The ACS-IR 2.0 BET-1 SIE SCT is missing a few tests due to a patch not
+    applying properly during build.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: 19A9EDCF-EEB9-43E4-86A0-F28734FED429
+    sub set: BBSRVariableSizeTest_func
+  update:
+    result: KNOWN ACS LIMITATION
+
+- rule: Force some SIE dropped (2) as known acs limitation
+    The ACS-IR 2.0 BET-1 SIE SCT is missing a few tests due to a patch not
+    applying properly during build.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: E39747C4-22D0-4D52-9C15-3C4EFA80E6C8
+    sub set: VariableAttributes
+  update:
+    result: KNOWN ACS LIMITATION
+
+- rule: Force some SIE dropped (3) as known acs limitation
+    The ACS-IR 2.0 BET-1 SIE SCT is missing a few tests due to a patch not
+    applying properly during build.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: 495CB6D7-0817-4015-A479-0DB4C2308626
+    sub set: VariableUpdates
+  update:
+    result: KNOWN ACS LIMITATION
+
+- rule: Force some SIE dropped (4) as known acs limitation
+    The ACS-IR 2.0 BET-1 SIE SCT is missing a few tests due to a patch not
+    applying properly during build.
+  criteria:
+    result: DROPPED
+    revision: '0x10000'
+    set guid: BA4A8DD9-2D6A-43A6-96CF-7947892B7359
+    sub set: ImageLoading
+  update:
+    result: KNOWN ACS LIMITATION

@@ -125,6 +125,7 @@ $defs:
             - HardwareErrorRecord_Conf
             - HardwareErrorRecord_Func
             - HashLogExtendEvent_Conf
+            - ImageLoading
             - Initialize_Conf
             - Initialize_Func
             - InstallConfigurationTable_Conf
@@ -256,6 +257,8 @@ $defs:
             - UnregisterKeyNotifyConformance
             - UpdateCapsule_Conf
             - UpdatePackageListFunction
+            - VariableAttributes
+            - VariableUpdates
             - WaitForEvent_Conf
             - WaitForEvent_Func
             - WriteEx_Conf
