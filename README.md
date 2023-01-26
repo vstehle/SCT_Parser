@@ -43,7 +43,7 @@ command. The parsed report can be found in `result.md`.
 ``` {.sh}
 $ ./parser.py \
                 </path/to/sct_results/Overall/Summary.ekl> \
-		contrib/v21.07_0.9_BETA/EBBR.seq
+                contrib/v21.07_0.9_BETA/EBBR.seq
 INFO apply_rules: Updated 200 tests out of 12206 after applying 124 rules
 INFO main: 0 dropped, 1 failure, 93 ignored, 106 known u-boot limitations, 12006 pass, 0 warning
 ```
@@ -341,7 +341,7 @@ the result of some tests with the following ones:
                          sequence file.
 
 `KNOWN SIZE LIMITATION`  Genuine limitations, we know about them; they are due
-			 to secure storage size limitations and they do not
+                         to secure storage size limitations and they do not
                          prevent Secure Boot.
 -------------------------------------------------------------------------------
 
