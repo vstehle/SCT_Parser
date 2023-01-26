@@ -61,18 +61,17 @@
     result: IGNORED
 
 ###############################################################################
-#                          Known RPMB limitations                             #
+#                          Known size limitations                             #
 ###############################################################################
 
-# We force the following tests result as `KNOWN RPMB LIMITATION'. They are
-# genuine limitations, we know about them; they are due to eMMC RPMB limitations
-# and they do not prevent Secure Boot.
+# We force the following tests result as `KNOWN SIZE LIMITATION'. They are
+# genuine limitations, we know about them; they are due to secure storage
+# limitations and they do not prevent Secure Boot.
 
-- rule: Force BBSR variable size test failure as known RPMB limitation.
+- rule: Force BBSR variable size test failure as known size limitation.
     The SIE ACS checks that MaxVariableStorageSize is larger than 128kb as per
     rule R040_BBSR of BBSR v1.1.
-    That is typically not the case when using OP-TEE's secure storage on eMMC
-    RPMB.
+    That is typically not the case when using OP-TEE's secure storage.
   criteria:
     descr: BBSR Variable Size Test
     device path: No device path
@@ -86,13 +85,12 @@
     sub set: BBSRVariableSizeTest_func
     test set: BBSRVariableSizeTest
   update:
-    result: KNOWN RPMB LIMITATION
+    result: KNOWN SIZE LIMITATION
 
-- rule: Force BBSR variable size test failure (2) as known RPMB limitation.
+- rule: Force BBSR variable size test failure (2) as known size limitation.
     The SIE ACS checks that MaxVariableSize is larger than 64kb as per rule
     R050_BBSR of BBSR v1.1.
-    That is typically not the case when using OP-TEE's secure storage on eMMC
-    RPMB.
+    That is typically not the case when using OP-TEE's secure storage.
   criteria:
     descr: BBSR Variable Size Test
     device path: No device path
@@ -106,7 +104,7 @@
     sub set: BBSRVariableSizeTest_func
     test set: BBSRVariableSizeTest
   update:
-    result: KNOWN RPMB LIMITATION
+    result: KNOWN SIZE LIMITATION
 
 ###############################################################################
 #                           Known ACS limitations                             #

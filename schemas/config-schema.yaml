@@ -93,7 +93,7 @@ items:
                         - FAILURE
                         - IGNORED
                         - KNOWN ACS LIMITATION
-                        - KNOWN RPMB LIMITATION
+                        - KNOWN SIZE LIMITATION
                         - KNOWN U-BOOT LIMITATION
                         - SKIPPED
                         - WARNING

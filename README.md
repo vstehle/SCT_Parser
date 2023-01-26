@@ -340,9 +340,9 @@ the result of some tests with the following ones:
                          and too fine-grained to be removed from the `BBSR.seq`
                          sequence file.
 
-`KNOWN RPMB LIMITATION`  Genuine limitations, we know about them; they are due
-                         to eMMC RPMB limitations and they do not prevent
-                         Secure Boot.
+`KNOWN SIZE LIMITATION`  Genuine limitations, we know about them; they are due
+			 to secure storage size limitations and they do not
+                         prevent Secure Boot.
 -------------------------------------------------------------------------------
 
 [BBSR]: https://developer.arm.com/documentation/den0107/b/?lang=en
