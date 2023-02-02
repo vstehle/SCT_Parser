@@ -61,6 +61,34 @@
     result: IGNORED
 
 ###############################################################################
+#                         Known U-Boot limitations                            #
+###############################################################################
+
+# We force the following tests result as `KNOWN U-BOOT LIMITATION'. They are
+# genuine bugs, which must ultimately be fixed. We know about them and they do
+# not prevent an OS to boot.
+
+- rule: Force query auth variable info failures as known U-Boot limitation
+    query variable info implementation in U-Boot up to (at least) v2023.01
+    does not check properly for all invalid inputs conditions instead of
+    delegating to StMM
+    https://lore.kernel.org/u-boot/20230126031512.17450-1-masahisa.kojima@linaro.org/
+  criteria:
+    descr: Variable Services Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6D0740FB-388A-491F-B818-9B5CB5170F95
+    log: Status - Invalid Parameter
+    name: RT.QueryVariableInfo - Query Auth Variable.
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 28155531-80C5-4AD0-8471-A5E2AECF236C
+    sub set: AuthVar_Conf
+    test set: VariableServicesTest
+  update:
+    result: KNOWN U-BOOT LIMITATION
+
+###############################################################################
 #                          Known size limitations                             #
 ###############################################################################
 
