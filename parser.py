@@ -797,8 +797,8 @@ def gen_md(md, res_keys, bins, meta):
     logging.debug(f'Generate {md}')
 
     with open(md, 'w') as resultfile:
-        resultfile.write("# SCT Summary \n\n")
-        resultfile.write("|  |  |\n")
+        resultfile.write("# SCT Summary\n\n")
+        resultfile.write("|Result|Test(s)|\n")
         resultfile.write("|--|--|\n")
 
         # Loop on all the result values we found for the summary
