@@ -931,6 +931,31 @@ def meta_data(argv, here):
     return r
 
 
+# Perform some sanity checks on the tests:
+# - We verify that the tests have all the fields we need.
+def sanity_check(cross_check):
+    fields = [
+        'descr',
+        'device path',
+        'guid',
+        'iteration',
+        'log',
+        'name',
+        'start date',
+        'start time',
+        'test set',
+        'sub set',
+        'set guid',
+        'revision',
+        'group',
+        'result',
+    ]
+
+    for x in cross_check:
+        for f in fields:
+            assert f in x
+
+
 if __name__ == '__main__':
     me = os.path.realpath(__file__)
     here = os.path.dirname(me)
@@ -1053,6 +1078,9 @@ if __name__ == '__main__':
         cross_check = read_log_and_seq(args.log_file, args.seq_file)
 
     logging.debug('{} combined test(s)'.format(len(cross_check)))
+
+    # Perform some sanity checks on the tests.
+    sanity_check(cross_check)
 
     # Second part of configuration file selection: take autodetect into account
     # but with less priority than command line.
