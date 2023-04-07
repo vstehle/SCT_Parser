@@ -666,16 +666,6 @@ def combine_dbs(db1, db2):
     if n:
         logging.debug(f'{n} spurious test(s)')
 
-    # Do a pass to autodetect all tests fields in case we need to merge dropped
-    # tests sets entries
-    f = {}
-
-    for x in cross_check:
-        for k in x.keys():
-            f[k] = ''
-
-    logging.debug(f'Test fields: {f.keys()}')
-
     # Do a pass to find the test sets that did not run for whatever reason.
     s = set()
 
@@ -692,7 +682,15 @@ def combine_dbs(db1, db2):
 
             # Create an artificial test entry to reflect the dropped test set
             cross_check.append({
-                **f,
+                'descr': '',
+                'device path': '',
+                'guid': '',
+                'iteration': '',
+                'log': '',
+                'name': '',
+                'start date': '',
+                'start time': '',
+                'test set': '',
                 'sub set': x['name'],
                 'set guid': x['guid'],
                 'revision': x['rev'],
