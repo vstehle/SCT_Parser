@@ -16,3 +16,17 @@ check-job:
 
     paths:
       - test-*.log
+
+doc-job:
+  tags:
+    - arm64
+
+  script:
+    - apt-get update
+    - apt-get install -y make pandoc texlive-latex-base
+      texlive-latex-recommended
+    - make doc
+
+  artifacts:
+    paths:
+      - README.pdf
