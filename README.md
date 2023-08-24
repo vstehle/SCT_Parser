@@ -29,6 +29,8 @@ If you want to generate the pdf version of this documentation or convert
 markdown results to HTML, you need to install [pandoc]. See [Usage] and
 [Documentation].
 
+See also `.gitlab-ci.yml`.
+
 [PyYAML]: https://github.com/yaml/pyyaml
 [packaging]: https://github.com/pypa/packaging
 [junit-xml]: https://pypi.org/project/junit-xml
