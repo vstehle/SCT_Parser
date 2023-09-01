@@ -7,6 +7,10 @@ generated `.seq` from [UEFI SCT] configurator.
 
 It will proceed to generate a Markdown file listing number of failures, passes, each test from the sequence file set that was Silently dropped, and a list of all failures and warnings.
 
+The latest version is available at:
+
+https://gitlab.arm.com/systemready/edk2-test-parser
+
 [UEFI SCT]: https://uefi.org/testtools
 
 ## Branches
