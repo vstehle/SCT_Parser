@@ -1,14 +1,49 @@
 ---
 name: CI
 # yamllint disable-line rule:truthy
-on: [push]
+on: push
+
 jobs:
-  check:
+  check-job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install dependencies and check
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
         run: |
-          sudo apt install flake8
-          make check
+          sudo apt-get install -y make python3 python3-yaml python3-jsonschema \
+            python3-packaging yamllint flake8 shellcheck python3-junit.xml git
+
+      - name: Check
+        run: make -k check
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+
+        with:
+          name: Logs
+          path: test-*.log
+
+  doc-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y make pandoc texlive-latex-base \
+            texlive-latex-recommended
+
+      - name: Generate doc
+        run: make doc
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+
+        with:
+          name: Doc
+          path: README.pdf
