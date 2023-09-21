@@ -13,7 +13,7 @@ import os
 import curses
 import time
 import subprocess
-from typing import Any
+from typing import Any, IO, Optional, cast, TypedDict
 
 try:
     from packaging import version
@@ -40,6 +40,33 @@ if 'yaml' in sys.modules:
         from yaml import CDumper as Dumper
     except ImportError:
         from yaml import Dumper
+
+DbEntry = dict[str, str]
+DbType = list[DbEntry]
+
+
+class ConfigEntry(TypedDict):
+    rule: str
+    criteria: DbEntry
+    update: DbEntry
+
+
+ConfigType = list[ConfigEntry]
+MetaData = dict[str, str]
+
+
+class SeqFile(TypedDict):
+    sha256: str
+    name: str
+    config: str
+
+
+class SeqDb(TypedDict):
+    seq_db: None
+    seq_files: list[SeqFile]
+
+
+BinsType = dict[str, list[dict[str, str]]]
 
 # Not all yaml versions have a Loader argument.
 if 'packaging.version' in sys.modules and \
@@ -69,7 +96,7 @@ if os.isatty(sys.stdout.fileno()):
 
 
 # Compute the plural of a word.
-def maybe_plural(n, word):
+def maybe_plural(n: int, word: str) -> str:
     if n < 2:
         return word
 
@@ -82,9 +109,12 @@ def maybe_plural(n, word):
 
 
 # based loosley on https://stackoverflow.com/a/4391978
-# returns a filtered dict of dicts that meet some Key-value pair.
+# returns a filtered list of dicts that meet some Key-value pair.
 # I.E. key="result" value="FAILURE"
-def key_value_find(list_1, key, value):
+def key_value_find(
+        list_1: list[dict[str, str]], key: str, value: str
+        ) -> list[dict[str, str]]:
+
     found = list()
     for test in list_1:
         if test[key] == value:
@@ -93,7 +123,7 @@ def key_value_find(list_1, key, value):
 
 
 # Were we intrept test logs into test dicts
-def test_parser(string, current):
+def test_parser(string: list[str], current: dict[str, str]) -> dict[str, str]:
     test_list = {
         "name": string[2],
         # FIXME:Sometimes, SCT has name and Description,
@@ -109,11 +139,11 @@ def test_parser(string, current):
 
 
 # Parse the ekl file, and create a map of the tests
-def ekl_parser(file):
+def ekl_parser(file: list[str]) -> list[dict[str, str]]:
     # create our "database" dict
     temp_list = list()
     # All tests are grouped by the "HEAD" line, which precedes them.
-    current = {}
+    current: dict[str, str] = {}
 
     # Count number of tests since beginning of the set
     n = 0
@@ -202,8 +232,8 @@ def ekl_parser(file):
 
 
 # Parse Seq file, used to tell which tests should run.
-def seq_parser(file):
-    temp_dict = list()
+def seq_parser(file: IO[str]) -> list[dict[str, str]]:
+    temp = list()
     lines = file.readlines()
     magic = 7
     # a test in a seq file is 7 lines, if not mod7, something wrong..
@@ -236,15 +266,14 @@ def seq_parser(file):
                 # from after "Order=" (6char long)
                 "Order": lines[x + 4][6:-1]
             }
-            # put in a dict based on guid
-            temp_dict.append(seq_dict)
+            temp.append(seq_dict)
 
-    return temp_dict
+    return temp
 
 
 # Print items by "group"
-def key_tree_2_md(input_list, file):
-    h = {}
+def key_tree_2_md(input_list: list[dict[str, str]], file: IO[str]) -> None:
+    h: dict[str, list[dict[str, str]]] = {}
 
     # Bin by group
     for t in input_list:
@@ -262,7 +291,7 @@ def key_tree_2_md(input_list, file):
 
 
 # generic writer, takes a list of dicts and turns the dicts into an MD table.
-def dict_2_md(input_list, file):
+def dict_2_md(input_list: list[dict[str, str]], file: IO[str]) -> None:
     if len(input_list) > 0:
         file.write("\n\n")
         k = input_list[0].keys()
@@ -273,10 +302,10 @@ def dict_2_md(input_list, file):
             temp_string2 += ("---|")
         file.write(temp_string1 + "\n" + temp_string2 + "\n")
         # print each item from the dict into the table
-        for x in input_list:
+        for w in input_list:
             test_string = "|"
             for y in k:
-                v = x[y] if y in x else ''
+                v = w[y] if y in w else ''
                 test_string += v + "|"
             file.write(test_string + '\n')
     # seprate table from other items in MD
@@ -285,12 +314,10 @@ def dict_2_md(input_list, file):
 
 # Sanitize our YAML configuration
 # We modify conf in-place
-def sanitize_yaml(conf):
+def sanitize_yaml(conf: ConfigType) -> None:
     rules = set()
 
-    for i in range(len(conf)):
-        r = conf[i]
-
+    for i, r in enumerate(conf):
         # Generate a rule name if needed
         if 'rule' not in r:
             r['rule'] = f'r{i}'
@@ -317,7 +344,7 @@ def sanitize_yaml(conf):
 # present anywhere in the test value string.
 # For example, the test value "abcde" matches the criteria value "cd".
 # This allows for more "relaxed" criteria than strict comparison.
-def matches_crit(test, crit):
+def matches_crit(test: DbEntry, crit: DbEntry) -> bool:
     for key, value in crit.items():
         if key not in test or test[key].find(value) < 0:
             return False
@@ -327,7 +354,7 @@ def matches_crit(test, crit):
 
 # Apply all configuration rules to the tests
 # We modify cross_check in-place
-def apply_rules(cross_check, conf):
+def apply_rules(cross_check: DbType, conf: ConfigType) -> None:
     # Prepare statistics counters
     stats = {}
 
@@ -366,22 +393,23 @@ def apply_rules(cross_check, conf):
         n += cnt
 
     if n:
-        r = len(conf)
+        x = len(conf)
         logging.info(
             f"Updated {n} {maybe_plural(n, 'test')} out of {s}"
-            f" after applying {r} {maybe_plural(r, 'rule')}")
+            f" after applying {x} {maybe_plural(x, 'rule')}")
 
 
 # Load YAML configuration file
 # See the README.md for details on the configuration file format.
-def load_config(filename):
+def load_config(filename: str) -> ConfigType:
     assert 'yaml' in sys.modules
 
     # Load configuration file
     logging.debug(f'Read {filename}')
 
     with open(filename, 'r') as yamlfile:
-        conf = yaml.load(yamlfile, **yaml_load_args)
+        y = yaml.load(yamlfile, **yaml_load_args)
+        conf = cast(Optional[ConfigType], y)
 
     if conf is None:
         conf = []
@@ -395,13 +423,13 @@ def load_config(filename):
 # Filter is a python expression, which is evaluated for each test
 # When the expression evaluates to True, the test is kept
 # Otherwise it is dropped
-def filter_data(cross_check, Filter):
+def filter_data(cross_check: DbType, Filter: str) -> DbType:
     logging.debug(f"Filtering with `{Filter}'")
     before = len(cross_check)
 
     # This function "wraps" the filter and is called for each test
-    def function(x):
-        return eval(Filter)
+    def function(x: DbEntry) -> bool:
+        return bool(eval(Filter))
 
     r = list(filter(function, cross_check))
     after = len(r)
@@ -414,7 +442,7 @@ def filter_data(cross_check, Filter):
 # sort_keys is a comma-separated list
 # The first key has precedence, then the second, etc.
 # To use python list in-place sorting, we use the keys in reverse order.
-def sort_data(cross_check, sort_keys):
+def sort_data(cross_check: DbType, sort_keys: str) -> None:
     logging.debug(f"Sorting on `{sort_keys}'")
     for k in reversed(sort_keys.split(',')):
         cross_check.sort(key=lambda x: x[k])
@@ -422,7 +450,7 @@ def sort_data(cross_check, sort_keys):
 
 # Keep only certain fields in data, in-place
 # The fields to write are supplied as a comma-separated list
-def keep_fields(cross_check, fields):
+def keep_fields(cross_check: DbType, fields: str) -> None:
     logging.debug(f"Keeping fields: `{fields}'")
     s = set(fields.split(','))
 
@@ -435,11 +463,11 @@ def keep_fields(cross_check, fields):
 # Do a "uniq" pass on the data
 # All duplicate entries are collapsed into a single one
 # We add a "count" field
-def uniq(cross_check):
+def uniq(cross_check: DbType) -> DbType:
     logging.debug("Collapsing duplicates")
 
     # First pass to count all occurences
-    h = {}
+    h: dict[str, DbEntry] = {}
 
     for x in cross_check:
         i = ''
@@ -449,15 +477,12 @@ def uniq(cross_check):
 
         if i not in h:
             h[i] = {
-                'count': 0,
+                'count': '0',
                 **x,
             }
 
-        h[i]['count'] += 1
-
-    # Transform all counts to string.
-    for k in h.keys():
-        h[k]['count'] = str(h[k]['count'])
+        # Increment count but keep it as a string.
+        h[i]['count'] = str(int(h[i]['count']) + 1)
 
     # Transform back to list
     r = list(h.values())
@@ -469,14 +494,16 @@ def uniq(cross_check):
 # The fields can be supplied as a comma-separated list
 # Order is preserved
 # Additional fields are auto-discovered and added to the list, sorted
-def discover_fields(cross_check, fields=None):
+def discover_fields(
+        cross_check: DbType, fields: Optional[str] = None) -> list[str]:
+
     if fields is not None:
         keys = fields.split(',')
     else:
         keys = []
 
     # Find keys, not already listed
-    s = set()
+    s: set[str] = set()
 
     for x in cross_check:
         s = s.union(x.keys())
@@ -490,7 +517,7 @@ def discover_fields(cross_check, fields=None):
 
 # Generate csv
 # The fields to write are supplied as a list
-def gen_csv(cross_check, filename, fields):
+def gen_csv(cross_check: DbType, filename: str, fields: list[str]) -> None:
     logging.debug(f'Generate {filename} (fields: {fields})')
 
     with open(filename, 'w', newline='') as csvfile:
@@ -501,7 +528,7 @@ def gen_csv(cross_check, filename, fields):
 
 
 # Generate json
-def gen_json(cross_check, filename):
+def gen_json(cross_check: DbType, filename: str) -> None:
     logging.debug(f'Generate {filename}')
 
     with open(filename, 'w') as jsonfile:
@@ -509,7 +536,7 @@ def gen_json(cross_check, filename):
 
 
 # Generate junit
-def gen_junit(cross_check, filename):
+def gen_junit(cross_check: DbType, filename: str) -> None:
     assert 'junit_xml' in sys.modules
     logging.debug(f'Generate {filename}')
 
@@ -549,7 +576,7 @@ def gen_junit(cross_check, filename):
 
 
 # Write meta-data to YAML file as comments.
-def yaml_meta(f, meta):
+def yaml_meta(f: IO[str], meta: MetaData) -> None:
     print('# Meta-data:', file=f)
 
     for k in sorted(meta.keys()):
@@ -560,7 +587,7 @@ def yaml_meta(f, meta):
 
 # Generate yaml
 # We output meta-data as comments.
-def gen_yaml(cross_check, filename, meta):
+def gen_yaml(cross_check: DbType, filename: str, meta: MetaData) -> None:
     assert 'yaml' in sys.modules
     logging.debug(f'Generate {filename}')
 
@@ -575,7 +602,7 @@ def gen_yaml(cross_check, filename, meta):
 # We omit some tests keys: iteration and dates.
 # We remove the leading directory from C filename in log.
 # We output meta-data as comments.
-def gen_template(cross_check, filename, meta):
+def gen_template(cross_check: DbType, filename: str, meta: MetaData) -> None:
     assert 'yaml' in sys.modules
     logging.debug(f'Generate {filename}')
     omitted_keys = set(['iteration', 'start date', 'start time'])
@@ -586,7 +613,7 @@ def gen_template(cross_check, filename, meta):
         if x['result'] == 'PASS':
             continue
 
-        r = {
+        r: ConfigEntry = {
             'rule': f'Generated rule ({i})',
             'criteria': {},
             'update': {'result': 'TEMPLATE'},
@@ -597,7 +624,7 @@ def gen_template(cross_check, filename, meta):
                 continue
 
             if key == 'log':
-                value = re.sub(r'^/.*/', '', value)
+                value = re.sub(r'^/.*/', '', str(value))
 
             r['criteria'][key] = value
 
@@ -612,7 +639,7 @@ def gen_template(cross_check, filename, meta):
 # Print to stdout
 # The fields to write are supplied as a list
 # We handle the case where not all fields are present for all records
-def do_print(cross_check, fields):
+def do_print(cross_check: DbType, fields: list[str]) -> None:
     logging.debug(f'Print (fields: {fields})')
 
     # First pass to find the width for each field
@@ -648,7 +675,7 @@ def do_print(cross_check, fields):
 # results forced to SPURIOUS.
 # Tests sets in db2, which were not run according to db1 have an artificial
 # test entry created with result DROPPED.
-def combine_dbs(db1, db2):
+def combine_dbs(db1: DbType, db2: DbType) -> DbType:
     cross_check = db1
 
     # Do a pass to verify that all tests in db1 were meant to be run.
@@ -710,7 +737,7 @@ def combine_dbs(db1, db2):
 
 
 # Verify Sanity of our YAML seq db
-def sanity_check_seq_db(seq_db):
+def sanity_check_seq_db(seq_db: SeqDb) -> None:
     assert 'seq_db' in seq_db
     s = set()
 
@@ -721,12 +748,16 @@ def sanity_check_seq_db(seq_db):
 
 
 # Load the database of known sequence files.
-def load_seq_db(filename):
+def load_seq_db(filename: str) -> SeqDb:
     assert 'yaml' in sys.modules
     logging.debug(f'Read {filename}')
 
     with open(filename, 'r') as yamlfile:
-        seq_db = yaml.load(yamlfile, **yaml_load_args)
+        y = yaml.load(yamlfile, **yaml_load_args)
+        seq_db = cast(Optional[SeqDb], y)
+
+    if seq_db is None:
+        seq_db = {'seq_db': None, 'seq_files': []}
 
     sanity_check_seq_db(seq_db)
     logging.debug(f"{len(seq_db['seq_files'])} known seq file(s)")
@@ -735,8 +766,8 @@ def load_seq_db(filename):
 
 # Try to identify the .seq file in a list of known versions using its sha256.
 # We return the identified seq_db entry or None.
-def ident_seq(seq_file, seq_db):
-    seq_db = load_seq_db(seq_db)
+def ident_seq(seq_file: str, seq_db_name: str) -> Optional[SeqFile]:
+    seq_db = load_seq_db(seq_db_name)
 
     # Hash seq file
     hm = 'sha256'
@@ -767,10 +798,9 @@ def ident_seq(seq_file, seq_db):
 
 # Read the .ekl log file and the .seq file and combine them into a single
 # database, which we return.
-def read_log_and_seq(log_file, seq_file):
+def read_log_and_seq(log_file: str, seq_file: str) -> DbType:
     # ekl file to open
     # "database 1" all tests.
-    db1 = list()
     logging.debug(f'Read {log_file}')
 
     # files are encoded in utf-16
@@ -781,7 +811,6 @@ def read_log_and_seq(log_file, seq_file):
 
     # seq file to open
     # "database 2" all test sets that should run
-    db2 = dict()
     logging.debug(f'Read {seq_file}')
 
     # files are encoded in utf-16
@@ -796,7 +825,9 @@ def read_log_and_seq(log_file, seq_file):
 
 # generate MD summary
 # We output meta-data
-def gen_md(md, res_keys, bins, meta):
+def gen_md(
+        md: str, res_keys: set[str], bins: BinsType, meta: MetaData) -> None:
+
     logging.debug(f'Generate {md}')
 
     with open(md, 'w') as resultfile:
@@ -833,12 +864,12 @@ def gen_md(md, res_keys, bins, meta):
 
 # Read back results from a previously generated summary markdown file.
 # From this, we re-create a database the best we can and we return it.
-def read_md(input_md):
+def read_md(input_md: str) -> DbType:
     logging.debug(f'Read {input_md}')
     tables = []
 
     with open(input_md, 'r') as f:
-        t = None
+        t: Optional[list[list[str]]] = None
 
         for i, line in enumerate(f):
             line = line.rstrip()
@@ -865,12 +896,12 @@ def read_md(input_md):
             tables.append(t)
 
     # Remove all small tables, such as the summary and meta-data tables
-    tables = filter(lambda x: len(x[0]) > 2, tables)
+    tables2 = filter(lambda x: len(x[0]) > 2, tables)
 
     # Transform tables lines to dicts and merge everything
     cross_check = []
 
-    for t in tables:
+    for t in tables2:
         # Save keys
         keys = t.pop(0)
         n = len(keys)
@@ -892,7 +923,7 @@ def read_md(input_md):
 
 # Print a one-line summary
 # We know how to colorize some categories when they are non-zero.
-def print_summary(bins, res_keys):
+def print_summary(bins: BinsType, res_keys: set[str]) -> None:
     colors = {
         'DROPPED': red,
         'FAILURE': red,
@@ -914,8 +945,8 @@ def print_summary(bins, res_keys):
 
 
 # Return a dict with the initial meta-data.
-def meta_data(argv, here):
-    r = {
+def meta_data(argv: list[str], here: str) -> MetaData:
+    r: MetaData = {
         'command-line': ' '.join(argv),
         'date': f"{time.asctime(time.gmtime())} UTC",
     }
@@ -936,7 +967,7 @@ def meta_data(argv, here):
 
 # Perform some sanity checks on the tests:
 # - We verify that the tests have all the fields we need.
-def sanity_check(cross_check):
+def sanity_check(cross_check: DbType) -> None:
     fields = [
         'descr',
         'device path',

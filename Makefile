@@ -23,7 +23,6 @@ check:
 	yamllint .
 	shellcheck $$(find -name '*.sh')
 	flake8
-	mypy --strict validate.py
 	mypy .
 	./validate.py --schema schemas/config-schema.yaml EBBR.yaml
 	./validate.py --schema schemas/config-schema.yaml SIE.yaml
