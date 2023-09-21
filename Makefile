@@ -7,7 +7,7 @@ help:
 	@echo 'Targets:'
 	@echo '  all'
 	@echo '  check   Perform sanity checks'
-	@echo '          (currently yamllint, shellcheck and flake8,'
+	@echo '          (currently yamllint, shellcheck, flake8 and mypy,'
 	@echo '           as well as configuration and sequence files database'
 	@echo '           validation and unit test)'
 	@echo '  clean'
@@ -23,6 +23,7 @@ check:
 	yamllint .
 	shellcheck $$(find -name '*.sh')
 	flake8
+	mypy .
 	./validate.py --schema schemas/config-schema.yaml EBBR.yaml
 	./validate.py --schema schemas/config-schema.yaml SIE.yaml
 	./validate.py --schema schemas/config-schema.yaml sample/sample.yaml

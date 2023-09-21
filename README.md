@@ -400,6 +400,7 @@ reports errors:
       Checker  Target
 -------------  ----------------
      `flake8`  Python scripts.
+       `mypy`  Python scripts.
    `yamllint`  [YAML] files.
  `shellcheck`  Shell scripts.
 -------------------------------

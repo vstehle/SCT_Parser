@@ -13,6 +13,7 @@ import os
 import curses
 import time
 import subprocess
+from typing import Any
 
 try:
     from packaging import version
@@ -34,6 +35,7 @@ except ImportError:
         ' support...')
 
 if 'yaml' in sys.modules:
+    Dumper: Any
     try:
         from yaml import CDumper as Dumper
     except ImportError:
@@ -57,7 +59,8 @@ if os.isatty(sys.stdout.fileno()):
         curses.setupterm()
         setafb = curses.tigetstr('setaf') or bytes()
         setaf = setafb.decode()
-        normal = curses.tigetstr('sgr0').decode() or ''
+        tmp = curses.tigetstr('sgr0')
+        normal = tmp.decode() if tmp is not None else ''
         red = curses.tparm(setafb, curses.COLOR_RED).decode() or ''
         yellow = curses.tparm(setafb, curses.COLOR_YELLOW).decode() or ''
         green = curses.tparm(setafb, curses.COLOR_GREEN).decode() or ''
