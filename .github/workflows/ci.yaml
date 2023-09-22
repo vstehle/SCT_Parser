@@ -6,16 +6,29 @@ on: push
 jobs:
   check-job:
     runs-on: ubuntu-latest
+    # We need a more recent version of e.g. mypy for this job, therefore
+    # use a container.
+    container: ubuntu:rolling
 
     steps:
+      - name: Install dependencies
+        # Notes:
+        # - Do this before checkout and be sure to install git. This is to have
+        #   git in the path at checkout time, to obtain the .git folder.
+        # - No need to use sudo in the container.
+        run: |
+          apt-get update
+          apt-get install -y make python3 python3-yaml python3-jsonschema \
+            python3-packaging yamllint flake8 shellcheck python3-junit.xml git \
+            mypy
+
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get install -y make python3 python3-yaml python3-jsonschema \
-            python3-packaging yamllint flake8 shellcheck python3-junit.xml git \
-            mypy
+      - name: Add git safe directory
+        # We need this workaround in the container as the checkout action does
+        # not run under the same user.
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Check
         run: make -k check
