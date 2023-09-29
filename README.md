@@ -401,6 +401,7 @@ reports errors:
 -------------  ----------------
      `flake8`  Python scripts.
        `mypy`  Python scripts.
+     `pylint`  Python scripts.
    `yamllint`  [YAML] files.
  `shellcheck`  Shell scripts.
 -------------------------------

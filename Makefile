@@ -7,9 +7,9 @@ help:
 	@echo 'Targets:'
 	@echo '  all'
 	@echo '  check   Perform sanity checks'
-	@echo '          (currently yamllint, shellcheck, flake8 and mypy,'
-	@echo '           as well as configuration and sequence files database'
-	@echo '           validation and unit test)'
+	@echo '          (currently yamllint, shellcheck, flake8, mypy and'
+	@echo '           pylint, as well as configuration and sequence files'
+	@echo '           database validation and unit test)'
 	@echo '  clean'
 	@echo '  doc     Generate README.pdf'
 	@echo '  help    Print this help.'
@@ -24,6 +24,7 @@ check:
 	shellcheck $$(find -name '*.sh')
 	flake8
 	mypy .
+	pylint --rcfile .pylint.rc *.py
 	./validate.py --schema schemas/config-schema.yaml EBBR.yaml
 	./validate.py --schema schemas/config-schema.yaml SIE.yaml
 	./validate.py --schema schemas/config-schema.yaml sample/sample.yaml

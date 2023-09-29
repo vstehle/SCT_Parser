@@ -102,10 +102,10 @@ def maybe_plural(n: int, word: str) -> str:
 
     ll = word[len(word) - 1].lower()
 
-    if ll == 'd' or ll == 's':
+    if ll in ('d', 's'):
         return word
-    else:
-        return f'{word}s'
+
+    return f'{word}s'
 
 
 # based loosley on https://stackoverflow.com/a/4391978
@@ -115,7 +115,7 @@ def key_value_find(
         list_1: list[dict[str, str]], key: str, value: str
         ) -> list[dict[str, str]]:
 
-    found = list()
+    found = []
     for test in list_1:
         if test[key] == value:
             found.append(test)
@@ -141,7 +141,7 @@ def test_parser(string: list[str], current: dict[str, str]) -> dict[str, str]:
 # Parse the ekl file, and create a map of the tests
 def ekl_parser(file: list[str]) -> list[dict[str, str]]:
     # create our "database" dict
-    temp_list = list()
+    temp_list = []
     # All tests are grouped by the "HEAD" line, which precedes them.
     current: dict[str, str] = {}
 
@@ -233,7 +233,7 @@ def ekl_parser(file: list[str]) -> list[dict[str, str]]:
 
 # Parse Seq file, used to tell which tests should run.
 def seq_parser(file: IO[str]) -> list[dict[str, str]]:
-    temp = list()
+    temp = []
     lines = file.readlines()
     magic = 7
     # a test in a seq file is 7 lines, if not mod7, something wrong..
@@ -330,8 +330,8 @@ def sanitize_yaml(conf: ConfigType) -> None:
 
         rules.add(r['rule'])
 
-        if 'criteria' not in r or not type(r['criteria']) is dict or \
-           'update' not in r or not type(r['update']) is dict:
+        if 'criteria' not in r or not isinstance(r['criteria'], dict) or \
+           'update' not in r or not isinstance(r['update'], dict):
             logging.error(f"{red}Bad rule{normal} {i} `{r}'")
             raise Exception()
 
@@ -414,7 +414,7 @@ def load_config(filename: str) -> ConfigType:
     if conf is None:
         conf = []
 
-    logging.debug('{} rule(s)'.format(len(conf)))
+    logging.debug(f"{len(conf)} rule(s)")
     sanitize_yaml(conf)
     return conf
 
@@ -687,10 +687,10 @@ def combine_dbs(db1: DbType, db2: DbType) -> DbType:
 
     n = 0
 
-    for i in range(len(cross_check)):
-        if cross_check[i]['set guid'] not in s:
+    for i, x in enumerate(cross_check):
+        if x['set guid'] not in s:
             logging.debug(f"Spurious test {i} `{cross_check[i]['name']}'")
-            cross_check[i]['result'] = 'SPURIOUS'
+            x['result'] = 'SPURIOUS'
             n += 1
 
     if n:
@@ -704,9 +704,7 @@ def combine_dbs(db1: DbType, db2: DbType) -> DbType:
 
     n = 0
 
-    for i in range(len(db2)):
-        x = db2[i]
-
+    for i, x in enumerate(db2):
         if not x['guid'] in s:
             logging.debug(f"Dropped test set {i} `{x['name']}'")
 
@@ -807,7 +805,7 @@ def read_log_and_seq(log_file: str, seq_file: str) -> DbType:
     with open(log_file, "r", encoding="utf-16") as f:
         db1 = ekl_parser(f.readlines())
 
-    logging.debug('{} test(s)'.format(len(db1)))
+    logging.debug(f"{len(db1)} test(s)")
 
     # seq file to open
     # "database 2" all test sets that should run
@@ -817,7 +815,7 @@ def read_log_and_seq(log_file: str, seq_file: str) -> DbType:
     with open(seq_file, "r", encoding="utf-16") as f:
         db2 = seq_parser(f)
 
-    logging.debug('{} test set(s)'.format(len(db2)))
+    logging.debug(f"{len(db2)} test set(s)")
 
     # Produce a single cross_check database from our two db1 and db2 databases.
     return combine_dbs(db1, db2)
@@ -837,8 +835,7 @@ def gen_md(
 
         # Loop on all the result values we found for the summary
         for k in sorted(res_keys):
-            resultfile.write(
-                "|{}:|{}|\n".format(k.title(), len(bins[k])))
+            resultfile.write(f"|{k.title()}:|{len(bins[k])}|\n")
 
         resultfile.write("\n\n")
 
@@ -849,7 +846,7 @@ def gen_md(
         res_keys_np.remove('PASS')
 
         for k in sorted(res_keys_np):
-            resultfile.write("## {}. {} by group\n\n".format(n, k.title()))
+            resultfile.write(f"## {n}. {k.title()} by group\n\n")
             key_tree_2_md(bins[k], resultfile)
             n += 1
 
@@ -1111,7 +1108,7 @@ if __name__ == '__main__':
         # Read both and combine them into a single cross_check database.
         cross_check = read_log_and_seq(args.log_file, args.seq_file)
 
-    logging.debug('{} combined test(s)'.format(len(cross_check)))
+    logging.debug(f"{len(cross_check)} combined test(s)")
 
     # Perform some sanity checks on the tests.
     sanity_check(cross_check)

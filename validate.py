@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
+import os
+import logging
+from typing import Any
 import argparse
 import sys
 import yaml
 import jsonschema
-import os
-import logging
-from typing import Any
 
 try:
     from packaging import version

@@ -20,7 +20,7 @@ jobs:
           apt-get update
           apt-get install -y make python3 python3-yaml python3-jsonschema \
             python3-packaging yamllint flake8 shellcheck python3-junit.xml git \
-            mypy
+            mypy pylint
 
       - name: Checkout
         uses: actions/checkout@v3
