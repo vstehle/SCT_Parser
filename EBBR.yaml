@@ -2373,7 +2373,6 @@
     https://bugzilla.tianocore.org/show_bug.cgi?id=3390
   criteria:
     descr: Simple Text Input Ex Protocol Test
-    device path: No device path
     group: ConsoleSupportTest
     guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
     log: Status = Unsupported
