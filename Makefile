@@ -21,7 +21,7 @@ doc: README.pdf
 
 check:
 	yamllint .
-	shellcheck $$(find -name '*.sh')
+	shellcheck $$(find -name '*.sh') tests/test-parser
 	flake8
 	mypy .
 	pylint --rcfile .pylint.rc *.py
