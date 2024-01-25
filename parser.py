@@ -14,18 +14,12 @@ import curses
 import time
 import subprocess
 from typing import Any, IO, Optional, cast, TypedDict
+import yaml
 
 try:
     from packaging import version
 except ImportError:
     print('No packaging. You should install python3-packaging...')
-
-try:
-    import yaml
-except ImportError:
-    print(
-        'No yaml. You should install PyYAML/python3-yaml for configuration'
-        ' file support...')
 
 try:
     from junit_xml import TestSuite, TestCase
@@ -34,12 +28,12 @@ except ImportError:
         'No junit_xml. You should install junit_xml for junit output'
         ' support...')
 
-if 'yaml' in sys.modules:
-    Dumper: Any
-    try:
-        from yaml import CDumper as Dumper
-    except ImportError:
-        from yaml import Dumper
+Dumper: Any
+
+try:
+    from yaml import CDumper as Dumper
+except ImportError:
+    from yaml import Dumper
 
 DbEntry = dict[str, str]
 DbType = list[DbEntry]
@@ -402,8 +396,6 @@ def apply_rules(cross_check: DbType, conf: ConfigType) -> None:
 # Load YAML configuration file
 # See the README.md for details on the configuration file format.
 def load_config(filename: str) -> ConfigType:
-    assert 'yaml' in sys.modules
-
     # Load configuration file
     logging.debug(f'Read {filename}')
 
@@ -588,7 +580,6 @@ def yaml_meta(f: IO[str], meta: MetaData) -> None:
 # Generate yaml
 # We output meta-data as comments.
 def gen_yaml(cross_check: DbType, filename: str, meta: MetaData) -> None:
-    assert 'yaml' in sys.modules
     logging.debug(f'Generate {filename}')
 
     with open(filename, 'w') as yamlfile:
@@ -603,7 +594,6 @@ def gen_yaml(cross_check: DbType, filename: str, meta: MetaData) -> None:
 # We remove the leading directory from C filename in log.
 # We output meta-data as comments.
 def gen_template(cross_check: DbType, filename: str, meta: MetaData) -> None:
-    assert 'yaml' in sys.modules
     logging.debug(f'Generate {filename}')
     omitted_keys = set(['iteration', 'start date', 'start time'])
     t = []
@@ -747,7 +737,6 @@ def sanity_check_seq_db(seq_db: SeqDb) -> None:
 
 # Load the database of known sequence files.
 def load_seq_db(filename: str) -> SeqDb:
-    assert 'yaml' in sys.modules
     logging.debug(f'Read {filename}')
 
     with open(filename, 'r') as yamlfile:
@@ -1032,16 +1021,10 @@ if __name__ == '__main__':
     parser.add_argument('seq_file', nargs='?', help='Input .seq filename')
     parser.add_argument('find_key', nargs='?', help='Search key')
     parser.add_argument('find_value', nargs='?', help='Search value')
-
-    # A few command line switches depend on yaml. We enable those only if we
-    # could actually import yaml.
-    if 'yaml' in sys.modules:
-        parser.add_argument(
-            '--config', help='Input .yaml configuration filename')
-        parser.add_argument('--yaml', help='Output .yaml filename')
-        parser.add_argument(
-            '--template', help='Output .yaml config template filename')
-
+    parser.add_argument('--config', help='Input .yaml configuration filename')
+    parser.add_argument('--yaml', help='Output .yaml filename')
+    parser.add_argument(
+        '--template', help='Output .yaml config template filename')
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -1063,7 +1046,7 @@ if __name__ == '__main__':
 
     # First part of configuration selection: command line, or default.
     # We need to do this early for the case of config validation.
-    if 'config' in args and args.config is not None:
+    if args.config is not None:
         config = args.config
     else:
         config = f'{here}/EBBR.yaml'
@@ -1094,7 +1077,7 @@ if __name__ == '__main__':
 
     # Second part of configuration file selection: take autodetect into account
     # but with less priority than command line.
-    if ('config' not in args or args.config is None) and ident is not None:
+    if args.config is None and ident is not None:
         config = f"{here}/{ident['config']}"
 
     # Take configuration file into account. This can perform transformations on
@@ -1144,7 +1127,7 @@ if __name__ == '__main__':
         gen_md(args.md, res_keys, bins, meta)
 
     # Generate yaml config template if requested
-    if 'template' in args and args.template is not None:
+    if args.template is not None:
         gen_template(cross_check, args.template, meta)
 
     # Filter fields before writing any other type of output
@@ -1172,7 +1155,7 @@ if __name__ == '__main__':
         gen_junit(cross_check, args.junit)
 
     # Generate yaml if requested
-    if 'yaml' in args and args.yaml is not None:
+    if args.yaml is not None:
         gen_yaml(cross_check, args.yaml, meta)
 
     # Print if requested

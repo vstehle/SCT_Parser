@@ -24,9 +24,8 @@ certification.
 
 ## Dependencies
 
-You need to install the [PyYAML] module for the configuration file to be loaded
-correctly. Depending on your Linux distribution, this might be available as the
-`python3-yaml` package.
+You need to install the [PyYAML] module. Depending on your Linux distribution,
+this might be available as the `python3-yaml` package.
 It is also recommended to install the [packaging] library for smooth version
 detection. Depending on your Linux distribution, this might be available as the
 `python3-packaging` package.
