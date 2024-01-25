@@ -170,7 +170,11 @@ parser.py "${args[@]}" --print-meta |& tee "$out"
 grep -q 'meta-data' "$out"
 grep -q 'command-line:' "$out"
 grep -q 'date:' "$out"
-grep -q 'git-commit:' "$out"
+
+if which git; then
+	grep -q 'git-commit:' "$out"
+fi
+
 grep -q 'seq-file-ident: Test sample.seq' "$out"
 
 echo 'ok.' >&3
