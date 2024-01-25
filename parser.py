@@ -1041,15 +1041,6 @@ if __name__ == '__main__':
         parser.add_argument('--yaml', help='Output .yaml filename')
         parser.add_argument(
             '--template', help='Output .yaml config template filename')
-        parser.add_argument(
-            '--schema', help='Validation schema',
-            default=f'{here}/schemas/config-schema.yaml')
-        parser.add_argument(
-            '--validate-config', action='store_true',
-            help='Deprecated')
-        parser.add_argument(
-            '--validate-seq-db', action='store_true',
-            help='Deprecated')
 
     args = parser.parse_args()
 
@@ -1062,15 +1053,13 @@ if __name__ == '__main__':
     ln = logging.getLevelName(logging.ERROR)
     logging.addLevelName(logging.ERROR, f"{red}{ln}{normal}")
 
-    # We must have a log file and a seq file, except when validating the config
-    # or the sequence files database
-    if not args.validate_config and not args.validate_seq_db:
-        if args.log_file is None:
-            logging.error("No input .ekl!")
-            sys.exit(1)
-        if args.seq_file is None:
-            logging.error("No input .seq!")
-            sys.exit(1)
+    # We must have a log file and a seq file.
+    if args.log_file is None:
+        logging.error("No input .ekl!")
+        sys.exit(1)
+    if args.seq_file is None:
+        logging.error("No input .seq!")
+        sys.exit(1)
 
     # First part of configuration selection: command line, or default.
     # We need to do this early for the case of config validation.
@@ -1078,16 +1067,6 @@ if __name__ == '__main__':
         config = args.config
     else:
         config = f'{here}/EBBR.yaml'
-
-    # Validate config and exit, if requested.
-    if args.validate_config:
-        logging.error('Config validation is deprecated!')
-        sys.exit(1)
-
-    # Validate sequence files databases and exit, if requested.
-    if args.validate_seq_db:
-        logging.error('Sequence validation is deprecated!')
-        sys.exit(1)
 
     # Prepare initial meta-data.
     meta = meta_data(sys.argv, here)
