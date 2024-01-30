@@ -421,8 +421,8 @@ def filter_data(cross_check: DbType, Filter: str) -> DbType:
 
     # This function "wraps" the filter and is called for each test
     # `x' is referred to from the filter expression.
-    # pylint: disable=unused-argument
     def function(x: DbEntry) -> bool:
+        # pylint: disable=unused-argument eval-used
         return bool(eval(Filter))
 
     r = list(filter(function, cross_check))
