@@ -13,7 +13,7 @@ import os
 import curses
 import time
 import subprocess
-from typing import Any, IO, Optional, cast, TypedDict
+from typing import Any, IO, Optional, cast, TypedDict, Callable
 import yaml
 
 try:
@@ -420,6 +420,8 @@ def filter_data(cross_check: DbType, Filter: str) -> DbType:
     before = len(cross_check)
 
     # This function "wraps" the filter and is called for each test
+    # `x' is referred to from the filter expression.
+    # pylint: disable=unused-argument
     def function(x: DbEntry) -> bool:
         return bool(eval(Filter))
 
@@ -436,8 +438,15 @@ def filter_data(cross_check: DbType, Filter: str) -> DbType:
 # To use python list in-place sorting, we use the keys in reverse order.
 def sort_data(cross_check: DbType, sort_keys: str) -> None:
     logging.debug(f"Sorting on `{sort_keys}'")
+
+    def key_func(k: str) -> Callable[[dict[str, str]], str]:
+        def func(x: dict[str, str]) -> str:
+            return x[k]
+
+        return func
+
     for k in reversed(sort_keys.split(',')):
-        cross_check.sort(key=lambda x: x[k])
+        cross_check.sort(key=key_func(k))
 
 
 # Keep only certain fields in data, in-place
@@ -653,10 +662,14 @@ def do_print(cross_check: DbType, fields: list[str]) -> None:
 
     print(sep.join([*map(lambda f: '-' * w[f], fields)]))
 
+    def map_func(x: dict[str, str]) -> Callable[[str], str]:
+        def func(f: str) -> str:
+            return f"{x[f] if f in x else '':{w[f]}}"
+
+        return func
+
     for x in cross_check:
-        print(sep.join([
-            *map(lambda f: f"{x[f] if f in x else '':{w[f]}}", fm1),
-            x[lf] if lf in x else '']))
+        print(sep.join([*map(map_func(x), fm1), x[lf] if lf in x else '']))
 
 
 # Combine or two databases db1 and db2 coming from ekl and seq files
@@ -939,7 +952,7 @@ def meta_data(argv: list[str], here: str) -> MetaData:
 
     cp = subprocess.run(
         f"git -C '{here}' describe --always --abbrev=12 --dirty", shell=True,
-        capture_output=True)
+        capture_output=True, check=False)
     logging.debug(cp)
 
     if cp.returncode:

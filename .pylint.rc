@@ -423,7 +423,6 @@ confidence=HIGH,
 # --disable=W".
 disable=broad-exception-caught,
         broad-exception-raised,
-        cell-var-from-loop,
         duplicate-code,
         eval-used,
         fixme,
@@ -433,12 +432,8 @@ disable=broad-exception-caught,
         missing-function-docstring,
         missing-module-docstring,
         redefined-outer-name,
-        subprocess-run-check,
         too-many-lines,
-        unspecified-encoding,
-        unused-argument,
-        use-symbolic-message-instead,
-        useless-suppression
+        unspecified-encoding
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
