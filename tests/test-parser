@@ -86,7 +86,7 @@ grep -q ' v21.07_0.9_BETA' "$out"
 parser.py /dev/null contrib/v22.10_2.0.0_BETA-1/BBSR.seq |& tee "$out"
 grep -q ' v22.10_2.0.0_BETA-1' "$out"
 
-echo -n 'id ir2, ' >&3
+echo -n 'id ir2.x, ' >&3
 parser.py /dev/null contrib/v23.03_2.0.0/EBBR.seq |& tee "$out"
 grep -q ' v22.10_2.0.0_BETA-1' "$out"
 
