@@ -265,3 +265,30 @@ $defs:
             - WriteEx_Func
             - Write_Conf
             - Write_Func
+    test-set:
+        enum:
+            - BBSRVariableSizeTest
+            - DevicePathProcotolTest
+            - DevicePathUtilitiesProcotolTest
+            - EFICompliantTest
+            - EventTimerandPriorityServicesTest
+            - HIIDatabaseProtocolTest
+            - ImageServicesTest
+            - LoadedImageProtocolTest
+            - MemoryAllocationServicesTest
+            - MiscBootServicesTest
+            - MiscRuntimeServicesTest
+            - PCIIOProtocolTest
+            - ProtocolHandlerServicesTest
+            - RNGProtocolTest
+            - SBBRRuntimeServicesTest
+            - SbbrBootServices
+            - SbbrEfiSpecVerLvl
+            - SbbrSysEnvConfig
+            - SimpleFileSystemProtocolTest
+            - SimpleInputProtocolTest
+            - SimpleNetworkProtocolTest
+            - SimpleOutputProtocolTest
+            - SimpleTextInputExProtocolTest
+            - TimeServicesTest
+            - VariableServicesTest

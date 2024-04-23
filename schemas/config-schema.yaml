@@ -55,31 +55,7 @@ items:
                 sub set:
                     '$ref': './common-schema.yaml#/$defs/sub-set'
                 test set:
-                    enum:
-                        - BBSRVariableSizeTest
-                        - DevicePathProcotolTest
-                        - DevicePathUtilitiesProcotolTest
-                        - EFICompliantTest
-                        - EventTimerandPriorityServicesTest
-                        - HIIDatabaseProtocolTest
-                        - ImageServicesTest
-                        - LoadedImageProtocolTest
-                        - MemoryAllocationServicesTest
-                        - MiscBootServicesTest
-                        - MiscRuntimeServicesTest
-                        - ProtocolHandlerServicesTest
-                        - RNGProtocolTest
-                        - SBBRRuntimeServicesTest
-                        - SbbrBootServices
-                        - SbbrEfiSpecVerLvl
-                        - SbbrSysEnvConfig
-                        - SimpleFileSystemProtocolTest
-                        - SimpleInputProtocolTest
-                        - SimpleNetworkProtocolTest
-                        - SimpleOutputProtocolTest
-                        - SimpleTextInputExProtocolTest
-                        - TimeServicesTest
-                        - VariableServicesTest
+                    '$ref': './common-schema.yaml#/$defs/test-set'
             additionalProperties: false
             minProperties: 1
         update:
