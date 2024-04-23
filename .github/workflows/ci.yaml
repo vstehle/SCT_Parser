@@ -23,7 +23,7 @@ jobs:
             mypy pylint python3-rfc3987
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Add git safe directory
         # We need this workaround in the container as the checkout action does
@@ -34,7 +34,7 @@ jobs:
         run: make -k check
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
 
         with:
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
@@ -57,7 +57,7 @@ jobs:
         run: make doc
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
 
         with:
           name: Doc
