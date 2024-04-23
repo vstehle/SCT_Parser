@@ -253,3 +253,22 @@
     test set: SecureBootTest
   update:
     result: KNOWN ACS LIMITATION
+
+- rule: Force image loading failure with ACS-IR v23.09_2.1.0 as known ACS
+    limitation
+    The EFI Image Execution Info Table is not supported in U-Boot and is not
+    required by EBBR and BBSR.
+  criteria:
+    descr: Secure Boot Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 6A8CAA83-B9DA-46C7-98F6-D4969DABDAA0
+    log: Status - Not Found
+    name: Secure Boot - ImageLoadingTest
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: BA4A8DD9-2D6A-43A6-96CF-7947892B7359
+    sub set: ImageLoading
+    test set: SecureBootTest
+  update:
+    result: KNOWN ACS LIMITATION
