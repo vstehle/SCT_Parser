@@ -28,6 +28,7 @@ $defs:
             - SBBR UEFI System Environment and Configuration Tests
             - SBBRRuntimeServices Tests
             - SbbrBootServices Tests
+            - Secure Boot Test
             - Simple Input Protocol Test
             - Simple Network Protocol Test
             - Simple Text Input Ex Protocol Test
@@ -285,6 +286,7 @@ $defs:
             - SbbrBootServices
             - SbbrEfiSpecVerLvl
             - SbbrSysEnvConfig
+            - SecureBootTest
             - SimpleFileSystemProtocolTest
             - SimpleInputProtocolTest
             - SimpleNetworkProtocolTest

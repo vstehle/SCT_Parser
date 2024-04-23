@@ -185,3 +185,71 @@
     sub set: ImageLoading
   update:
     result: KNOWN ACS LIMITATION
+
+###############################################################################
+#                           Known ACS limitations                             #
+###############################################################################
+
+# We force the following tests result as `KNOWN ACS LIMITATION'. They are
+# genuine bugs, which are fixed in a more recent version of the ACS or which
+# must ultimately be fixed and which we know about.
+
+- rule: Force unsigned authenticated variable update failure with ACS-IR
+    v23.09_2.1.0 as known ACS limitation
+    The SIE SCT sends a random, very large, blob which FW handles differently to
+    an invalid key and returns INVALID_PARAMETER, while the SIE SCT expects only
+    SECURITY_VIOLATION.
+  criteria:
+    descr: Secure Boot Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: D2073163-EDB0-4D6B-BA8F-5C6116C1592C
+    log: Status - Invalid Parameter
+    name: SecureBoot - Verify unsigned KEK update
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 495CB6D7-0817-4015-A479-0DB4C2308626
+    sub set: VariableUpdates
+    test set: SecureBootTest
+  update:
+    result: KNOWN ACS LIMITATION
+
+- rule: Force unsigned authenticated variable update failure (2) with ACS-IR
+    v23.09_2.1.0 as known ACS limitation
+    The SIE SCT sends a random, very large, blob which FW handles differently to
+    an invalid key and returns INVALID_PARAMETER, while the SIE SCT expects only
+    SECURITY_VIOLATION.
+  criteria:
+    descr: Secure Boot Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 25AD4F9B-6533-4A96-9447-FEED03EEC3E2
+    log: Status - Invalid Parameter
+    name: SecureBoot - Verify unsigned db update
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 495CB6D7-0817-4015-A479-0DB4C2308626
+    sub set: VariableUpdates
+    test set: SecureBootTest
+  update:
+    result: KNOWN ACS LIMITATION
+
+- rule: Force unsigned authenticated variable update failure (3) with ACS-IR
+    v23.09_2.1.0 as known ACS limitation
+    The SIE SCT sends a random, very large, blob which FW handles differently to
+    an invalid key and returns INVALID_PARAMETER, while the SIE SCT expects only
+    SECURITY_VIOLATION.
+  criteria:
+    descr: Secure Boot Test
+    device path: No device path
+    group: RuntimeServicesTest
+    guid: 70FEBF5B-27D6-44AE-AB43-059DDD8B2947
+    log: Status - Invalid Parameter
+    name: SecureBoot - Verify unsigned dbx update
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 495CB6D7-0817-4015-A479-0DB4C2308626
+    sub set: VariableUpdates
+    test set: SecureBootTest
+  update:
+    result: KNOWN ACS LIMITATION
