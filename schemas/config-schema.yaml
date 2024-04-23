@@ -53,7 +53,7 @@ items:
                 set guid:
                     '$ref': './common-schema.yaml#/$defs/guid'
                 sub set:
-                    '$ref': './common-schema.yaml#/$defs/sub set'
+                    '$ref': './common-schema.yaml#/$defs/sub-set'
                 test set:
                     enum:
                         - BBSRVariableSizeTest
