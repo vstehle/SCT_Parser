@@ -353,6 +353,10 @@ the result of some tests with the following ones:
 `KNOWN SIZE LIMITATION`  Genuine limitations, we know about them; they are due
                          to secure storage size limitations and they do not
                          prevent Secure Boot.
+
+ `KNOWN ACS LIMITATION`  Genuine bugs, which are fixed in a more recent
+                         version of the ACS or which must ultimately be fixed
+                         and which we know about.
 -------------------------------------------------------------------------------
 
 [BBSR]: https://developer.arm.com/documentation/den0107/b/?lang=en
