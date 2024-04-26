@@ -33,6 +33,7 @@ $defs:
             - Simple Text Input Ex Protocol Test
             - Simple Text Output Protocol Test
             - Testing For EFI Random Number Protocol
+            - Testing For EFI TCG2 Protocol
             - Testing For Loaded Image Protocol
             - Testing For Simple File System Protocol and EFI_FILE Protocol
             - Time Services Test
@@ -290,5 +291,6 @@ $defs:
             - SimpleNetworkProtocolTest
             - SimpleOutputProtocolTest
             - SimpleTextInputExProtocolTest
+            - TCG2ProtocolTest
             - TimeServicesTest
             - VariableServicesTest

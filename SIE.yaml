@@ -60,6 +60,30 @@
   update:
     result: IGNORED
 
+# We force the following failed tests result as `IGNORED' because they are not
+# mandated by BBSR.
+
+- rule: Force older TPM compatibility combined failure as ignored
+    The ACS SCT test is verifying compatibility with TPM capabilities 1.0.
+    U-Boot up to at least version 2023.10 does not support TPM capabilities 1.0
+    and also erroneously returns BUFFER_TOO_SMALL in this case instead of
+    SUCCESS.
+    BBSR does not mandate compatibility with older TPM capabilities 1.0;
+    it only requires TCG2, TPM capabilities 1.1.
+  criteria:
+    descr: Testing For EFI TCG2 Protocol
+    guid: 8DDB031B-7448-40EE-B1A2-E6F8E8C4E55F
+    log: Status - Buffer Too Small
+    name: TCG2_PROTOCOL.GetCapability - GetCapability() backwards compatibility
+      check for 1.0 version of EFI_TCG_BOOT_SERVICE_CAPABILITY
+    result: FAILURE
+    revision: '0x00010000'
+    set guid: 39FF9C71-4B41-4E5B-AED7-87C794187D67
+    sub set: GetCapability_Conf
+    test set: TCG2ProtocolTest
+  update:
+    result: IGNORED
+
 ###############################################################################
 #                         Known U-Boot limitations                            #
 ###############################################################################
