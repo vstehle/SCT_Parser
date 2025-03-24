@@ -559,12 +559,13 @@ def gen_junit(cross_check: DbType, filename: str) -> None:
             "\nIteration: " + result['iteration'] +
             "\nLog: " + result['log'],
             "")
-        if result['result'] == 'FAILURE':
-            testcase.add_failure_info(result['result'])
-        elif result['result'] == 'SKIPPED':
-            testcase.add_skipped_info(result['result'])
-        elif result['result'] == 'DROPPED':
-            testcase.add_skipped_info(result['result'])
+        match result['result']:
+            case 'FAILURE':
+                testcase.add_failure_info(result['result'])
+            case 'SKIPPED':
+                testcase.add_skipped_info(result['result'])
+            case 'DROPPED':
+                testcase.add_skipped_info(result['result'])
 
         group = result['group'] if result['group'] else result['test set']
         if group not in testsuites:
