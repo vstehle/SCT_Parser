@@ -177,4 +177,9 @@ fi
 
 grep -q 'seq-file-ident: Test sample.seq' "$out"
 
+echo -n 'hang, ' >&3
+parser.py tests/hang.ekl contrib/v21.09_1.0/EBBR.seq --fields 'count,result,name' --uniq --print |& tee "$out"
+grep 'summary: .*, 1 spurious,' "$out"
+grep -F '1      SPURIOUS  System hangs or stops abnormally.' "$out"
+
 echo 'ok.' >&3

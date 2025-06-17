@@ -679,8 +679,26 @@ def do_print(cross_check: DbType, fields: list[str]) -> None:
 # results forced to SPURIOUS.
 # Tests sets in db2, which were not run according to db1 have an artificial
 # test entry created with result DROPPED.
+# We handle the case of some missing keys gracefully here, which happens in
+# case of abnormal hang or stop for example.
 def combine_dbs(db1: DbType, db2: DbType) -> DbType:
     cross_check = db1
+
+    # Do a pass to handle the case of some missing keys, which happens in the
+    # case of hang or stop.
+    n = 0
+
+    for i, x in enumerate(cross_check):
+        for k in ['set guid', 'descr', 'device path', 'iteration',
+                  'start date', 'start time', 'test set', 'sub set',
+                  'revision', 'group']:
+            if k not in x:
+                logging.debug(
+                    f"Missing `{k}' for test {i} `{cross_check[i]['name']}'")
+                x[k] = 'Unknown'
+
+    if n:
+        logging.debug(f'{n} test(s) with missing keys(s)')
 
     # Do a pass to verify that all tests in db1 were meant to be run.
     # Otherwise, force the result to SPURIOUS.
